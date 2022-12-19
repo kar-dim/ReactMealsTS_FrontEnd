@@ -1,0 +1,44 @@
+import React, {useState} from 'react';
+import CartButton from './CartButton';
+import HeaderStyles from './Header.module.css';
+import ICartItem from '../interfaces/CartItemInterface';
+import CartModal from './CartModal';
+
+interface HeaderInterface {
+    cartItems: ICartItem[];
+}
+const Header = ({cartItems} : HeaderInterface) => {
+
+    const [showModal, setShowModal] = useState<boolean>(false);
+
+    //called from inside the modal (props), disables/enables the modal
+    const showModalHandler = (showModal : boolean) => { setShowModal(showModal); }
+
+    //click on the "cart" div
+    const clickCartHandler = (): void => {
+        if (cartItems !== null && cartItems.length > 0){
+            setShowModal(true);
+        } //else -> empty
+        else {
+            alert("Empty item list");
+        }
+    };
+
+    return (
+        <React.Fragment>
+            <CartModal cartItems={cartItems} showModal={showModal} setShowModal={showModalHandler} />
+            <div className={HeaderStyles.header_main}>
+                <h1>Jimmys Foodzilla</h1>
+                <CartButton cartItems = {cartItems} cartButtonClick={clickCartHandler} />
+            </div>
+            <img src={require("../media/bg.webp")} className={HeaderStyles.main_bg} alt="food background"></img>
+            <div className={HeaderStyles.header_text}>
+                <h1>Delicious Food, Delivered To You</h1>
+                <p>Choose your favorite meal from our broad selection of available meals and enjoy a delicious lunch or dinner at home.</p>
+                <p>All our meals are cooked with high-quality ingredients, just-in-time and of course by experienced chefs!</p>
+            </div>
+        </React.Fragment>
+    );
+};
+
+export default Header;

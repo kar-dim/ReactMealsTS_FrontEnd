@@ -1,0 +1,47 @@
+.dish_main {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dish_left {
+   float: left;
+}
+
+.dish_right {
+    align-self: flex-end;
+    float: right;
+}
+
+.dish_left > span {
+    margin-bottom: 5px;
+    display:inline-block;
+}
+
+span.dish_text_price {
+    margin-top: 1px;
+    color: orange;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+button.add_button {
+    outline:none;
+    box-shadow: none;
+    color: white;
+    border: none;
+    font-size: 22px;
+    background-color: rgb(226, 0, 34);
+    border-radius: 25px;
+    padding: 10px 15px 10px 15px;
+}
+
+button.add_button:hover {
+    background-color: rgb(214, 0, 39);
+    color: rgb(230,230,230);
+}
+
+button.add_button:active {
+    background-color: rgb(186, 0, 34);
+    color: rgb(210,210,210);
+}
