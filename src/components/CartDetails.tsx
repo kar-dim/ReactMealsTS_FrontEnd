@@ -59,7 +59,7 @@ const CartDetails = ({cartItems, closeModal, addItem, removeItem} : ICartDetails
                 <h2>Total Amount</h2>
                 <div className={CartDetailsStyle.cart_details_main_right}>
                     <h2>$ {calculatedTotalAmount.toFixed(2)}</h2>
-                    <div>
+                    <div className={CartDetailsStyle.cart_details_main_right_buttons}>
                         <button onClick={closeModal} className={CartDetailsStyle.cart_details_button_close}>Close</button>
                         <button className={CartDetailsStyle.cart_details_button_order}>Order</button>
                     </div>

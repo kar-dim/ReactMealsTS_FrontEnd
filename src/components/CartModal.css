@@ -1,3 +1,5 @@
+/* fix this css so that the modal does not go WAY ABOVE screen when more dish categories are added on the screen! */
+
 .cart_modal {
     position: fixed;
     left: 0;

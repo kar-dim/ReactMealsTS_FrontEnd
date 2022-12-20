@@ -78,6 +78,12 @@ button.cart_details_minus:active {
     float: right;
 }
 
+div.cart_details_main_right_buttons {
+    float: left;
+    width: 180px;
+    margin-top: 20px;
+}
+
 div.cart_details_price {
     display: flex;
     flex-direction: row;
