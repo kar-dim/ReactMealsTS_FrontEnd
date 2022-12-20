@@ -1,8 +1,8 @@
 import React from 'react';
-import CartInterface from '../interfaces/CartItemInterface';
+import IDish from '../interfaces/DishInterface';
 interface contextType {
-    cartItems: CartInterface[],
-    addCartItem(item : CartInterface) : void
+    cartItems: IDish[],
+    addCartItem(item : IDish) : void
 };
 
 const CartContext = React.createContext<contextType>({

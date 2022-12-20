@@ -1,7 +1,7 @@
 import CartButtonStyle from './CartButton.module.css';
-import ICartItem from '../interfaces/CartItemInterface';
+import IDish from '../interfaces/DishInterface';
 interface CartButtonInterface {
-   cartItems: ICartItem[],
+   cartItems: IDish[],
    cartButtonClick(): void
 };
 

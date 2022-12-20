@@ -3,7 +3,7 @@ import MainContentStyles from './MainContent.module.css';
 import Dish from './Dish';
 import IDish from '../interfaces/DishInterface';
 import DishTypeInterface from '../interfaces/DishTypeInterface';
-import ICartItem from '../interfaces/CartItemInterface';
+import ICartItem from '../interfaces/DishInterface';
 
 const dishes : IDish[] = [
     {
@@ -39,7 +39,7 @@ const dishes : IDish[] = [
 ];
 
 interface MainContentInterface {
-    cartItemAdd(item : ICartItem): void;
+    cartItemAdd(item : IDish): void;
 };
 
 const MainContent = (props : MainContentInterface) => {

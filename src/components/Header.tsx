@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import CartButton from './CartButton';
 import HeaderStyles from './Header.module.css';
-import ICartItem from '../interfaces/CartItemInterface';
+import IDish from '../interfaces/DishInterface';
 import CartModal from './CartModal';
+import { toastShow } from '../ToastUtils';
 
 interface HeaderInterface {
-    cartItems: ICartItem[];
+    cartItems: IDish[];
+    addItem(dish: IDish) : void;
+    removeItem(dish: IDish) : void;
 }
-const Header = ({cartItems} : HeaderInterface) => {
+const Header = ({cartItems, addItem, removeItem} : HeaderInterface) => {
 
     const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -20,13 +23,13 @@ const Header = ({cartItems} : HeaderInterface) => {
             setShowModal(true);
         } //else -> empty
         else {
-            alert("Empty item list");
+            toastShow('Empty cart!', "E");
         }
     };
 
     return (
         <React.Fragment>
-            <CartModal cartItems={cartItems} showModal={showModal} setShowModal={showModalHandler} />
+            <CartModal cartItems={cartItems} showModal={showModal} setShowModal={showModalHandler} addItem={addItem} removeItem={removeItem} />
             <div className={HeaderStyles.header_main}>
                 <h1>Jimmys Foodzilla</h1>
                 <CartButton cartItems = {cartItems} cartButtonClick={clickCartHandler} />
