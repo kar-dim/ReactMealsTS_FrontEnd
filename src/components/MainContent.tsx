@@ -39,10 +39,10 @@ const dishes : IDish[] = [
 ];
 
 interface MainContentInterface {
-    cartItemAdd(item : IDish): void;
+    addItem(item : IDish): void;
 };
 
-const MainContent = (props : MainContentInterface) => {
+const MainContent = ({addItem} : MainContentInterface) => {
     const [availableDishes, setAvailableDishes] = useState<IDish[] | null>(dishes);
     const shouldRenderList = () : boolean => {
         return (availableDishes !== null && availableDishes !== undefined && availableDishes.length > 0);
@@ -53,7 +53,7 @@ const MainContent = (props : MainContentInterface) => {
         <div className={MainContentStyles.main_content}>
             <ul className={MainContentStyles.main_content_ul}>
                 {availableDishes?.map(dish => {
-                    return <Dish key={dish.id} dish={dish} addDish={props.cartItemAdd} />;
+                    return <Dish key={dish.id} dish={dish} addDish={addItem} />;
                 })}
             </ul>
         </div> 
