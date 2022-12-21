@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Header from './components/Header';
 import MainContent from './components/MainContent';
@@ -43,8 +43,8 @@ function App() {
 
   //todo localstorage
   const removeItem = (dishToRemove : IDish): void => {
-      for (var i=0; i<cartItems.length; i++){
-        if (cartItems[i].id === dishToRemove.id){
+      for (let i=0; i<cartItems.length; i++){
+        if (cartItems[i].id === dishToRemove.id) {
           setCartItems((prev : IDish[]): IDish[] => {
             let arr : IDish[] = [...prev];
             arr.splice(i,1);

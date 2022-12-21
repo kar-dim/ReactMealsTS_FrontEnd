@@ -1,6 +1,5 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import './CartModal.css';
-import IDish from '../interfaces/DishInterface';
 import CartDetails from './CartDetails';
 
 interface ICartModal {

@@ -18,7 +18,7 @@ const CartDetails = ({closeModal} : ICartDetails) => {
         if (!mp.has(o.id)) mp.set(o.id, { ...o, count: 0 });
         mp.get(o.id).count++;
         return mp;
-    }, new Map).values()];
+    }, new Map()).values()];
 
     //calculate total amount
     let calculatedTotalAmount : number = 0;

@@ -3,7 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 //will not execute if type is wrong
 export const toastShow = (message : string, type : string) => {
-    if (type != null && type != undefined)
+    if (type !== null && type !== undefined)
     {
         type = type.toUpperCase();
         if (type === "E")
@@ -29,7 +29,7 @@ export const toastShow = (message : string, type : string) => {
                 progress: undefined,
                 theme: "dark",
                 });
-        } else if (type == "I") {
+        } else if (type === "I") {
             toast.info(message, {
                 position: "top-right",
                 autoClose: 5000,
@@ -40,7 +40,7 @@ export const toastShow = (message : string, type : string) => {
                 progress: undefined,
                 theme: "dark",
                 });
-        } else if (type == "S") {
+        } else if (type === "S") {
             toast.success(message, {
                 position: "top-right",
                 autoClose: 5000,

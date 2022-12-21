@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import MainContentStyles from './MainContent.module.css';
 import Dish from './Dish';
 import IDish from '../interfaces/DishInterface';
-import {useCartContext} from '../contexts/cart-context';
 
 const dishes : IDish[] = [
     {
@@ -38,6 +37,8 @@ const dishes : IDish[] = [
 ];
 
 const MainContent = () => {
+    //TODO: arxika ta diavazei fixed times, opote to state einai USELESS, otan  ta diavazei apo DB (an graftei to API )
+    //tote tha exei aksia (px arxikopoihsh me EMPTY kai otan ta diavasei pisw na kanei populate to state, pithanon na exei kai alla states (px ERROR, LOADING))
     const [availableDishes, setAvailableDishes] = useState<IDish[] | null>(dishes);
     const shouldRenderList = () : boolean => {
         return (availableDishes !== null && availableDishes !== undefined && availableDishes.length > 0);

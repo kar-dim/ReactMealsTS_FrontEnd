@@ -8,7 +8,7 @@ import { toastShow } from '../ToastUtils';
 const Header = ()  => {
 
     const [showModal, setShowModal] = useState<boolean>(false);
-    const {cartItems, addCartItem, removeCartItem} = useCartContext();
+    const {cartItems} = useCartContext();
 
     //called from inside the modal (props), disables/enables the modal
     const showModalHandler = (showModal : boolean) => { setShowModal(showModal); }
