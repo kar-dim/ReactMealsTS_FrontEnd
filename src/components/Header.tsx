@@ -1,18 +1,14 @@
 import React, {useState} from 'react';
 import CartButton from './CartButton';
 import HeaderStyles from './Header.module.css';
-import IDish from '../interfaces/DishInterface';
+import {useCartContext} from '../contexts/cart-context';
 import CartModal from './CartModal';
 import { toastShow } from '../ToastUtils';
 
-interface HeaderInterface {
-    cartItems: IDish[];
-    addItem(dish: IDish) : void;
-    removeItem(dish: IDish) : void;
-}
-const Header = ({cartItems, addItem, removeItem} : HeaderInterface) => {
+const Header = ()  => {
 
     const [showModal, setShowModal] = useState<boolean>(false);
+    const {cartItems, addCartItem, removeCartItem} = useCartContext();
 
     //called from inside the modal (props), disables/enables the modal
     const showModalHandler = (showModal : boolean) => { setShowModal(showModal); }
@@ -29,7 +25,7 @@ const Header = ({cartItems, addItem, removeItem} : HeaderInterface) => {
 
     return (
         <React.Fragment>
-            <CartModal cartItems={cartItems} showModal={showModal} setShowModal={showModalHandler} addItem={addItem} removeItem={removeItem} />
+            <CartModal showModal={showModal} setShowModal={showModalHandler} />
             <div className={HeaderStyles.header_main}>
                 <h1>Jimmys Foodzilla</h1>
                 <CartButton cartItems = {cartItems} cartButtonClick={clickCartHandler} />

@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useContext } from 'react';
 import IDish from '../interfaces/DishInterface';
+
 interface contextType {
     cartItems: IDish[],
-    addCartItem(item : IDish) : void
+    addCartItem(item : IDish) : void,
+    removeCartItem(item : IDish) : void
 };
 
-const CartContext = React.createContext<contextType>({
+export const CartContext = React.createContext<contextType>({
     cartItems: [], 
-    addCartItem(item) {}
+    addCartItem(item) {},
+    removeCartItem(item) {}
   }
 );
 
-export default CartContext;
+export const useCartContext = () => useContext(CartContext);

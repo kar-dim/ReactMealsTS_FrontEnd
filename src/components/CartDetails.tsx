@@ -1,19 +1,18 @@
 import IDish from '../interfaces/DishInterface';
 import CartDetailsStyle from './CartDetails.module.css';
+import {useCartContext} from '../contexts/cart-context';
 
 interface ICartDetails {
-    cartItems : IDish[];
     closeModal() : void;
-    addItem(dish: IDish) : void;
-    removeItem(dish: IDish) : void;
 };
 
 interface CartItemCounter extends IDish {
     count: number;
 };
 
-const CartDetails = ({cartItems, closeModal, addItem, removeItem} : ICartDetails) => {
+const CartDetails = ({closeModal} : ICartDetails) => {
 
+    const {cartItems, addCartItem, removeCartItem} = useCartContext();
     //returns a "frequency object" which counts how many times each dish ID (that exists in cart) appears
     const cartItemsCountered : CartItemCounter[] = [...cartItems.reduce( (mp, o) => {
         if (!mp.has(o.id)) mp.set(o.id, { ...o, count: 0 });
@@ -44,8 +43,8 @@ const CartDetails = ({cartItems, closeModal, addItem, removeItem} : ICartDetails
                                         </div>
 
                                         <div className={CartDetailsStyle.cart_details_price_right}>
-                                            <button onClick={() => removeItem(cartItemC)} className={CartDetailsStyle.cart_details_minus}>-</button>
-                                            <button onClick={() => addItem(cartItemC)} className={CartDetailsStyle.cart_details_plus}>+</button>
+                                            <button onClick={() => removeCartItem(cartItemC)} className={CartDetailsStyle.cart_details_minus}>-</button>
+                                            <button onClick={() => addCartItem(cartItemC)} className={CartDetailsStyle.cart_details_plus}>+</button>
                                         </div>
                                     </div>
                                     <hr></hr>

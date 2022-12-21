@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import MainContentStyles from './MainContent.module.css';
 import Dish from './Dish';
 import IDish from '../interfaces/DishInterface';
-import DishTypeInterface from '../interfaces/DishTypeInterface';
-import ICartItem from '../interfaces/DishInterface';
+import {useCartContext} from '../contexts/cart-context';
 
 const dishes : IDish[] = [
     {
@@ -38,11 +37,7 @@ const dishes : IDish[] = [
     }
 ];
 
-interface MainContentInterface {
-    addItem(item : IDish): void;
-};
-
-const MainContent = ({addItem} : MainContentInterface) => {
+const MainContent = () => {
     const [availableDishes, setAvailableDishes] = useState<IDish[] | null>(dishes);
     const shouldRenderList = () : boolean => {
         return (availableDishes !== null && availableDishes !== undefined && availableDishes.length > 0);
@@ -53,7 +48,7 @@ const MainContent = ({addItem} : MainContentInterface) => {
         <div className={MainContentStyles.main_content}>
             <ul className={MainContentStyles.main_content_ul}>
                 {availableDishes?.map(dish => {
-                    return <Dish key={dish.id} dish={dish} addDish={addItem} />;
+                    return <Dish key={dish.id} dish={dish} />;
                 })}
             </ul>
         </div> 

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import Header from './components/Header';
 import MainContent from './components/MainContent';
-import CartItemContext from './contexts/cart-context';
+import {CartContext} from './contexts/cart-context';
 import IDish from './interfaces/DishInterface';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -58,11 +58,11 @@ function App() {
   };
 
   return (
-    <React.Fragment>
+    <CartContext.Provider value ={{cartItems: cartItems, addCartItem: addItem, removeCartItem: removeItem }}>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover={false} theme="dark"/>
-      <Header cartItems={cartItems} addItem={addItem} removeItem={removeItem}/>
-      <MainContent addItem={addItem}/>
-    </React.Fragment>
+      <Header />
+      <MainContent/>
+    </CartContext.Provider>
   );
 }
 

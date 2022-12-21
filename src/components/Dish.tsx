@@ -1,8 +1,14 @@
 import React from 'react';
-import DishType from '../interfaces/DishTypeInterface';
+import IDish from '../interfaces/DishInterface';
+import { useCartContext } from '../contexts/cart-context';
 import'./Dish.css';
 
-const Dish = ({dish, addDish} : DishType) => {
+interface IDishComponent {
+    dish: IDish
+};
+
+const Dish = ({dish} : IDishComponent) => {
+    const {addCartItem} = useCartContext();
     return (
         <li>
             <div className="dish_main">
@@ -12,7 +18,7 @@ const Dish = ({dish, addDish} : DishType) => {
                 <span className="dish_text_price">$ {dish.price}</span>
                </div>
                <div className="dish_right">
-                  <button onClick={() => {addDish(dish)}} className="add_button" type="button">+ Add</button>
+                  <button onClick={() => {addCartItem(dish)}} className="add_button" type="button">+ Add</button>
                </div>
             </div>
             <br/><hr/>
