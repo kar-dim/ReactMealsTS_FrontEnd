@@ -11,7 +11,6 @@ function App() {
   //initial state when page loads (read from local storage first)
   const checkLocalStorageCartItems = () :IDish[] => {
     var localStorageItems = localStorage.getItem('cartItems');
-    console.log(localStorageItems);
     //empty -> set empty array
     if (localStorageItems == null)
         return [];

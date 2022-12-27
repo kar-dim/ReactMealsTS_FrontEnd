@@ -1,48 +1,36 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import MainContentStyles from './MainContent.module.css';
 import Dish from './Dish';
 import IDish from '../interfaces/DishInterface';
-
-const dishes : IDish[] = [
-    {
-        id: 1,
-        dish_name: "Sushi",
-        dish_description: "Best sushi from japan!",
-        price: 8.37
-    },
-    {
-        id: 2,
-        dish_name: "Cheeseburger",
-        dish_description: "Hottest cheese and with the softest of buns!",
-        price: 2.30
-    },
-    {
-        id: 3,
-        dish_name: "Schnitzel",
-        dish_description: "So crispy! Yummmmmm",
-        price: 7.85
-    },
-    {
-        id: 4,
-        dish_name: "Greek Dolmadakia",
-        dish_description: "Traditional greek dish!",
-        price: 7.20
-    },
-    {
-        id: 5,
-        dish_name: "Pastitsio",
-        dish_description: "Traditional greek dish with Besamel",
-        price: 8.40
-    }
-];
+import axios from 'axios';
+import { toastShow } from '../ToastUtils';
 
 const MainContent = () => {
-    //TODO: arxika ta diavazei fixed times, opote to state einai USELESS, otan  ta diavazei apo DB (an graftei to API )
-    //tote tha exei aksia (px arxikopoihsh me EMPTY kai otan ta diavasei pisw na kanei populate to state, pithanon na exei kai alla states (px ERROR, LOADING))
-    const [availableDishes, setAvailableDishes] = useState<IDish[] | null>(dishes);
+    const [availableDishes, setAvailableDishes] = useState<IDish[] | null>([]);
+    const [initialText, setInitialText] = useState<string>('Loading...');
+
     const shouldRenderList = () : boolean => {
         return (availableDishes !== null && availableDishes !== undefined && availableDishes.length > 0);
     };
+
+    useEffect(() => {
+        const getDishes = async() => {
+            try {
+                const response = await axios.get('https://localhost:7008/api/Dishes/GetDishes');
+                const dishesRet : IDish[] = response.data;
+                if (dishesRet != null && dishesRet.length > 0){
+                    setAvailableDishes(dishesRet);
+                } else {
+                    setInitialText('Could not fetch dishes');
+                }
+            }
+            catch (error) {
+                console.error(error);
+                setInitialText('Could not fetch dishes');
+            }
+        };
+        getDishes();
+    }, []);
 
     return (
         shouldRenderList() ? 
@@ -53,7 +41,7 @@ const MainContent = () => {
                 })}
             </ul>
         </div> 
-        : <div></div>
+        : <div style={{ fontSize: '2rem', marginTop: '2rem', textAlign: 'center', color: 'white'}}>{initialText}</div>
     );
 };
 export default MainContent;

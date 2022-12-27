@@ -9,6 +9,7 @@ interface IDishComponent {
 
 const Dish = ({dish} : IDishComponent) => {
     const {addCartItem} = useCartContext();
+    console.log(dish);
     return (
         <li>
             <div className="dish_main">
