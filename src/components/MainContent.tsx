@@ -17,16 +17,17 @@ const MainContent = () => {
         const getDishes = async() => {
             try {
                 const response = await axios.get('https://localhost:7008/api/Dishes/GetDishes');
-                const dishesRet : IDish[] = response.data;
+                const dishesRet : IDish[] | null = response.data;
                 if (dishesRet != null && dishesRet.length > 0){
                     setAvailableDishes(dishesRet);
                 } else {
-                    setInitialText('Could not fetch dishes');
+                    setInitialText('');
+                    toastShow('Could not fetch dishes', 'E');
                 }
-            }
-            catch (error) {
+            } catch (error) {
                 console.error(error);
-                setInitialText('Could not fetch dishes');
+                setInitialText('');
+                toastShow('Could not fetch dishes', 'E');
             }
         };
         getDishes();
