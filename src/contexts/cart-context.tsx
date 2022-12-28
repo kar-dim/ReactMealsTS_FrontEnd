@@ -4,13 +4,15 @@ import IDish from '../interfaces/DishInterface';
 interface contextType {
     cartItems: IDish[],
     addCartItem(item : IDish) : void,
-    removeCartItem(item : IDish) : void
+    removeCartItem(item : IDish) : void,
+    clearCartItems() : void
 };
 
 export const CartContext = React.createContext<contextType>({
     cartItems: [], 
     addCartItem(item) {},
-    removeCartItem(item) {}
+    removeCartItem(item) {},
+    clearCartItems(){}
   }
 );
 

@@ -47,6 +47,12 @@ button.cart_details_button_close:active {
     color: rgb(210,210,210);
 }
 
+button.cart_details_button_order:disabled {
+    outline: 2px solid rgb(177, 0, 9);
+    color: rgb(177, 0, 9);
+    background-color: darkgray;
+}
+
 button.cart_details_plus,
 button.cart_details_minus {
     outline: 2px solid rgb(177, 0, 9);

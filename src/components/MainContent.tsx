@@ -16,7 +16,7 @@ const MainContent = () => {
     useEffect(() => {
         const getDishes = async() => {
             try {
-                const response = await axios.get('https://localhost:7008/api/Dishes/GetDishes');
+                const response = await axios.get('http://localhost:5179/api/Dishes/GetDishes');
                 const dishesRet : IDish[] | null = response.data;
                 if (dishesRet != null && dishesRet.length > 0){
                     setAvailableDishes(dishesRet);

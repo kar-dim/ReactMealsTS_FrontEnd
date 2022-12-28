@@ -40,7 +40,6 @@ function App() {
     });
   };
 
-  //todo localstorage
   const removeItem = (dishToRemove : IDish): void => {
       for (let i=0; i<cartItems.length; i++){
         if (cartItems[i].id === dishToRemove.id) {
@@ -56,8 +55,13 @@ function App() {
       }
   };
 
+  const clearItems = (): void => {
+    localStorage.removeItem('cartItems');
+    setCartItems([]);
+  }
+
   return (
-    <CartContext.Provider value ={{cartItems: cartItems, addCartItem: addItem, removeCartItem: removeItem }}>
+    <CartContext.Provider value ={{cartItems: cartItems, addCartItem: addItem, removeCartItem: removeItem, clearCartItems: clearItems}}>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover={false} theme="dark"/>
       <Header />
       <MainContent/>
