@@ -16,9 +16,8 @@
 
 .cart_modal_content {
     position: absolute;
-    top: 40%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 7rem);
     background-color: white;
     padding: 1rem 1.5rem;
     width: 72rem;
