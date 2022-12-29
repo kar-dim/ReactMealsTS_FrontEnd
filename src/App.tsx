@@ -34,6 +34,8 @@ function App() {
     localStorage.setItem('cartItems', JSON.stringify(arr));
     //then set the state
     setCartItems((prev : IDish[]): IDish[] => {
+      console.log(prev);
+      console.log(dishToAdd);
       return [
         ...prev, dishToAdd
       ];
@@ -42,7 +44,7 @@ function App() {
 
   const removeItem = (dishToRemove : IDish): void => {
       for (let i=0; i<cartItems.length; i++){
-        if (cartItems[i].id === dishToRemove.id) {
+        if (cartItems[i].dish_id === dishToRemove.dish_id) {
           setCartItems((prev : IDish[]): IDish[] => {
             let arr : IDish[] = [...prev];
             arr.splice(i,1);

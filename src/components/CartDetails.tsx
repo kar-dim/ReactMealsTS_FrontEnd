@@ -20,8 +20,8 @@ const CartDetails = ({closeModal} : ICartDetails) => {
     const {cartItems, addCartItem, removeCartItem, clearCartItems} = useCartContext();
     //returns a "frequency object" which counts how many times each dish ID (that exists in cart) appears
     const cartItemsCountered : CartItemCounter[] = [...cartItems.reduce( (mp, o) => {
-        if (!mp.has(o.id)) mp.set(o.id, { ...o, count: 0 });
-        mp.get(o.id).count++;
+        if (!mp.has(o.dish_id)) mp.set(o.dish_id, { ...o, count: 0 });
+        mp.get(o.dish_id).count++;
         return mp;
     }, new Map()).values()];
 
@@ -32,7 +32,7 @@ const CartDetails = ({closeModal} : ICartDetails) => {
 
         const orderData : IOrderData = {
             order: cartItemsCountered.map((cardItemC) => {
-                return {dish_id: cardItemC.id, dish_counter: cardItemC.count}
+                return {dish_id: cardItemC.dish_id, dish_counter: cardItemC.count}
             })
         };
         try {

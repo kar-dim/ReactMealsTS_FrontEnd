@@ -1,5 +1,5 @@
 interface IDish {
-    id: number,
+    dish_id: number,
     dish_name: string,
     dish_description: string,
     price: number

@@ -38,7 +38,7 @@ const MainContent = () => {
         <div className={MainContentStyles.main_content}>
             <ul className={MainContentStyles.main_content_ul}>
                 {availableDishes?.map(dish => {
-                    return <Dish key={dish.id} dish={dish} />;
+                    return <Dish key={dish.dish_id} dish={dish} />;
                 })}
             </ul>
         </div> 
