@@ -8,7 +8,6 @@ interface ICartModal {
 };
 
 //TODO: hide if clicked OUTSIDE!
-
 const CartModal = ({showModal, setShowModal} : ICartModal) => {
     let showModalClass = showModal ? "cart_modal cart_show_modal" : "cart_modal";
     return (

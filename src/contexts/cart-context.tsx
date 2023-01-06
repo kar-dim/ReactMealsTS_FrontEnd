@@ -8,6 +8,7 @@ interface contextType {
     clearCartItems() : void
 };
 
+// the cart items context with addition and removal of cart items, shared among all the components of the application
 export const CartContext = React.createContext<contextType>({
     cartItems: [], 
     addCartItem(item) {},

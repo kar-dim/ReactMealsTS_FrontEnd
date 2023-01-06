@@ -1,3 +1,4 @@
+//information about a Dish, data returned from the server
 interface IDish {
     dish_id: number,
     dish_name: string,

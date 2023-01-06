@@ -1,0 +1,23 @@
+#error_page {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 7rem);
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: 72rem;
+    border-radius: 0.5rem;
+}
+
+#error_page_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+p, h1 {
+    margin: 5px 0px 15px 0px;
+}
+
+p {
+    font-size: 18px;
+}

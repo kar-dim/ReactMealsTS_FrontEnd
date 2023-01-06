@@ -1,8 +1,8 @@
 import IDish from '../interfaces/DishInterface';
 import CartDetailsStyle from './CartDetails.module.css';
 import {useCartContext} from '../contexts/cart-context';
-import { toastShow } from '../ToastUtils';
-import axios , {AxiosResponse, AxiosError} from 'axios';
+import { toastShow } from '../other/ToastUtils';
+import axios from 'axios';
 import React, {useState} from 'react';
 
 interface ICartDetails {
@@ -16,8 +16,8 @@ interface CartItemCounter extends IDish {
 const CartDetails = ({closeModal} : ICartDetails) => {
 
     const [showOrderButton, setShowOrderButton] = useState<boolean>(true);
-
     const {cartItems, addCartItem, removeCartItem, clearCartItems} = useCartContext();
+    
     //returns a "frequency object" which counts how many times each dish ID (that exists in cart) appears
     const cartItemsCountered : CartItemCounter[] = [...cartItems.reduce( (mp, o) => {
         if (!mp.has(o.dish_id)) mp.set(o.dish_id, { ...o, count: 0 });
@@ -25,7 +25,7 @@ const CartDetails = ({closeModal} : ICartDetails) => {
         return mp;
     }, new Map()).values()];
 
-    //order food -> send http POST
+    //order food 
     const order = async() => {
         interface IOrderItem { dish_id: number, dish_counter: number };
         interface IOrderData  { order: IOrderItem[] };
@@ -35,9 +35,18 @@ const CartDetails = ({closeModal} : ICartDetails) => {
                 return {dish_id: cardItemC.dish_id, dish_counter: cardItemC.count}
             })
         };
+
+        //if empty card don't send request! Also close the modal
+        if (orderData.order.length == 0){
+            toastShow('Empty cart!', 'E');
+            closeModal();
+            return;
+        }
+        
+        //send http POST request
         try {
             setShowOrderButton(false);
-            const response : AxiosResponse = await axios.post('http://localhost:5179/api/Dishes/Order', orderData);
+            await axios.post('http://localhost:5179/api/Dishes/Order', orderData);
             toastShow('Your order is complete! Thanks', 'S');
             clearCartItems();
             closeModal();

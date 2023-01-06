@@ -1,4 +1,4 @@
-//dish stuff + callback function gia na kanei ADD
+//dish stuff + callback function to ADD
 import IDish from './DishInterface';
 
 interface DishType {

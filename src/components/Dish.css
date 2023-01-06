@@ -34,6 +34,7 @@ button.add_button {
     background-color: rgb(226, 0, 34);
     border-radius: 25px;
     padding: 10px 15px 10px 15px;
+    cursor: pointer;
 }
 
 button.add_button:hover {

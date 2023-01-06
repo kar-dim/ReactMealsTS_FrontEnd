@@ -7,6 +7,7 @@ interface IDishComponent {
     dish: IDish
 };
 
+//renders a dish (its data information is returned from the server) with an Add button
 const Dish = ({dish} : IDishComponent) => {
     const {addCartItem} = useCartContext();
     return (

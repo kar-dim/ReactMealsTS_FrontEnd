@@ -1,7 +1,8 @@
+//toast functions
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-//will not execute if type is wrong
+//show the (dark) toast based on its type (Error, Warn, Info, Success), will not execute if type is wrong
 export const toastShow = (message : string, type : string) => {
     if (type !== null && type !== undefined)
     {

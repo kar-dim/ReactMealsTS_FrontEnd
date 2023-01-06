@@ -3,8 +3,9 @@ import MainContentStyles from './MainContent.module.css';
 import Dish from './Dish';
 import IDish from '../interfaces/DishInterface';
 import axios from 'axios';
-import { toastShow } from '../ToastUtils';
+import { toastShow } from '../other/ToastUtils';
 
+//Main body of the website, sends the GET request and renders the dishes returned
 const MainContent = () => {
     const [availableDishes, setAvailableDishes] = useState<IDish[] | null>([]);
     const [initialText, setInitialText] = useState<string>('Loading...');
