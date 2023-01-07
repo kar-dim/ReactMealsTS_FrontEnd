@@ -4,6 +4,7 @@ import HeaderStyles from './Header.module.css';
 import {useCartContext} from '../contexts/cart-context';
 import CartModal from './CartModal';
 import { toastShow } from '../other/ToastUtils';
+import { Link } from "react-router-dom";
 
 //renders the top header bar
 const Header = ()  => {
@@ -29,6 +30,11 @@ const Header = ()  => {
             <CartModal showModal={showModal} setShowModal={showModalHandler} />
             <div className={HeaderStyles.header_main}>
                 <h1>Jimmys Foodzilla</h1>
+
+
+                <Link to="/about">About!</Link>
+
+
                 <CartButton cartItemsCounter = {cartItems.length} cartButtonClick={clickCartHandler} />
             </div>
             <img src={require("../media/bg.webp")} className={HeaderStyles.main_bg} alt="food background"></img>
