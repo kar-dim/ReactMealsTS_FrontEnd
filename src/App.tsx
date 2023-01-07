@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home"
 import About from './About'
 import RouteErrorPage from './other/route_error';
@@ -68,12 +68,13 @@ function App() {
   return (
     <CartContext.Provider value ={{cartItems: cartItems, addCartItem: addItem, removeCartItem: removeItem, clearCartItems: clearItems}}>
         <ToastContainer position="top-right" autoClose={5000} hideProgressBar newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover={false} theme="dark"/>
-
-        <Routes>
-          <Route path="/" element = { <Home/> } />
-          <Route path="about" element = { <About/> } />
-          <Route path="*" element = { <RouteErrorPage/> } />
-        </Routes>
+        <Router>
+          <Routes>
+            <Route path="/" element = { <Home/> } />
+            <Route path="about" element = { <About/> } />
+            <Route path="*" element = { <RouteErrorPage/> } />
+          </Routes>
+        </Router>
 
     </CartContext.Provider>
   )
