@@ -29,11 +29,10 @@ const Header = ()  => {
         <React.Fragment>
             <CartModal showModal={showModal} setShowModal={showModalHandler} />
             <div className={HeaderStyles.header_main}>
-                <h1>Jimmys Foodzilla</h1>
-
-
-                <Link to="/about">About!</Link>
-
+                <div>
+                    <Link to="/" id={HeaderStyles.header_home}>Jimmys Foodzilla</Link>
+                    <Link to="/about" id={HeaderStyles.header_about_link}>About</Link>
+                </div>
 
                 <CartButton cartItemsCounter = {cartItems.length} cartButtonClick={clickCartHandler} />
             </div>
