@@ -15,10 +15,12 @@ a#header_home {
     margin-top: 10px;
     float:left;
     cursor: pointer;
+    transition: .3s ease
 }
 
 #header_home:hover {
     text-shadow: 0 0 10px white;
+    transition: .3s ease
 }
 
 a#header_about_link {
@@ -27,12 +29,18 @@ a#header_about_link {
     font-size: 1.2em;
     color: white;
     float:right;
+    transition: .3s ease
 }
 a#header_about_link:link, a#header_home:link,
 a#header_about_link:visited, a#header_home:visited,
 a#header_about_link:hover,
 a#header_about_link:active, a#header_home:active{
     text-decoration: none; 
+}
+
+a#header_about_link:hover {
+    text-shadow: 0 0 10px white;
+    transition: .3s ease
 }
 
 .header_text {
