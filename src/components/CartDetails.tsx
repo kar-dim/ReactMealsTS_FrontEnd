@@ -20,19 +20,20 @@ const CartDetails = ({closeModal} : ICartDetails) => {
     
     //returns a "frequency object" which counts how many times each dish ID (that exists in cart) appears
     const cartItemsCountered : CartItemCounter[] = [...cartItems.reduce( (mp, o) => {
-        if (!mp.has(o.dish_id)) mp.set(o.dish_id, { ...o, count: 0 });
-        mp.get(o.dish_id).count++;
+        if (!mp.has(o.dishId)) mp.set(o.dishId, { ...o, count: 0 });
+        mp.get(o.dishId).count++;
         return mp;
     }, new Map()).values()];
+    console.log(cartItemsCountered);
 
     //order food 
     const order = async() => {
-        interface IOrderItem { dish_id: number, dish_counter: number };
+        interface IOrderItem { dishid: number, dish_counter: number };
         interface IOrderData  { order: IOrderItem[] };
 
         const orderData : IOrderData = {
             order: cartItemsCountered.map((cardItemC) => {
-                return {dish_id: cardItemC.dish_id, dish_counter: cardItemC.count}
+                return {dishid: cardItemC.dishId, dish_counter: cardItemC.count}
             })
         };
 

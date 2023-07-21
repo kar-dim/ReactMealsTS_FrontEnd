@@ -46,7 +46,7 @@ function App() {
     //called from the CART MODAL ("-" BUTTON)
     const removeItem = (dishToRemove : IDish): void => {
         for (let i=0; i<cartItems.length; i++){
-          if (cartItems[i].dish_id === dishToRemove.dish_id) {
+          if (cartItems[i].dishId === dishToRemove.dishId) {
             setCartItems((prev : IDish[]): IDish[] => {
               let arr : IDish[] = [...prev];
               arr.splice(i,1);
