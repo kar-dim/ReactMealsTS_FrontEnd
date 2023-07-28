@@ -3,7 +3,7 @@ import CartDetailsStyle from './CartDetails.module.css';
 import {useCartContext} from '../contexts/cart-context';
 import { toastShow } from '../other/ToastUtils';
 import axios from 'axios';
-import React, {useState} from 'react';
+import {useState} from 'react';
 
 interface ICartDetails {
     closeModal() : void;

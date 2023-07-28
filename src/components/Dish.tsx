@@ -1,4 +1,3 @@
-import React from 'react';
 import IDish from '../interfaces/DishInterface';
 import { useCartContext } from '../contexts/cart-context';
 import'./Dish.css';

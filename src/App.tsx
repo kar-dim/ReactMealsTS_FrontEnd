@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home"
 import About from './About'
 import RouteErrorPage from './other/route_error';
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {CartContext} from './contexts/cart-context';
 import IDish from './interfaces/DishInterface';
 import { ToastContainer } from 'react-toastify';

@@ -5,6 +5,7 @@ import {useCartContext} from '../contexts/cart-context';
 import CartModal from './CartModal';
 import { toastShow } from '../other/ToastUtils';
 import { Link } from "react-router-dom";
+import imgBg from '../media/bg.webp';
 
 //renders the top header bar
 const Header = ()  => {
@@ -36,7 +37,7 @@ const Header = ()  => {
 
                 <CartButton cartItemsCounter = {cartItems.length} cartButtonClick={clickCartHandler} />
             </div>
-            <img src={require("../media/bg.webp")} className={HeaderStyles.main_bg} alt="food background"></img>
+            <img src={imgBg} className={HeaderStyles.main_bg} alt="food background"></img>
             <div className={HeaderStyles.header_text}>
                 <h1>Delicious Food, Delivered To You</h1>
                 <p>Choose your favorite meal from our broad selection of available meals and enjoy a delicious lunch or dinner at home.</p>
