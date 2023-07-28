@@ -1,4 +1,3 @@
-import React from 'react';
 import './CartModal.css';
 import CartDetails from './CartDetails';
 

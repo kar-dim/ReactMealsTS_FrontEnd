@@ -1,5 +1,5 @@
 import CartButtonStyle from './CartButton.module.css';
-import IDish from '../interfaces/DishInterface';
+import cartButtonImg from './../media/cart_icon.png';
 
 interface CartButtonInterface {
    cartItemsCounter: number,
@@ -11,7 +11,7 @@ interface CartButtonInterface {
 const CartButton = ({cartItemsCounter, cartButtonClick}: CartButtonInterface) => {
     return (
        <div onClick={cartButtonClick} className={CartButtonStyle.cart_button}>
-         <img src={require('../media/cart_icon.png')} width="25px" height="25px" alt="cart icon"></img>
+         <img src={cartButtonImg} width="25px" height="25px" alt="cart icon"></img>
          <p>Your Cart</p>
          <div className={CartButtonStyle.cart_count}>
             <p>{cartItemsCounter}</p>
