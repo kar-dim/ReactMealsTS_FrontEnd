@@ -89,7 +89,7 @@ a#header_about_link:active, a#header_home:active {
 .header_text > p {
     text-align: center;
     color: white;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .main_bg {
