@@ -7,9 +7,11 @@ import {CartContext} from './contexts/cart-context';
 import IDish from './interfaces/DishInterface';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth0 } from "@auth0/auth0-react";
+import Auth0LoadingPage from "./components/Auth0LoadingPage";
 
 function App() {
-
+    
     //initial state when page loads (read from local storage first)
     const checkLocalStorageCartItems = () :IDish[] => {
       var localStorageItems = localStorage.getItem('cartItems');
@@ -64,6 +66,12 @@ function App() {
       setCartItems([]);
     };
 
+    const { isLoading } = useAuth0();
+    if (isLoading) {
+      return (
+        <Auth0LoadingPage />
+      );
+    }
 
   return (
     <CartContext.Provider value ={{cartItems: cartItems, addCartItem: addItem, removeCartItem: removeItem, clearCartItems: clearItems}}>

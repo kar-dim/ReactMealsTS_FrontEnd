@@ -6,10 +6,14 @@ import CartModal from './CartModal';
 import { toastShow } from '../other/ToastUtils';
 import { Link } from "react-router-dom";
 import imgBg from '../media/bg.webp';
+import Auth0SignInOffButton from './Auth0SignInOffButton';
+import { useAuth0 } from "@auth0/auth0-react";
 
 //renders the top header bar
 const Header = ()  => {
 
+    const {isAuthenticated} = useAuth0();
+    console.log("isAuthenticated? -> ",isAuthenticated);
     const [showModal, setShowModal] = useState<boolean>(false);
     const {cartItems} = useCartContext();
 
@@ -18,11 +22,15 @@ const Header = ()  => {
 
     //click on the "cart" div
     const clickCartHandler = (): void => {
-        if (cartItems !== null && cartItems.length > 0){
-            setShowModal(true);
-        } //else -> empty
-        else {
-            toastShow('Empty cart!', "E");
+        if (!isAuthenticated){
+            toastShow("Please Login first!", "E");
+        } else {
+            if (cartItems !== null && cartItems.length > 0){
+                setShowModal(true);
+            } //else -> empty
+            else {
+                toastShow('Empty cart!', "E");
+            }
         }
     };
 
@@ -32,7 +40,8 @@ const Header = ()  => {
             <div className={HeaderStyles.header_main}>
                 <div>
                     <Link to="/" id={HeaderStyles.header_home}>Jimmys Foodzilla</Link>
-                    <Link to="/about" id={HeaderStyles.header_about_link}>About</Link>
+                    <button className={HeaderStyles.custom_button}><Link id={HeaderStyles.header_about_link} to="/about">About</Link></button>
+                    <Auth0SignInOffButton text={isAuthenticated ? "Logout" : "Login"} isLogin = {!isAuthenticated} />
                 </div>
 
                 <CartButton cartItemsCounter = {cartItems.length} cartButtonClick={clickCartHandler} />

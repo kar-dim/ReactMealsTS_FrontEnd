@@ -4,16 +4,50 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.custom_button {
+  margin-left: 10px;
+  font-size: 1.0em;
+  padding: 10px 25px;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+  border: 0px;
+  font-weight: 700;
+  box-shadow: 0px 0px 14px -7px #f08c19;
+  background-image: linear-gradient(45deg, #FF512F 0%, #f08c19  51%, #FF512F  100%);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.custom_button:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.custom_button:active {
+  transform: scale(0.95);
+}
+
+a#header_about_link {
+    color:white;
 }
 
 a#header_home {
     font-size: 1.6em;
     color: white;
     font-weight: bold;
-    margin-bottom: 10px;
-    margin-left: 8vw;
-    margin-top: 10px;
-    float:left;
+    margin-right: 30px;
+    margin-left: 4vw;
     cursor: pointer;
     transition: .3s ease
 }
@@ -23,24 +57,11 @@ a#header_home {
     transition: .3s ease
 }
 
-a#header_about_link {
-    margin-left: 20px;
-    margin-top: 17px;
-    font-size: 1.2em;
-    color: white;
-    float:right;
-    transition: .3s ease
-}
 a#header_about_link:link, a#header_home:link,
 a#header_about_link:visited, a#header_home:visited,
 a#header_about_link:hover,
-a#header_about_link:active, a#header_home:active{
+a#header_about_link:active, a#header_home:active {
     text-decoration: none; 
-}
-
-a#header_about_link:hover {
-    text-shadow: 0 0 10px white;
-    transition: .3s ease
 }
 
 .header_text {

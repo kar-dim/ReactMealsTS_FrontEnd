@@ -1,6 +1,7 @@
 import IDish from '../interfaces/DishInterface';
 import { useCartContext } from '../contexts/cart-context';
 import'./Dish.css';
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface IDishComponent {
     dish: IDish
@@ -8,6 +9,8 @@ interface IDishComponent {
 
 //renders a dish (its data information is returned from the server) with an Add button
 const Dish = ({dish} : IDishComponent) => {
+    const { isAuthenticated } = useAuth0();
+
     const {addCartItem} = useCartContext();
     return (
         <li>
@@ -18,7 +21,7 @@ const Dish = ({dish} : IDishComponent) => {
                 <span className="dish_text_price">$ {dish.price}</span>
                </div>
                <div className="dish_right">
-                  <button onClick={() => {addCartItem(dish)}} className="add_button" type="button">+ Add</button>
+                  {isAuthenticated && <button onClick={() => {addCartItem(dish)}} className="add_button" type="button">+ Add</button>}
                </div>
             </div>
             <br/><hr/>
