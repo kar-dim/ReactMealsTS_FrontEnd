@@ -3,14 +3,16 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
+import Settings from "./other/PublicSettings.ts"
 
 ReactDOM.createRoot(document.getElementById("root") as Element).render(
   <BrowserRouter>
     <Auth0Provider
-      domain="dev-f0vakdckhtwh0dl8.us.auth0.com"
-      clientId="lUYQ4bVv26qAc2y7fK1jw9zXenl9sw5a"
+      domain={Settings.auth0_domain}
+      clientId={Settings.auth0_clientId}
       authorizationParams={{
-        redirect_uri: "http://localhost:3000/"
+        redirect_uri: "http://localhost:3000/",
+        audience: Settings.auth0_audience
       }}
     >
       <App />

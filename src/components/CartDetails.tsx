@@ -4,6 +4,8 @@ import {useCartContext} from '../contexts/cart-context';
 import { toastShow } from '../other/ToastUtils';
 import axios from 'axios';
 import {useState} from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import Settings from '../other/PublicSettings';
 
 interface ICartDetails {
     closeModal() : void;
@@ -15,6 +17,7 @@ interface CartItemCounter extends IDish {
 
 const CartDetails = ({closeModal} : ICartDetails) => {
 
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     const [showOrderButton, setShowOrderButton] = useState<boolean>(true);
     const {cartItems, addCartItem, removeCartItem, clearCartItems} = useCartContext();
     
@@ -47,7 +50,17 @@ const CartDetails = ({closeModal} : ICartDetails) => {
         //send http POST request
         try {
             setShowOrderButton(false);
-            await axios.post('http://localhost:5179/api/Dishes/Order', orderData);
+            //get auth0 access token
+            const accessToken = await getAccessTokenSilently({
+                authorizationParams: {
+                  audience: Settings.auth0_audience
+                }});
+            console.log("AccessToken WHEN ORDERING: ", accessToken);
+            await axios.post('http://localhost:5179/api/Dishes/Order', orderData, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            });
             toastShow('Your order is complete! Thanks', 'S');
             clearCartItems();
             closeModal();

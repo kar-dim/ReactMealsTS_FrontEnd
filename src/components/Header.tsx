@@ -13,7 +13,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 const Header = ()  => {
 
     const {isAuthenticated} = useAuth0();
-    console.log("isAuthenticated? -> ",isAuthenticated);
     const [showModal, setShowModal] = useState<boolean>(false);
     const {cartItems} = useCartContext();
 
