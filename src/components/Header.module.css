@@ -64,6 +64,12 @@ a#header_about_link:active, a#header_home:active {
     text-decoration: none; 
 }
 
+span#header_user_name {
+    color: white;
+    margin-left: 16px;
+    font-size: 1.2em;
+}
+
 .header_text {
     background-color: rgb(55, 55, 55);
     width:500px;
