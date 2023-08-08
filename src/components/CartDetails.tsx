@@ -17,7 +17,7 @@ interface CartItemCounter extends IDish {
 
 const CartDetails = ({closeModal} : ICartDetails) => {
 
-    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { user, getAccessTokenSilently } = useAuth0();
     const [showOrderButton, setShowOrderButton] = useState<boolean>(true);
     const {cartItems, addCartItem, removeCartItem, clearCartItems} = useCartContext();
     
@@ -27,18 +27,20 @@ const CartDetails = ({closeModal} : ICartDetails) => {
         mp.get(o.dishId).count++;
         return mp;
     }, new Map()).values()];
-    console.log(cartItemsCountered);
 
     //order food 
     const order = async() => {
         interface IOrderItem { dishid: number, dish_counter: number };
-        interface IOrderData  { order: IOrderItem[] };
+        interface IOrderData  { userId: string, order: IOrderItem[] };
 
         const orderData : IOrderData = {
+            userId : user!.sub!,
             order: cartItemsCountered.map((cardItemC) => {
                 return {dishid: cardItemC.dishId, dish_counter: cardItemC.count}
             })
         };
+
+        console.log(orderData);
 
         //if empty card don't send request! Also close the modal
         if (orderData.order.length == 0){
@@ -55,7 +57,6 @@ const CartDetails = ({closeModal} : ICartDetails) => {
                 authorizationParams: {
                   audience: Settings.auth0_audience
                 }});
-            console.log("AccessToken WHEN ORDERING: ", accessToken);
             await axios.post('http://localhost:5179/api/Dishes/Order', orderData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

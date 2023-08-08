@@ -37,8 +37,6 @@ function App() {
       localStorage.setItem('cartItems', JSON.stringify(arr));
       //then set the state
       setCartItems((prev : IDish[]): IDish[] => {
-        console.log(prev);
-        console.log(dishToAdd);
         return [
           ...prev, dishToAdd
         ];
