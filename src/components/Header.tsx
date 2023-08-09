@@ -2,13 +2,15 @@ import React, {useEffect, useState} from 'react';
 import CartButton from './CartButton';
 import HeaderStyles from './Header.module.css';
 import {useCartContext} from '../contexts/cart-context';
-import CartModal from './CartModal';
+import Modal from './Modal';
 import { toastShow } from '../other/ToastUtils';
 import { Link } from "react-router-dom";
 import imgBg from '../media/bg.webp';
 import Auth0SignInOffButton from './Auth0SignInOffButton';
 import { useAuth0 } from "@auth0/auth0-react";
 import Settings from '../other/PublicSettings';
+import CartDetails from './CartDetails';
+import OrderDetails from './OrderDetails';
 
 //renders the top header bar
 const Header = ()  => {
@@ -16,7 +18,8 @@ const Header = ()  => {
     const {getIdTokenClaims, isAuthenticated} = useAuth0();
     const [userLoggedIn, setUserLoggedIn] = useState<IAuth0User | undefined>(undefined);
     const {cartItems, clearCartItems} = useCartContext();
-    const [showModal, setShowModal] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(false); //new order modal
+    const [showMyOrdersModal, setShowMyOrdersModal] = useState<boolean>(false); //user (completed) orders modal
     //called from inside the modal (props), disables/enables the modal
     const showModalHandler = (showModal : boolean) => { setShowModal(showModal); }
     
@@ -57,14 +60,25 @@ const Header = ()  => {
         }
     };
 
+    //send a GET request to retrieve this user's ORDERS
+    const clickOrdersHandler = (): void => {
+        setShowMyOrdersModal(true);
+    }
+
     return (
         <React.Fragment>
-            <CartModal showModal={showModal} setShowModal={showModalHandler} />
+            <Modal showModal={showMyOrdersModal} setShowModal={setShowMyOrdersModal}>
+                <OrderDetails closeModal={() => setShowMyOrdersModal(false)}/>
+            </Modal>
+            <Modal showModal={showModal} setShowModal={showModalHandler}>
+                <CartDetails closeModal={() => setShowModal(false)}/>
+            </Modal>
             <div className={HeaderStyles.header_main}>
                 <div>
                     <Link to="/" id={HeaderStyles.header_home}>Jimmys Foodzilla</Link>
                     <button className={HeaderStyles.custom_button}><Link id={HeaderStyles.header_about_link} to="/about">About</Link></button>
                     <Auth0SignInOffButton text={isAuthenticated ? "Logout" : "Login"} isLogin = {!isAuthenticated} />
+                    {(isAuthenticated && userLoggedIn !== undefined && userLoggedIn.name != undefined) && <button className={HeaderStyles.custom_button} onClick = {() => clickOrdersHandler()}>My Orders</button>}
                     {(isAuthenticated && userLoggedIn !== undefined && userLoggedIn.name != undefined) && <span id={HeaderStyles.header_user_name}>Welcome back, {userLoggedIn.name}!</span>}
                 </div>
 

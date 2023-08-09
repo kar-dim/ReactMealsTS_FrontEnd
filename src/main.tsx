@@ -10,6 +10,8 @@ ReactDOM.createRoot(document.getElementById("root") as Element).render(
     <Auth0Provider
       domain={Settings.auth0_domain}
       clientId={Settings.auth0_clientId}
+      useRefreshTokens={true}
+      cacheLocation="localstorage"
       authorizationParams={{
         redirect_uri: "http://localhost:3000/",
         audience: Settings.auth0_audience
