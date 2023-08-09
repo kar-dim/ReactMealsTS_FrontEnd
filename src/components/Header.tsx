@@ -15,7 +15,11 @@ const Header = ()  => {
 
     const {getIdTokenClaims, isAuthenticated} = useAuth0();
     const [userLoggedIn, setUserLoggedIn] = useState<IAuth0User | undefined>(undefined);
-
+    const {cartItems, clearCartItems} = useCartContext();
+    const [showModal, setShowModal] = useState<boolean>(false);
+    //called from inside the modal (props), disables/enables the modal
+    const showModalHandler = (showModal : boolean) => { setShowModal(showModal); }
+    
     //get the IdToken Claims, which contain the user's metadata (user NAME/LASTNAME/ADDRESS), these are added
     //in the idToken in Auth0 dashboard -> onPostLogin AUTH0 ACTION
     useEffect(() => {
@@ -32,16 +36,12 @@ const Header = ()  => {
                 }
             }
             getIdClaimsAsync();
-        } else
+        } else {
+            clearCartItems(); //not logged in -> clear cart
             setUserLoggedIn(undefined);
+        }
 
         }, [isAuthenticated]);
-
-    const [showModal, setShowModal] = useState<boolean>(false);
-    const {cartItems} = useCartContext();
-
-    //called from inside the modal (props), disables/enables the modal
-    const showModalHandler = (showModal : boolean) => { setShowModal(showModal); }
 
     //click on the "cart" div
     const clickCartHandler = (): void => {
