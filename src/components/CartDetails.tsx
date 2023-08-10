@@ -28,13 +28,13 @@ const CartDetails = ({closeModal} : ICartDetails) => {
         return mp;
     }, new Map()).values()];
 
-    //order food 
+    //order food (POST request)
     const order = async() => {
         interface IOrderItem { dishid: number, dish_counter: number };
-        interface IOrderData  { userId: string, order: IOrderItem[] };
+        interface IOrderData  { userId: string | null, order: IOrderItem[] };
 
         const orderData : IOrderData = {
-            userId : user!.sub!,
+            userId : user == undefined ? null : user.sub == undefined ? null : user.sub,
             order: cartItemsCountered.map((cardItemC) => {
                 return {dishid: cardItemC.dishId, dish_counter: cardItemC.count}
             })
@@ -57,7 +57,7 @@ const CartDetails = ({closeModal} : ICartDetails) => {
                 authorizationParams: {
                   audience: Settings.auth0_audience
                 }});
-            await axios.post('http://localhost:5179/api/Dishes/Order', orderData, {
+            await axios.post(`${Settings.backend_url}/api/Dishes/Order`, orderData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 }

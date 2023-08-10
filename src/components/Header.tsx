@@ -18,10 +18,8 @@ const Header = ()  => {
     const {getIdTokenClaims, isAuthenticated} = useAuth0();
     const [userLoggedIn, setUserLoggedIn] = useState<IAuth0User | undefined>(undefined);
     const {cartItems, clearCartItems} = useCartContext();
-    const [showModal, setShowModal] = useState<boolean>(false); //new order modal
+    const [showCartModal, setShowCartModal] = useState<boolean>(false); //new order modal
     const [showMyOrdersModal, setShowMyOrdersModal] = useState<boolean>(false); //user (completed) orders modal
-    //called from inside the modal (props), disables/enables the modal
-    const showModalHandler = (showModal : boolean) => { setShowModal(showModal); }
     
     //get the IdToken Claims, which contain the user's metadata (user NAME/LASTNAME/ADDRESS), these are added
     //in the idToken in Auth0 dashboard -> onPostLogin AUTH0 ACTION
@@ -52,7 +50,7 @@ const Header = ()  => {
             toastShow("Please Login first!", "E");
         } else {
             if (cartItems !== null && cartItems.length > 0){
-                setShowModal(true);
+                setShowCartModal(true);
             } //else -> empty
             else {
                 toastShow('Empty cart!', "E");
@@ -60,25 +58,23 @@ const Header = ()  => {
         }
     };
 
-    //send a GET request to retrieve this user's ORDERS
-    const clickOrdersHandler = (): void => {
-        setShowMyOrdersModal(true);
-    }
-
     return (
         <React.Fragment>
-            <Modal showModal={showMyOrdersModal} setShowModal={setShowMyOrdersModal}>
+            {showMyOrdersModal && <Modal showModal={showMyOrdersModal} setShowModal={setShowMyOrdersModal}>
                 <OrderDetails closeModal={() => setShowMyOrdersModal(false)}/>
+            </Modal> 
+            }
+            {
+            showCartModal && <Modal showModal={showCartModal} setShowModal={setShowCartModal}>
+                <CartDetails closeModal={() => setShowCartModal(false)}/>
             </Modal>
-            <Modal showModal={showModal} setShowModal={showModalHandler}>
-                <CartDetails closeModal={() => setShowModal(false)}/>
-            </Modal>
+            }
             <div className={HeaderStyles.header_main}>
                 <div>
                     <Link to="/" id={HeaderStyles.header_home}>Jimmys Foodzilla</Link>
                     <button className={HeaderStyles.custom_button}><Link id={HeaderStyles.header_about_link} to="/about">About</Link></button>
                     <Auth0SignInOffButton text={isAuthenticated ? "Logout" : "Login"} isLogin = {!isAuthenticated} />
-                    {(isAuthenticated && userLoggedIn !== undefined && userLoggedIn.name != undefined) && <button className={HeaderStyles.custom_button} onClick = {() => clickOrdersHandler()}>My Orders</button>}
+                    {(isAuthenticated && userLoggedIn !== undefined && userLoggedIn.name != undefined) && <button className={HeaderStyles.custom_button} onClick = {() => setShowMyOrdersModal(true)}>My Orders</button>}
                     {(isAuthenticated && userLoggedIn !== undefined && userLoggedIn.name != undefined) && <span id={HeaderStyles.header_user_name}>Welcome back, {userLoggedIn.name}!</span>}
                 </div>
 

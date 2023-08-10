@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root") as Element).render(
       useRefreshTokens={true}
       cacheLocation="localstorage"
       authorizationParams={{
-        redirect_uri: "http://localhost:3000/",
+        redirect_uri: `${Settings.frontend_url}/`,
         audience: Settings.auth0_audience
       }}
     >

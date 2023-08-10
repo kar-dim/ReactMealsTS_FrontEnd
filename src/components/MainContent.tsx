@@ -4,6 +4,7 @@ import Dish from './Dish';
 import IDish from '../interfaces/DishInterface';
 import axios from 'axios';
 import { toastShow } from '../other/ToastUtils';
+import Settings from '../other/PublicSettings';
 
 //Main body of the website, sends the GET request and renders the dishes returned
 const MainContent = () => {
@@ -17,7 +18,17 @@ const MainContent = () => {
     useEffect(() => {
         const getDishes = async() => {
             try {
-                const response = await axios.get('http://localhost:5179/api/Dishes/GetDishes');
+                let response : any = "";
+                //if backend is using ngrok -> add extra http header
+                if (Settings.backend_ngrok == true) {
+                    response = await axios.get(`${Settings.backend_url}/api/Dishes/GetDishes`, {
+                        headers : {
+                            'ngrok-skip-browser-warning' : true
+                        }
+                    });
+                } else {
+                    response = await axios.get(`${Settings.backend_url}/api/Dishes/GetDishes`);
+                }
                 const dishesRet : IDish[] | null = response.data;
                 if (dishesRet != null && dishesRet.length > 0){
                     setAvailableDishes(dishesRet);

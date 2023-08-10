@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import Auth0LoadingPage from "./components/Auth0LoadingPage";
+import axios from "axios";
 
 function App() {
     
@@ -70,6 +71,9 @@ function App() {
         <Auth0LoadingPage />
       );
     }
+
+  //global timeout
+  axios.defaults.timeout = 5000;
 
   return (
     <CartContext.Provider value ={{cartItems: cartItems, addCartItem: addItem, removeCartItem: removeItem, clearCartItems: clearItems}}>
