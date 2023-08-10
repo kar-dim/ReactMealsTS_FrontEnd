@@ -72,8 +72,9 @@ function App() {
       );
     }
 
-  //global timeout
-  axios.defaults.timeout = 5000;
+  //global axios stuff
+  axios.defaults.timeout = 7000;
+  axios.defaults.headers.common['ngrok-skip-browser-warning'] = true;
 
   return (
     <CartContext.Provider value ={{cartItems: cartItems, addCartItem: addItem, removeCartItem: removeItem, clearCartItems: clearItems}}>

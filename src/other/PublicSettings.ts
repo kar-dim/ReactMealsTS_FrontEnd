@@ -4,8 +4,7 @@ const Settings = {
     auth0_audience: "https://jimmys/api",
     frontend_url: "http://localhost:3000",
     //backend_url: "http://localhost:5179",
-    backend_url: "https://solely-useful-grouse.ngrok-free.app",
-    backend_ngrok: true
+    backend_url: "https://solely-useful-grouse.ngrok-free.app"
 };
 
 export default Settings;

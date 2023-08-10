@@ -15,11 +15,12 @@
 .cart_modal_content {
     position: absolute;
     left: 50%;
-    transform: translate(-50%, 7rem);
+    transform: translate(-50%, 4rem);
     background-color: white;
     padding: 1rem 1.5rem;
-    width: 72rem;
     border-radius: 0.5rem;
+    overflow-y: auto;
+    max-height: 800px;
 }
 
 .cart_modal_close_button {

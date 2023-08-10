@@ -1,0 +1,65 @@
+div#no_orders {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+div#main_div {
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+ul.order_details_ul {
+    width: 90%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+div.order_container_details {
+    
+}
+
+div.order_details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+div.order_food_details {
+    display:flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+div.order_food_details_total {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+span#order_food_details_total_span {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+div#order_food_detail {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+div.food_counter_box {
+    display:inline;
+    outline: 2px solid rgb(153, 153, 153);
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

@@ -18,17 +18,7 @@ const MainContent = () => {
     useEffect(() => {
         const getDishes = async() => {
             try {
-                let response : any = "";
-                //if backend is using ngrok -> add extra http header
-                if (Settings.backend_ngrok == true) {
-                    response = await axios.get(`${Settings.backend_url}/api/Dishes/GetDishes`, {
-                        headers : {
-                            'ngrok-skip-browser-warning' : true
-                        }
-                    });
-                } else {
-                    response = await axios.get(`${Settings.backend_url}/api/Dishes/GetDishes`);
-                }
+                const response = await axios.get(`${Settings.backend_url}/api/Dishes/GetDishes`);
                 const dishesRet : IDish[] | null = response.data;
                 if (dishesRet != null && dishesRet.length > 0){
                     setAvailableDishes(dishesRet);
