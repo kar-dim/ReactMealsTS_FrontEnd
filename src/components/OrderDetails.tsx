@@ -61,6 +61,7 @@ const OrderDetails = ({closeModal} : IOrderDetailsProps) => {
             console.error(error);
             setUserOrders(null);
             toastShow('Could not fetch Orders', 'E');
+            closeModal();
         } finally {
             setIsFetchingOrders(false);
             return;
@@ -79,7 +80,6 @@ const OrderDetails = ({closeModal} : IOrderDetailsProps) => {
 
     //could not fetch data (request/response error probably)
     if (userOrders == null || userOrders.orders == null) {
-        closeModal();
         return null;
     }
     //fetched, but 0 orders
