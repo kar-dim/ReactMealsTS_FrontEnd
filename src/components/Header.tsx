@@ -60,19 +60,19 @@ const Header = ()  => {
 
     return (
         <React.Fragment>
-            {showMyOrdersModal && <Modal showModal={showMyOrdersModal} setShowModal={setShowMyOrdersModal} modalWidth="48rem">
+            {showMyOrdersModal && <Modal showModal={showMyOrdersModal} setShowModal={() => setShowMyOrdersModal(false)} modalWidth="48rem">
                 <OrderDetails closeModal={() => setShowMyOrdersModal(false)}/>
             </Modal> 
             }
             {
-            showCartModal && <Modal showModal={showCartModal} setShowModal={setShowCartModal} modalWidth="72rem">
+            showCartModal && <Modal showModal={showCartModal} setShowModal={() => setShowCartModal(false)} modalWidth="72rem">
                 <CartDetails closeModal={() => setShowCartModal(false)}/>
             </Modal>
             }
             <div className={HeaderStyles.header_main}>
                 <div>
                     <Link to="/" id={HeaderStyles.header_home}>Jimmys Foodzilla</Link>
-                    <button className={HeaderStyles.custom_button}><Link id={HeaderStyles.header_about_link} to="/about">About</Link></button>
+                    <Link id={HeaderStyles.header_about_link} to="/about"><button className={HeaderStyles.custom_button}>About</button></Link>
                     <Auth0SignInOffButton text={isAuthenticated ? "Logout" : "Login"} isLogin = {!isAuthenticated} />
                     {(isAuthenticated && userLoggedIn !== undefined && userLoggedIn.name != undefined) && <button className={HeaderStyles.custom_button} onClick = {() => setShowMyOrdersModal(true)}>My Orders</button>}
                     {(isAuthenticated && userLoggedIn !== undefined && userLoggedIn.name != undefined) && <span id={HeaderStyles.header_user_name}>Welcome back, {userLoggedIn.name}!</span>}

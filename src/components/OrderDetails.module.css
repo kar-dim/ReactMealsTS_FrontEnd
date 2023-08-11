@@ -19,10 +19,6 @@ ul.order_details_ul {
     padding: 0;
 }
 
-div.order_container_details {
-    
-}
-
 div.order_details {
     display: flex;
     flex-direction: row;

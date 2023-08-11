@@ -1,19 +1,42 @@
-.dish_main {
+div.dish_main {
     display:flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.dish_left {
-   float: left;
+div.dish_left {
+   display: flex;
+   cursor: pointer;
 }
 
-.dish_right {
+div.dish_left_text {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+div.dish_left_image:hover {
+    transform: scale(2.0);
+    transition-delay:0.35s;
+  }
+
+div.dish_left_image {
+    transition: transform 0.3s;
+}
+
+img#dish_left_img {
+    border-radius: 20px;
+}
+
+div.dish_right {
     align-self: flex-end;
     float: right;
 }
 
-.dish_left > span {
+div.dish_left > span {
     margin-bottom: 5px;
     display:inline-block;
 }

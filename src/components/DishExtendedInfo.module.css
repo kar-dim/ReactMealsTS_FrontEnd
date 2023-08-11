@@ -1,0 +1,29 @@
+div#main_div {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+div#header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+img#food_pic {
+    border-radius: 20px;
+}
+
+div#name_and_short_description {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0px;
+}
+
+div#name_and_short_description > h1,h2 {
+    text-align: center;
+}

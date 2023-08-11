@@ -1,5 +1,4 @@
 import OrderDetailsStyle from './OrderDetails.module.css';
-import {useCartContext} from '../contexts/cart-context';
 import { toastShow } from '../other/ToastUtils';
 import axios from 'axios';
 import {useEffect, useState} from 'react';
@@ -8,6 +7,7 @@ import Settings from '../other/PublicSettings';
 import IDish from '../interfaces/DishInterface';
 import NoOrdersPic from '../media/sad_food.jpg';
 import { Tooltip } from 'react-tooltip';
+import React from 'react';
 
 //props
 interface IOrderDetailsProps {
@@ -100,29 +100,29 @@ const OrderDetails = ({closeModal} : IOrderDetailsProps) => {
                 {
                   userOrders.orders.map((order : IOrder, index : number) => {
                     return (
-                        <>
-                        <li key={index}>
+                        <React.Fragment key={index}>
+                        <li>
                             <div className={OrderDetailsStyle.order_container_details}>
-                                <h2>Order #{order.id}</h2>
+                                <h2>Order ID #{order.id}</h2>
                                 <div className={OrderDetailsStyle.order_details}>
                                     <div className={OrderDetailsStyle.order_food_details}>
                                         {
                                             order.dishes.map((dish : IDishWithCounter, food_index : number) => {
                                                 return (
-                                                    <>
-                                                    <div id={OrderDetailsStyle.order_food_detail}>
-                                                        <span data-tooltip-id={"food-name-tooltip"+ index + food_index} data-tooltip-content={dish.dish_description}>{dish.dish_name}</span>
-                                                        <Tooltip id={"food-name-tooltip" + index + food_index} />
-                                                        <div id={OrderDetailsStyle.order_food_detail_right_part}>
-                                                            <span style={{marginRight: "10px", fontWeight: "600"}}>{dish.price}$</span>
-                                                            <div className={OrderDetailsStyle.food_counter_box}>
-                                                                <span>x {dish.dish_counter}</span>
+                                                    <React.Fragment key = {"" + index + food_index}>
+                                                        <div id={OrderDetailsStyle.order_food_detail}>
+                                                            <span data-tooltip-id={"food-name-tooltip"+ index + food_index} data-tooltip-content={dish.dish_description}>{dish.dish_name}</span>
+                                                            <Tooltip id={"food-name-tooltip" + index + food_index} />
+                                                            <div id={OrderDetailsStyle.order_food_detail_right_part}>
+                                                                <span style={{marginRight: "10px", fontWeight: "600"}}>{dish.price}$</span>
+                                                                <div className={OrderDetailsStyle.food_counter_box}>
+                                                                    <span>x {dish.dish_counter}</span>
+                                                                </div>
                                                             </div>
+                                                            
                                                         </div>
-                                                        
-                                                    </div>
-                                                    <br></br>
-                                                    </>
+                                                        <br></br>
+                                                    </React.Fragment>
                                                 )
                                             })
                                         }
@@ -134,7 +134,7 @@ const OrderDetails = ({closeModal} : IOrderDetailsProps) => {
                             </div>    
                         </li>
                         <hr></hr>
-                        </>
+                        </React.Fragment>
                     );
                   })
                 }
