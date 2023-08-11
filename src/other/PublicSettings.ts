@@ -6,6 +6,5 @@ const Settings = {
     //backend_url: "http://localhost:5179",
     backend_url: "https://solely-useful-grouse.ngrok-free.app"
 };
-console.log("FRONTEND_URL",Settings.frontend_url);
 
 export default Settings;
