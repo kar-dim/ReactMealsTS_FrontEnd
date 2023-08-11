@@ -1,10 +1,10 @@
 import IDish from '../interfaces/DishInterface';
 import { useCartContext } from '../contexts/cart-context';
-import'./Dish.css';
 import { useAuth0 } from "@auth0/auth0-react";
 import Settings from '../other/PublicSettings';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import DishStyle from './Dish.module.css';
 
 interface IDishProps {
     dish: IDish,
@@ -44,19 +44,19 @@ const Dish = ({dish, showCurrentDishInfo} : IDishProps) => {
     const {addCartItem} = useCartContext();
     return (
         <li key = {dish.dishId}>
-            <div className="dish_main">
-               <div className="dish_left" onClick={() => showCurrentDishInfo(dish, fetchedDishImage)}>
-                    <div className="dish_left_image">
-                        {dish.dish_url && fetchedDishImage && <img id="dish_left_img" src={`data:image/jpeg;charset=utf-8;base64,${fetchedDishImage}`}height={150} width={170}></img>}
+            <div className={DishStyle.dish_main}>
+               <div className={DishStyle.dish_left} onClick={() => showCurrentDishInfo(dish, fetchedDishImage)}>
+                    <div className={DishStyle.left_image}>
+                        {dish.dish_url && fetchedDishImage && <img id={DishStyle.dish_left_img} src={`data:image/jpeg;charset=utf-8;base64,${fetchedDishImage}`}height={150} width={170}></img>}
                     </div>
-                    <div className="dish_left_text">
+                    <div className={DishStyle.dish_left_text}>
                         <span>{dish.dish_name}</span><br/>
                         <span style={{fontStyle : "italic"}}>{dish.dish_description}</span><br/>
-                        <span className="dish_text_price">$ {dish.price}</span>
+                        <span className={DishStyle.dish_text_price}>$ {dish.price}</span>
                     </div>
                 </div>
-                <div className="dish_right">
-                    {isAuthenticated && <button onClick={() => {addCartItem(dish)}} className="add_button" type="button">+ Add</button>}
+                <div className={DishStyle.dish_right}>
+                    {isAuthenticated && <button onClick={() => {addCartItem(dish)}} className={DishStyle.add_button} type="button">+ Add</button>}
                 </div>
             </div>
            <hr/>

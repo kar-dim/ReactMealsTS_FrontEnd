@@ -29,7 +29,6 @@
 
 .custom_button:hover {
   background-position: right center;
-  /* change the direction of the change here */
   color: #fff;
   text-decoration: none;
 }
@@ -73,7 +72,6 @@ span#header_user_name {
 .header_text {
     background-color: rgb(55, 55, 55);
     width:500px;
-    height:150px;
     display: block;
     position: relative;
     margin-left: auto;
@@ -103,3 +101,80 @@ span#header_user_name {
     width: 100%;
     max-height: 200px;
 }
+
+@media (max-width: 1366px) {
+    .header_main {
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+
+    a#header_home  {
+      font-size: 1.3em;
+      margin-left: 8px;
+      margin-bottom: 3px;
+      margin-right: 8px;
+    }
+    button.custom_button {
+        margin-left: 5px;
+        font-size: 0.9em;
+        padding: 7px 17px;
+        background-size: 200% auto;
+    }
+    span#header_user_name {
+        display: none;
+    }
+}
+
+@media (min-width: 900px) and (max-width: 1366px) {
+    
+    span#header_user_name {
+        display: inline;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 590px) {
+    .header_main {
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+
+    a#header_home  {
+      font-size: 1.1em;
+      display: block;
+      margin-left: 7px;
+      margin-bottom: 3px;
+      margin-right: 0px;
+    }
+    button.custom_button {
+        margin-left: 5px;
+        font-size: 0.7em;
+        padding: 5px 15px;
+        background-size: 200% auto;
+    }
+    span#header_user_name {
+        display: none;
+    }
+}
+
+@media (max-width: 560px) {
+    .header_text {
+        width:90%;
+        display: block;
+        position: relative;
+        margin-top: -70px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .header_text > h1 {
+        text-align: center;
+        font-size: 18px;
+    }
+    .header_text > p {
+        text-align: center;
+        font-size: 10px;
+    }
+}
+
