@@ -29,6 +29,8 @@ div.dish_left_image {
 
 img#dish_left_img {
     border-radius: 20px;
+    height: 150px;
+    width: 170px;
 }
 
 div.dish_right {
@@ -41,7 +43,7 @@ div.dish_left > span {
     display:inline-block;
 }
 
-span.dish_text_price {
+span#dish_text_price {
     margin-top: 1px;
     color: orange;
     font-weight: bold;
@@ -68,4 +70,52 @@ button.add_button:hover {
 button.add_button:active {
     background-color: rgb(186, 0, 34);
     color: rgb(210,210,210);
+}
+
+span#dish_description {
+    display:inline;
+}
+
+@media screen and (max-width: 960px) {
+    img#dish_left_img {
+        height: 90px;
+        width: 110px;
+    }
+    span#dish_description {
+        display:inline;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    button.add_button {
+      font-size: 16px;
+    }
+    span#dish_text_price {
+        font-size: 16px;
+    }
+    span#dish_name {
+        font-size:16px;
+    }
+    span#dish_description {
+        display:none;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    img#dish_left_img {
+        height: 70px;
+        width: 85px;
+    }
+    button.add_button {
+      font-size: 14px;
+    }
+    span#dish_text_price {
+        font-size: 14px;
+    }
+    span#dish_name {
+        font-size:14px;
+    }
+    span#dish_description {
+        display:none;
+    }
 }

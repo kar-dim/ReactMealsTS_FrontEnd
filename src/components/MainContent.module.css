@@ -2,7 +2,7 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 900px;
     justify-content: center;
     margin-top: 40px;
     margin-left: auto;
@@ -16,4 +16,10 @@ ul.main_content_ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+@media screen and (max-width: 960px) {
+  .main_content {
+    width: 90%;
+  }
 }

@@ -47,12 +47,12 @@ const Dish = ({dish, showCurrentDishInfo} : IDishProps) => {
             <div className={DishStyle.dish_main}>
                <div className={DishStyle.dish_left} onClick={() => showCurrentDishInfo(dish, fetchedDishImage)}>
                     <div className={DishStyle.left_image}>
-                        {dish.dish_url && fetchedDishImage && <img id={DishStyle.dish_left_img} src={`data:image/jpeg;charset=utf-8;base64,${fetchedDishImage}`}height={150} width={170}></img>}
+                        {dish.dish_url && fetchedDishImage && <img id={DishStyle.dish_left_img} src={`data:image/jpeg;charset=utf-8;base64,${fetchedDishImage}`}></img>}
                     </div>
                     <div className={DishStyle.dish_left_text}>
-                        <span>{dish.dish_name}</span><br/>
-                        <span style={{fontStyle : "italic"}}>{dish.dish_description}</span><br/>
-                        <span className={DishStyle.dish_text_price}>$ {dish.price}</span>
+                        <span id={DishStyle.dish_name}>{dish.dish_name}</span><br/>
+                        <span id={DishStyle.dish_description}style={{fontStyle : "italic"}}>{dish.dish_description}</span><br/>
+                        <span id={DishStyle.dish_text_price}>$ {dish.price}</span>
                     </div>
                 </div>
                 <div className={DishStyle.dish_right}>
