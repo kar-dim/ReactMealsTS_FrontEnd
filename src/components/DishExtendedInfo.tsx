@@ -5,7 +5,7 @@ const DishExtendedInfo = ({dish_description, dish_extended_info, dish_name, imag
     return (
         <div id={style.main_div}>
             <div id={style.header}>
-            {imageUrlEncoded !== null && <img id={style.food_pic} src={`data:image/jpeg;charset=utf-8;base64,${imageUrlEncoded}`}height={270} width={340}></img>}
+            {imageUrlEncoded !== null && <img id={style.food_pic} src={`data:image/jpeg;charset=utf-8;base64,${imageUrlEncoded}`}></img>}
                 <div id={style.name_and_short_description}>
                     <h1>{dish_name}</h1>
                     <h2>{dish_description}</h2>

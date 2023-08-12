@@ -43,3 +43,15 @@
     transform: scale(1.0);
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 } 
+
+@media screen and (max-width: 830px) {
+    .cart_modal_content {
+        width: 97vw !important;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 4rem);
+        padding: 9px 9px;
+        max-height: none;
+    }
+    
+}

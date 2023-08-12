@@ -103,7 +103,7 @@ const OrderDetails = ({closeModal} : IOrderDetailsProps) => {
                         <React.Fragment key={index}>
                         <li>
                             <div className={OrderDetailsStyle.order_container_details}>
-                                <h2>Order ID #{order.id}</h2>
+                                <h2 id={OrderDetailsStyle.order_id}>Order ID #{order.id}</h2>
                                 <div className={OrderDetailsStyle.order_details}>
                                     <div className={OrderDetailsStyle.order_food_details}>
                                         {

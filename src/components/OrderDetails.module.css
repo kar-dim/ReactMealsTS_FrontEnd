@@ -59,3 +59,57 @@ div.food_counter_box {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+@media screen and (max-width: 830px) {
+    ul.order_details_ul {
+        width: 100%;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+}
+
+@media screen and (max-width: 560px) {
+    h2#order_id {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    div.order_details {
+        font-size: 16px;
+        display:block;
+    }
+    div.order_food_details {
+        width: 95%;
+    }
+
+    div.order_food_details_total {
+        width: 100%;
+    }
+    
+}
+
+@media screen and (max-width: 440px) {
+    h2#order_id {
+        font-size: 18px;
+        margin-bottom: 18px;
+    }
+    div.order_details {
+        font-size: 14px;
+        display:block;
+    }
+    div.order_food_details {
+        width: 95%;
+    }
+
+    div.order_food_details_total {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    div.order_food_details {
+        width: 90%;
+    }
+    
+}

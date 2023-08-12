@@ -14,6 +14,8 @@ div#header {
 
 img#food_pic {
     border-radius: 20px;
+    height: 270px;
+    width: 340px;
 }
 
 div#name_and_short_description {
@@ -26,4 +28,60 @@ div#name_and_short_description {
 
 div#name_and_short_description > h1,h2 {
     text-align: center;
+}
+
+@media screen and (max-width: 960px) {
+    img#food_pic {
+        height: 240px;
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    div#header {
+        margin-bottom: 20px;
+    }
+
+    #name_and_short_description > h1 {
+        font-size: 24px;
+    }
+
+    #name_and_short_description > h2 {
+        font-size: 22px;
+    }
+
+    img#food_pic {
+        height: 210px;
+        width: 270px;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    #name_and_short_description > h1 {
+        font-size: 20px;
+    }
+
+    #name_and_short_description > h2 {
+        font-size: 17px;
+    }
+
+    img#food_pic {
+        height: 120px;
+        width: 170px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #name_and_short_description > h1 {
+        font-size: 17px;
+    }
+
+    #name_and_short_description > h2 {
+        font-size: 14px;
+    }
+
+    img#food_pic {
+        height: 120px;
+        width: 170px;
+    }
 }

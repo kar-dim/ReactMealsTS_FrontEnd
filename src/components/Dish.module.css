@@ -9,6 +9,12 @@ div.dish_main {
 div.dish_left {
    display: flex;
    cursor: pointer;
+   transition: .5s ease
+}
+
+div.dish_left:hover {
+    text-shadow: 0 0 2px rgb(187, 75, 0);
+    transition: .5s ease
 }
 
 div.dish_left_text {
@@ -16,15 +22,6 @@ div.dish_left_text {
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-div.dish_left_image:hover {
-    transform: scale(2.0);
-    transition-delay:0.35s;
-  }
-
-div.dish_left_image {
-    transition: transform 0.3s;
 }
 
 img#dish_left_img {
