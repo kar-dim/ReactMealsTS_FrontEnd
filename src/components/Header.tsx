@@ -60,12 +60,12 @@ const Header = ()  => {
 
     return (
         <React.Fragment>
-            {showMyOrdersModal && <Modal showModal={showMyOrdersModal} setShowModal={() => setShowMyOrdersModal(false)} modalWidth="48rem">
+            {showMyOrdersModal && <Modal showModal={showMyOrdersModal} setShowModal={() => setShowMyOrdersModal(false)}>
                 <OrderDetails closeModal={() => setShowMyOrdersModal(false)}/>
             </Modal> 
             }
             {
-            showCartModal && <Modal showModal={showCartModal} setShowModal={() => setShowCartModal(false)} modalWidth="72rem">
+            showCartModal && <Modal showModal={showCartModal} setShowModal={() => setShowCartModal(false)}>
                 <CartDetails closeModal={() => setShowCartModal(false)}/>
             </Modal>
             }
