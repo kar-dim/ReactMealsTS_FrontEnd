@@ -128,3 +128,25 @@ div.cart_details_counter_box {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+
+
+@media screen and (max-width: 450px) {
+    div.cart_details_main > h2 {
+        font-size: 18px;
+    }
+
+    div.cart_details_main_right > h2 {
+        font-size: 18px;
+    }
+
+    div.cart_details_main_right_buttons {
+        margin-top: 10px;
+        margin-right: 15px;
+        width: auto;
+    }
+    div.cart_details_main_right_buttons > button {
+        font-size: 18px;
+        padding: 4px 7px 4px 7px;
+    }
+}

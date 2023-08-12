@@ -14,13 +14,14 @@
 
 .cart_modal_content {
     position: absolute;
+    width: 48rem;
     left: 50%;
     transform: translate(-50%, 4rem);
     background-color: white;
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
     overflow-y: auto;
-    max-height: 800px;
+    max-height: 70vh;
 }
 
 .cart_modal_close_button {
@@ -51,7 +52,6 @@
         left: 50%;
         transform: translate(-50%, 4rem);
         padding: 9px 9px;
-        max-height: none;
     }
     
 }
