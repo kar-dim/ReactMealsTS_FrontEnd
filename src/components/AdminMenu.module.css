@@ -1,12 +1,12 @@
-div#about_main {
+div#main {
     display: flex;
     justify-content: center;
     width: 100%;
     margin-top: 25px;
 }
 
-div#about_main_content {
-    width: 1000px;
+div#main_content {
+    width: 1366px;
     background-color: white;
     padding: 25px;
     border-radius: 15px;

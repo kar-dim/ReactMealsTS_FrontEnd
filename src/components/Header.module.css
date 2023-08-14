@@ -37,7 +37,7 @@
   transform: scale(0.95);
 }
 
-a#header_about_link {
+a#header_about_link, a#header_admin_link {
     color:white;
 }
 
@@ -56,10 +56,10 @@ a#header_home {
     transition: .3s ease
 }
 
-a#header_about_link:link, a#header_home:link,
-a#header_about_link:visited, a#header_home:visited,
-a#header_about_link:hover,
-a#header_about_link:active, a#header_home:active {
+a#header_about_link:link, a#header_home:link, a#header_admin_link
+a#header_about_link:visited, a#header_home:visited, a#header_admin_link:visited,
+a#header_about_link:hover, a#header_admin_link:hover
+a#header_about_link:active, a#header_home:active, a#header_admin_link:active{
     text-decoration: none; 
 }
 

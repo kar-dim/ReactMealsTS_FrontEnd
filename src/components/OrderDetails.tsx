@@ -3,7 +3,7 @@ import { toastShow } from '../other/ToastUtils';
 import axios from 'axios';
 import {useEffect, useState} from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import Settings from '../other/PublicSettings';
+import {ApiRoutes, Settings} from '../other/PublicSettings';
 import IDish from '../interfaces/DishInterface';
 import NoOrdersPic from '../media/sad_food.jpg';
 import { Tooltip } from 'react-tooltip';
@@ -44,13 +44,14 @@ const OrderDetails = ({closeModal} : IOrderDetailsProps) => {
                 toastShow("Could not send the request. Please try again later", "E");
                 return; //will go to finally block
             }
+
             let headers : any = {
                 Authorization: `Bearer ${accessToken}`
             };
 
             //send the get request
             const response = await axios.get(
-                `${Settings.backend_url}/api/Dishes/GetUserOrders/${user?.sub}`,{
+                `${Settings.backend_url}/${ApiRoutes.GetUserOrders}/${user?.sub}`,{
                     headers : headers
                 });
 

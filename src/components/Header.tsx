@@ -8,21 +8,25 @@ import { Link } from "react-router-dom";
 import imgBg from '../media/bg.webp';
 import Auth0SignInOffButton from './Auth0SignInOffButton';
 import { useAuth0 } from "@auth0/auth0-react";
-import Settings from '../other/PublicSettings';
+import {Settings} from '../other/PublicSettings';
 import CartDetails from './CartDetails';
 import OrderDetails from './OrderDetails';
+import jwtDecode , { JwtPayload } from 'jwt-decode';
+import { isLoggedAsAdmin } from '../other/utils';
 
 //renders the top header bar
 const Header = ()  => {
 
-    const {getIdTokenClaims, isAuthenticated} = useAuth0();
+    const {getIdTokenClaims, isAuthenticated, getAccessTokenSilently} = useAuth0();
     const [userLoggedIn, setUserLoggedIn] = useState<IAuth0User | undefined>(undefined);
     const {cartItems, clearCartItems} = useCartContext();
     const [showCartModal, setShowCartModal] = useState<boolean>(false); //new order modal
     const [showMyOrdersModal, setShowMyOrdersModal] = useState<boolean>(false); //user (completed) orders modal
-    
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
     //get the IdToken Claims, which contain the user's metadata (user NAME/LASTNAME/ADDRESS), these are added
     //in the idToken in Auth0 dashboard -> onPostLogin AUTH0 ACTION
+    //also check if the user is admin by decoding the access token and checking the "admin:admin" permission (was setup from auth0 dashboard directly)
     useEffect(() => {
         if (isAuthenticated) {
             const getIdClaimsAsync = async() => {
@@ -36,10 +40,18 @@ const Header = ()  => {
                     });
                 }
             }
+            const checkIfAdmin = async() => {
+                const accessToken = await getAccessTokenSilently();
+                if (isLoggedAsAdmin(accessToken))
+                    setIsAdmin(true);
+            };
+
             getIdClaimsAsync();
+            checkIfAdmin();
         } else {
             clearCartItems(); //not logged in -> clear cart
             setUserLoggedIn(undefined);
+            setIsAdmin(false);
         }
 
         }, [isAuthenticated]);
@@ -58,6 +70,8 @@ const Header = ()  => {
         }
     };
 
+    const isAuthenticatedUser = (isAuthenticated && userLoggedIn !== undefined && userLoggedIn.name != undefined);
+
     return (
         <React.Fragment>
             {showMyOrdersModal && <Modal showModal={showMyOrdersModal} setShowModal={() => setShowMyOrdersModal(false)}>
@@ -74,8 +88,9 @@ const Header = ()  => {
                     <Link to="/" id={HeaderStyles.header_home}>Jimmys Foodzilla</Link>
                     <Link id={HeaderStyles.header_about_link} to="/about"><button className={HeaderStyles.custom_button}>About</button></Link>
                     <Auth0SignInOffButton text={isAuthenticated ? "Logout" : "Login"} isLogin = {!isAuthenticated} />
-                    {(isAuthenticated && userLoggedIn !== undefined && userLoggedIn.name != undefined) && <button className={HeaderStyles.custom_button} onClick = {() => setShowMyOrdersModal(true)}>My Orders</button>}
-                    {(isAuthenticated && userLoggedIn !== undefined && userLoggedIn.name != undefined) && <span id={HeaderStyles.header_user_name}>Welcome back, {userLoggedIn.name}!</span>}
+                    {isAuthenticatedUser && <button className={HeaderStyles.custom_button} onClick = {() => setShowMyOrdersModal(true)}>My Orders</button>}
+                    {isAuthenticatedUser && !isAdmin && <span id={HeaderStyles.header_user_name}>Welcome back, {userLoggedIn.name}!</span>}
+                    {isAuthenticatedUser && isAdmin && <Link id={HeaderStyles.header_admin_link} to="/admin"><button className={HeaderStyles.custom_button}>Admin Menu</button></Link>}
                 </div>
 
                 <CartButton cartItemsCounter = {cartItems.length} cartButtonClick={clickCartHandler} />

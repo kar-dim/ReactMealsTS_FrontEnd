@@ -4,7 +4,7 @@ import Dish from './Dish';
 import IDish from '../interfaces/DishInterface';
 import axios from 'axios';
 import { toastShow } from '../other/ToastUtils';
-import Settings from '../other/PublicSettings';
+import {Settings, ApiRoutes} from '../other/PublicSettings';
 import Modal from './Modal';
 import DishExtendedInfo from './DishExtendedInfo';
 import IDishWithImageURLEncoded from '../interfaces/DishWithImageUrlEncodedInterface';
@@ -21,7 +21,7 @@ const MainContent = () => {
     useEffect(() => {
         const getDishes = async() => {
             try {
-                const response = await axios.get(`${Settings.backend_url}/api/Dishes/GetDishes`);
+                const response = await axios.get(`${Settings.backend_url}/${ApiRoutes.GetDishes}`);
                 const dishesRet : IDish[] | null = response.data;
                 if (dishesRet != null && dishesRet.length > 0){
                     setAvailableDishes(dishesRet);

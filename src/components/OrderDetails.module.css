@@ -5,6 +5,11 @@ div#no_orders {
     flex-direction: column;
 }
 
+div#no_orders > img{
+    height: 400px;
+    width: 400px;
+}
+
 div#main_div {
     overflow-y: auto;
     display: flex;
@@ -107,9 +112,19 @@ div.food_counter_box {
     }
 }
 
+@media screen and (max-width: 400px) {
+    div#no_orders > img{
+        height: 300px;
+        width: 300px;
+    }
+    div#no_orders > h1 {
+        font-size: 18px;
+    }
+}
+
 @media screen and (max-width: 300px) {
     div.order_food_details {
         width: 90%;
     }
-    
 }
+

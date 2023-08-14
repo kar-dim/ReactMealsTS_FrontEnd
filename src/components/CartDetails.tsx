@@ -5,7 +5,7 @@ import { toastShow } from '../other/ToastUtils';
 import axios from 'axios';
 import {useState} from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import Settings from '../other/PublicSettings';
+import {Settings, ApiRoutes} from '../other/PublicSettings';
 
 interface ICartDetails {
     closeModal() : void;
@@ -57,7 +57,7 @@ const CartDetails = ({closeModal} : ICartDetails) => {
                 authorizationParams: {
                   audience: Settings.auth0_audience
                 }});
-            await axios.post(`${Settings.backend_url}/api/Dishes/Order`, orderData, {
+            await axios.post(`${Settings.backend_url}/${ApiRoutes.Order}`, orderData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 }

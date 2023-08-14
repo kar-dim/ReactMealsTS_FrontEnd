@@ -1,5 +1,5 @@
-import Header from "./components/Header"
-import AboutStyles from "./About.module.css"
+import Header from "./Header";
+import AboutStyles from "./About.module.css";
 
 //todo
 const About = () => {

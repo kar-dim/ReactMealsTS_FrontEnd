@@ -1,7 +1,8 @@
 import {Routes, Route } from "react-router-dom";
-import Home from "./Home"
-import About from './About'
-import RouteErrorPage from './other/route_error';
+import Home from "./components/Home";
+import About from "./components/About";
+import AdminMenu from "./components/AdminMenu";
+import RouteErrorPage from './other/RouteError';
 import {useState} from 'react';
 import {CartContext} from './contexts/cart-context';
 import IDish from './interfaces/DishInterface';
@@ -82,7 +83,8 @@ function App() {
         <Routes>
           <Route path="/" element = { <Home/> } />
           <Route path="about" element = { <About/> } />
-          <Route path="*" element = { <RouteErrorPage/> } />
+          <Route path="admin" element = { <AdminMenu/> } />
+          <Route path="*" element = { <RouteErrorPage errorText="PAGE NOT FOUND" errorDescription="The page you requested could not be found."/> } />
         </Routes>
 
     </CartContext.Provider>

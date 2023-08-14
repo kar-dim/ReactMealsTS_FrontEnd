@@ -1,7 +1,7 @@
 import IDish from '../interfaces/DishInterface';
 import { useCartContext } from '../contexts/cart-context';
 import { useAuth0 } from "@auth0/auth0-react";
-import Settings from '../other/PublicSettings';
+import {OtherRoutes, Settings} from '../other/PublicSettings';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import DishStyle from './Dish.module.css';
@@ -21,7 +21,7 @@ const Dish = ({dish, showCurrentDishInfo} : IDishProps) => {
         if (dish.dish_url != null) {
             const fetchDishes = async() => {
                 try {
-                const res = await axios.get(`${Settings.backend_url}/dishimages/${dish.dish_url}`, { responseType:"arraybuffer" });
+                const res = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dish.dish_url}`, { responseType:"arraybuffer" });
                 //convert to base64
                 let b64img = btoa(new Uint8Array(res.data).reduce((data, byte) => data + String.fromCharCode(byte),''));
                 setFetchedDishImage(b64img);
