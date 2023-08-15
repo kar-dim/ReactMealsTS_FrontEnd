@@ -1,4 +1,4 @@
-import IDish from '../interfaces/DishInterface';
+import {IDish} from '../interfaces/DishInterfaces';
 import CartDetailsStyle from './CartDetails.module.css';
 import {useCartContext} from '../contexts/cart-context';
 import { toastShow } from '../other/ToastUtils';

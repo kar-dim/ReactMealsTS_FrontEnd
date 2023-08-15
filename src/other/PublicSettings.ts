@@ -8,9 +8,12 @@ export const Settings = {
 };
 
 export const ApiRoutes = {
-    GetDishes : "api/Dishes/GetDishes",
-    Order : "api/Dishes/Order",
-    GetUserOrders : "api/Dishes/GetUserOrders"
+    GetDishes: "api/Dishes/GetDishes",
+    Order: "api/Dishes/Order",
+    GetUserOrders: "api/Dishes/GetUserOrders",
+    AddDish: "api/Dishes/AddDish",
+    UpdateDish: "api/Dishes/UpdateDish",
+    DeleteDish: "api/Dishes/DeleteDish"
 }
 
 export const OtherRoutes = {

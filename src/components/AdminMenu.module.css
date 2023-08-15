@@ -1,3 +1,52 @@
+.custom_button {
+    font-size: 16px;
+    padding: 10px 25px;
+    text-align: center;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+    border: 0px;
+    font-weight: 700;
+    box-shadow: 0px 0px 14px -7px #f08c19;
+    background-image: linear-gradient(45deg, #FF512F 0%, #f08c19  51%, #FF512F  100%);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+  
+.custom_button:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
+  
+.custom_button:active {
+    transform: scale(0.95);
+}
+
+.custom_button:disabled {
+    background-image: linear-gradient(45deg, #ffc4c4 0%, #ffcd95  51%, #ffb0a0  100%);
+}
+
+input {
+    font-size: 16px;
+}
+
+input[type=text], input[type=number], textarea{
+    border-radius: 5px;
+}
+
+textarea {
+    resize: none;
+}
+
+input:invalid, textarea:invalid {
+   border-color: rgb(255, 86, 74);
+}
+
+
 div#main {
     display: flex;
     justify-content: center;
@@ -11,4 +60,170 @@ div#main_content {
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    font-size: 16px;
+}
+
+/* ADD DISH ELEMENTS */
+
+form#add_dish_form {
+    display:flex;
+    flex-direction: column;
+    margin-top: 25px;
+}
+
+div#add_dish_1 {
+    display: flex;
+    justify-content:space-between;
+}
+
+input#adminmenu_dish_name, input#adminmenu_dish_description, input#adminmenu_dish_price {
+    margin-left: 10px;
+}
+label#adminmenu_dish_description_label, label#adminmenu_dish_price_label  {
+    margin-left: 45px;
+}
+
+input#adminmenu_dish_name {
+    width: 18em;
+}
+
+input#adminmenu_dish_description {
+    width: 32em;
+}
+
+input#adminmenu_dish_price {
+    width: 4.5em;
+}
+
+/* EXTENDED INFO */
+
+div#add_dish_2 {
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+}
+
+div#add_dish_2 textarea {
+    font-size: 14px;
+    margin-left: 15px;
+}
+
+/* DISH IMAGE */
+div#add_dish_3 {
+    margin-top: 25px;
+}
+
+label#adminmenu_imageFile_label {
+    margin-right: 15px;
+}
+
+/* ADD DISH BUTTON */
+
+div#add_dish_4 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+/* media quieries */
+
+@media screen and (max-width: 1420px) {
+    input {
+        font-size: 13px;
+    }
+    div#main_content {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 1128px) {
+    input#adminmenu_dish_name, input#adminmenu_dish_description, input#adminmenu_dish_price {
+        margin-left: 10px;
+    }
+    label#adminmenu_dish_description_label, label#adminmenu_dish_price_label  {
+        margin-left: 15px;
+    }
+    
+    input#adminmenu_dish_name {
+        width: 16em;
+    }
+    
+    input#adminmenu_dish_description {
+        width: 26em;
+    }
+    
+    input#adminmenu_dish_price {
+        width: 4.5em;
+    }
+    div#main_content {
+        width: 95%;
+    }
+    div#add_dish_2 {
+        flex-direction: column;
+    }
+    div#add_dish_2 > textarea {
+        width: 80vw;
+    }
+}
+
+@media screen and (max-width: 962px) {
+    input#adminmenu_dish_name, input#adminmenu_dish_description, input#adminmenu_dish_price {
+        margin-left: 0px;
+    }
+    label#adminmenu_dish_description_label, label#adminmenu_dish_price_label  {
+        margin-left: 0px;
+    }
+    
+    input#adminmenu_dish_name {
+        width: 16em;
+    }
+    
+    input#adminmenu_dish_description {
+        width: 26em;
+    }
+    
+    input#adminmenu_dish_price {
+        width: 4.5em;
+    }
+    div#add_dish_2 > textarea {
+        height: 20em;
+    }
+}
+
+@media screen and (max-width: 726px) {
+    div#add_dish_1 {
+        flex-direction: column;
+    }
+    div#add_dish_1 > div {
+        display: flex;
+        justify-content: space-between;
+    }
+    input#adminmenu_dish_name {
+        width: 26em;
+    }
+    div#add_dish_2 > textarea {
+        height: 25em;
+    }
+}
+
+@media screen and (max-width: 484px) {
+    input#adminmenu_dish_name {
+        width: 13em;
+    }
+    input#adminmenu_dish_description {
+        width: 13em;
+    }
+}
+
+@media screen and (max-width: 330px) {
+    input#adminmenu_dish_name {
+        width: 10em;
+    }
+    input#adminmenu_dish_description {
+        width: 10em;
+    }
+    div#add_dish_2 > textarea {
+        height: 30em;
+    }
 }

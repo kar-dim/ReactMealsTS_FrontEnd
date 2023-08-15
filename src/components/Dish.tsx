@@ -1,4 +1,4 @@
-import IDish from '../interfaces/DishInterface';
+import {IDish} from '../interfaces/DishInterfaces';
 import { useCartContext } from '../contexts/cart-context';
 import { useAuth0 } from "@auth0/auth0-react";
 import {OtherRoutes, Settings} from '../other/PublicSettings';

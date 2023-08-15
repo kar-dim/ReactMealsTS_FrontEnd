@@ -4,7 +4,7 @@ import axios from 'axios';
 import {useEffect, useState} from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import {ApiRoutes, Settings} from '../other/PublicSettings';
-import IDish from '../interfaces/DishInterface';
+import {IDish} from '../interfaces/DishInterfaces';
 import NoOrdersPic from '../media/sad_food.jpg';
 import { Tooltip } from 'react-tooltip';
 import React from 'react';

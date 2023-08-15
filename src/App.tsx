@@ -5,7 +5,7 @@ import AdminMenu from "./components/AdminMenu";
 import RouteErrorPage from './other/RouteError';
 import {useState} from 'react';
 import {CartContext} from './contexts/cart-context';
-import IDish from './interfaces/DishInterface';
+import {IDish} from './interfaces/DishInterfaces';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth0 } from "@auth0/auth0-react";

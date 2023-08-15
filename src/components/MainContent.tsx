@@ -1,13 +1,12 @@
 import {useState, useEffect} from 'react';
 import MainContentStyles from './MainContent.module.css';
 import Dish from './Dish';
-import IDish from '../interfaces/DishInterface';
+import {IDish, IDishWithImageURLEncoded} from '../interfaces/DishInterfaces';
 import axios from 'axios';
 import { toastShow } from '../other/ToastUtils';
 import {Settings, ApiRoutes} from '../other/PublicSettings';
 import Modal from './Modal';
 import DishExtendedInfo from './DishExtendedInfo';
-import IDishWithImageURLEncoded from '../interfaces/DishWithImageUrlEncodedInterface';
 
 //Main body of the website, sends the GET request and renders the dishes returned
 const MainContent = () => {

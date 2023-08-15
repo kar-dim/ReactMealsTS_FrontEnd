@@ -11,7 +11,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import {Settings} from '../other/PublicSettings';
 import CartDetails from './CartDetails';
 import OrderDetails from './OrderDetails';
-import jwtDecode , { JwtPayload } from 'jwt-decode';
 import { isLoggedAsAdmin } from '../other/utils';
 
 //renders the top header bar
