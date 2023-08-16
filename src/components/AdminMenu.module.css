@@ -194,7 +194,13 @@ button#main_editdishes_edit_btn , button#main_editdishes_delete_btn  {
     background-color: white;
     padding: 0;
     cursor: pointer;
+    filter: brightness(1);
 }
+
+button#main_editdishes_edit_btn:disabled , button#main_editdishes_delete_btn:disabled  {
+    filter: saturate(0);
+}
+
 button#main_editdishes_delete_btn {
     margin-left: 5px;
 }

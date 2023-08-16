@@ -17,7 +17,9 @@ const AdminMenu = () => {
     const [availableDishes, setAvailableDishes] = useState<IDishToPut[]>([]);
     const {getAccessTokenSilently} = useAuth0();
     const [addDishImageBase64, setAddDishImageBase64] = useState<string | null>(null);
-    const addDishButton = useRef<HTMLButtonElement>(null);
+    const addDishButton = useRef<HTMLButtonElement | null>(null);
+    const editDishButtons = useRef<(HTMLButtonElement | null)[]>([]);
+    const deleteDishButtons = useRef<(HTMLButtonElement | null)[]>([]);
 
     //get all the available dishes on startup
     useEffect(() => {
@@ -142,7 +144,107 @@ const AdminMenu = () => {
         reader.readAsDataURL(file);
     };
 
-    console.log(availableDishes?.length, availableDishes);
+    const editDish = async(dishToPut: IDishToPut) => {
+        //disable all buttons while the Edit operation is in progress
+        for (let i = 0; i < availableDishes.length; i++) {
+            editDishButtons.current[i]?.setAttribute("disabled", "true");
+            deleteDishButtons.current[i]?.setAttribute("disabled", "true");
+        } 
+
+        //send http PUT request
+        try {
+            //get auth0 access token
+            const accessToken = await getAccessTokenSilently();
+            //send the put request
+            await axios.put(`${Settings.backend_url}/${ApiRoutes.UpdateDish}`, dishToPut , {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            });
+            toastShow('Dish update success', 'S');
+            //update this specific dish locally, and then re-render
+            const availableDishesC = availableDishes.map(x => x);
+            for (let i=0; i<availableDishesC.length; i++) {
+                if (availableDishesC[i].dishId == dishToPut.dishId) {
+                    availableDishesC[i] = {
+                        dishId: availableDishesC[i].dishId,
+                        dish_name: "NEW NAME TEST", //dishToPut.dish_name;
+                        dish_description: "NEW DESC TEST", //dishToPut.dish_description;
+                        dish_extended_info: dishToPut.dish_extended_info,
+                        price: dishToPut.price,
+                        dish_image_base64: dishToPut.dish_image_base64
+                    }
+                }
+            }
+            setAvailableDishes(availableDishesC);
+        } catch (error : any) {
+            toastShow('Error in updating the dish. Check console log', 'E');
+             // check if the error was thrown from axios
+            if (axios.isAxiosError(error)) {
+                if (error.response) {
+                    console.error(error.response.data);
+                    console.error(error.response.status);
+                    console.error(error.response.headers);
+                }
+            } else
+                console.error(error);
+        } finally {
+            //enable the buttons again
+            for (let i = 0; i < availableDishes.length; i++) {
+                editDishButtons.current[i]?.removeAttribute("disabled");
+                deleteDishButtons.current[i]?.removeAttribute("disabled");
+            } 
+        }
+    };
+
+    const deleteDish = async(dishIdToDelete: number) => {
+        //disable all buttons while the Delete operation is in progress
+        for (let i = 0; i < availableDishes.length; i++) {
+            editDishButtons.current[i]?.setAttribute("disabled", "true");
+            deleteDishButtons.current[i]?.setAttribute("disabled", "true");
+        } 
+
+         //send http DELETE request
+        try {
+            //get auth0 access token
+            const accessToken = await getAccessTokenSilently();
+            //send the delete request
+            await axios.delete(`${Settings.backend_url}/${ApiRoutes.DeleteDish}/${dishIdToDelete}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            });
+            toastShow('Dish delete success', 'S');
+            setAvailableDishes(prev => prev.filter((dish) => dish.dishId != dishIdToDelete));
+        } catch (error : any) {
+             // check if the error was thrown from axios
+            if (axios.isAxiosError(error)) {
+                if (error.response) {
+                    console.error(error.response.data);
+                    console.error(error.response.status);
+                    //if 404 not found from server -> we can delete the local dish from here
+                    if (error.response.status == 404) {
+                        setAvailableDishes(prev => prev.filter((dish) => dish.dishId != dishIdToDelete));
+                        toastShow('Dish not found in db', 'I');
+                    } else
+                        toastShow('Error in deleting the dish. Check console log', 'E');
+                    console.error(error.response.headers);
+                } else {
+                    toastShow('Error in deleting the dish. Check console log', 'E');
+                }
+            } else {
+                toastShow('Error in deleting the dish. Check console log', 'E');
+                console.error(error);
+            }
+        } finally {
+            //enable the buttons again
+            for (let i = 0; i < availableDishes.length; i++) {
+                editDishButtons.current[i]?.removeAttribute("disabled");
+                deleteDishButtons.current[i]?.removeAttribute("disabled");
+            } 
+        }        
+    };
+
     return (
         <>
         <Header />
@@ -201,7 +303,7 @@ const AdminMenu = () => {
                         {availableDishes.length > 0 &&
                         <div id={adminStyle.main_editdishes_main}>
                             <ul>
-                                {availableDishes.map(dish => {
+                                {availableDishes.map((dish, index) => {
                                     return (
                                         <li key={dish.dishId} className={adminStyle.main_editdidhes_li}>
                                             <img id={adminStyle.main_editdishes_img} src={`data:image/*;charset=utf-8;base64,${dish.dish_image_base64}`}></img>
@@ -211,8 +313,8 @@ const AdminMenu = () => {
                                                 <span id={adminStyle.main_editdishes_text_description}>{dish.dish_description}</span>
                                             </div>
                                             <div id={adminStyle.main_editdishes_buttons}>
-                                                <button id={adminStyle.main_editdishes_edit_btn}><img id={adminStyle.main_editdishes_edit_btn_img} src={IconEdit}></img></button>
-                                                <button id={adminStyle.main_editdishes_delete_btn}><img id={adminStyle.main_editdishes_delete_btn_img}src={IconDelete}></img></button>
+                                                <button ref={ref => (editDishButtons.current[index] = ref)} onClick = {() => {} /*editDish(dish)*/}id={adminStyle.main_editdishes_edit_btn}><img id={adminStyle.main_editdishes_edit_btn_img} src={IconEdit}></img></button>
+                                                <button ref={ref => (deleteDishButtons.current[index] = ref)} onClick = {() => deleteDish(dish.dishId)} id={adminStyle.main_editdishes_delete_btn}><img id={adminStyle.main_editdishes_delete_btn_img}src={IconDelete}></img></button>
                                             </div>
                                         </li>
                                     )
