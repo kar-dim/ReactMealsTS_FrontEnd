@@ -21,10 +21,10 @@ const Dish = ({dish, showCurrentDishInfo} : IDishProps) => {
         if (dish.dish_url != null) {
             const fetchDishes = async() => {
                 try {
-                const res = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dish.dish_url}`, { responseType:"arraybuffer" });
-                //convert to base64
-                let b64img = btoa(new Uint8Array(res.data).reduce((data, byte) => data + String.fromCharCode(byte),''));
-                setFetchedDishImage(b64img);
+                    const res = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dish.dish_url}`, { responseType:"arraybuffer" });
+                    //convert to base64
+                    let b64img = btoa(new Uint8Array(res.data).reduce((data, byte) => data + String.fromCharCode(byte),''));
+                    setFetchedDishImage(b64img);
                 } catch (error : any) {
                      // check if the error was thrown from axios
                     if (axios.isAxiosError(error)) {
@@ -47,7 +47,7 @@ const Dish = ({dish, showCurrentDishInfo} : IDishProps) => {
             <div className={DishStyle.dish_main}>
                <div className={DishStyle.dish_left} onClick={() => showCurrentDishInfo(dish, fetchedDishImage)}>
                     <div className={DishStyle.left_image}>
-                        {dish.dish_url && fetchedDishImage && <img id={DishStyle.dish_left_img} src={`data:image/jpeg;charset=utf-8;base64,${fetchedDishImage}`}></img>}
+                        {dish.dish_url && fetchedDishImage && <img id={DishStyle.dish_left_img} src={`data:image/*;charset=utf-8;base64,${fetchedDishImage}`}></img>}
                     </div>
                     <div className={DishStyle.dish_left_text}>
                         <span id={DishStyle.dish_name}>{dish.dish_name}</span><br/>

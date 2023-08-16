@@ -26,3 +26,8 @@ export interface IDishToAdd {
     dish_extended_info: string,
     dish_image_base64 : string | null
 };
+
+//a dish interface used on HTTP PUT request
+export interface IDishToPut extends IDishToAdd {
+    dishId: number
+};
