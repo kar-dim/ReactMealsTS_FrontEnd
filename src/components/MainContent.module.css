@@ -12,14 +12,40 @@
     padding: 25px;
 }
 
+/* extension of main_content, used when the dishes could not be loaded */
+.main_content_error {
+  align-items: center;
+}
+
 ul.main_content_ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
+img#error_img {
+  max-width: 60%;
+  max-height: 60%;
+}
+
+h1#main_content_error_h1 {
+  font-size: 26px;
+}
+
 @media screen and (max-width: 960px) {
   .main_content {
     width: 80%;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  h1#main_content_error_h1 {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 410px) {
+  h1#main_content_error_h1 {
+    font-size: 12px;
   }
 }

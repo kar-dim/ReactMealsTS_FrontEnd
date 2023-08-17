@@ -7,6 +7,7 @@ import { toastShow } from '../other/ToastUtils';
 import {Settings, ApiRoutes} from '../other/PublicSettings';
 import Modal from './Modal';
 import DishExtendedInfo from './DishExtendedInfo';
+import ErrorImage from "../media/sad_food.jpg";
 
 //Main body of the website, sends the GET request and renders the dishes returned
 const MainContent = () => {
@@ -58,7 +59,14 @@ const MainContent = () => {
                 </ul>
             </div> 
         </>
+        : initialText== '' ? 
+        <div className={`${MainContentStyles.main_content} ${MainContentStyles.main_content_error}`}>
+            <h1 id={MainContentStyles.main_content_error_h1}>Internal Error. Please try again later.</h1>
+            <img id={MainContentStyles.error_img} src={ErrorImage}></img>
+        </div> 
+        
         : <div style={{ fontSize: '2rem', marginTop: '2rem', textAlign: 'center', color: 'white'}}>{initialText}</div>
+        
     );
 };
 export default MainContent;
