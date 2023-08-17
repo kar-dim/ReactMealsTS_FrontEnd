@@ -1,5 +1,5 @@
 import React, {useContext } from 'react';
-import IDish from '../interfaces/DishInterfaces';
+import {IDish} from '../interfaces/DishInterfaces';
 
 interface contextType {
     cartItems: IDish[],
