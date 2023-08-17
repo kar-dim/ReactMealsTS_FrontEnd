@@ -42,11 +42,6 @@ textarea {
     resize: none;
 }
 
-input:invalid, textarea:invalid {
-   border-color: rgb(255, 86, 74);
-}
-
-
 div#main {
     display: flex;
     justify-content: center;
