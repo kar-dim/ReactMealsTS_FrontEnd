@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 
 interface IModal {
     showModal : boolean;
-    setShowModal() : void;
+    closeModal() : void;
     desiredWidth?: string;
     children: ReactNode
 };
@@ -15,7 +15,7 @@ const Modal = (props: IModal) => {
     return (
         <div className={showModalClass}>
             <div className="cart_modal_content" style={modalWidth ? {width: modalWidth} : undefined}>
-                <span onClick={() => props.setShowModal()} className="cart_modal_close_button">&times;</span>
+                <span onClick={() => props.closeModal()} className="cart_modal_close_button">&times;</span>
                 {props.children}
             </div>
         </div>

@@ -41,7 +41,7 @@ const MainContent = () => {
     return (
         shouldRenderList() ? 
         <>
-            {currentDishExtendedInfo !== null && <Modal showModal={currentDishExtendedInfo !== null} setShowModal={() => setShowCurrentDishExtendedInfo(null)}>
+            {currentDishExtendedInfo !== null && <Modal showModal={currentDishExtendedInfo !== null} closeModal={() => setShowCurrentDishExtendedInfo(null)}>
                 <div> 
                 {<DishExtendedInfo {...currentDishExtendedInfo} ></DishExtendedInfo>}
                 </div>

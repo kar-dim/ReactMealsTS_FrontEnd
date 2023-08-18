@@ -9,11 +9,14 @@ export const Settings = {
 
 export const ApiRoutes = {
     GetDishes: "api/Dishes/GetDishes",
+    GetUsers: "api/Users/GetUsers",
     Order: "api/Dishes/Order",
     GetUserOrders: "api/Dishes/GetUserOrders",
     AddDish: "api/Dishes/AddDish",
     UpdateDish: "api/Dishes/UpdateDish",
-    DeleteDish: "api/Dishes/DeleteDish"
+    UpdateUser: "api/Users/UpdateUser",
+    DeleteDish: "api/Dishes/DeleteDish",
+    DeleteUser: "api/Users/DeleteUser"
 }
 
 export const OtherRoutes = {

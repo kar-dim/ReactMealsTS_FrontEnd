@@ -59,7 +59,6 @@ div#main_content {
     font-size: 16px;
 }
 
-/* ADD DISH ELEMENTS */
 
 form#add_dish_form {
     display:flex;
@@ -91,8 +90,6 @@ input#adminmenu_dish_price {
     width: 4.5em;
 }
 
-/* EXTENDED INFO */
-
 div#add_dish_2 {
     display: flex;
     align-items: center;
@@ -104,7 +101,6 @@ div#add_dish_2 textarea {
     margin-left: 15px;
 }
 
-/* DISH IMAGE */
 div#add_dish_3 {
     margin-top: 25px;
 }
@@ -113,7 +109,6 @@ label#adminmenu_imageFile_label {
     margin-right: 15px;
 }
 
-/* ADD DISH BUTTON */
 
 div#add_dish_4 {
     display: flex;
@@ -123,34 +118,46 @@ div#add_dish_4 {
 }
 
 
-/* EDIT USERS SECTION */
+div#deletedish_confirm_dialog {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-div#main_editdishes_main {
+div.main_edit_main {
     display: flex;
     flex-direction: column;
 }
 
-div#main_editdishes_error{
+div.main_edit_error {
 
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-div#main_editdishes_error > img{
+div.main_edit_error > img{
     height: 400px;
     width: 400px;
 }
 
-div#main_editdishes_main {
+div.main_edit_main {
     display: flex;
     flex-direction: column;
 }
 
-div#main_editdishes_main > ul {
+div.main_edit_main > ul {
     list-style: none;
 }
 
-li.main_editdidhes_li {
+li.main_editdishes_li {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+li.main_editusers_li {
     display:flex;
     align-items: center;
     justify-content: space-between;
@@ -181,7 +188,33 @@ span#main_editdishes_text_description {
     display: inline-block;
 }
 
-button#main_editdishes_edit_btn , button#main_editdishes_delete_btn  {
+
+div#main_editusers_text {
+    display:flex;
+    width: 90%;
+    text-align:center;
+    align-items: center;
+}
+span#main_editusers_text_email {
+    display: inline-block;
+    flex-grow: 1;
+}
+span#main_editusers_text_name {
+    display: inline-block;
+    flex-grow: 1;
+}
+
+span#main_editusers_text_lastname {
+    display: inline-block;
+    flex-grow: 1;
+}
+
+span#main_editusers_text_address {
+    display: inline-block;
+    flex-grow: 1;
+}
+
+button#main_edit_edit_btn , button#main_edit_delete_btn  {
     border: none;
     outline:none;
     box-shadow: none;
@@ -192,40 +225,60 @@ button#main_editdishes_edit_btn , button#main_editdishes_delete_btn  {
     filter: brightness(1);
 }
 
-button#main_editdishes_edit_btn:disabled , button#main_editdishes_delete_btn:disabled  {
+button#main_edit_edit_btn:disabled , button#main_edit_delete_btn:disabled  {
     filter: saturate(0);
 }
 
-button#main_editdishes_delete_btn {
+button#main_edit_delete_btn {
     margin-left: 5px;
 }
 
-button#main_editdishes_edit_btn:hover > img, button#main_editdishes_delete_btn:hover > img {
+button#main_edit_edit_btn:hover > img, button#main_edit_delete_btn:hover > img {
     pointer-events: none;
     filter: brightness(1.15);
 }
 
-button#main_editdishes_edit_btn:active > img, button#main_editdishes_delete_btn:active > img {
+button#main_edit_edit_btn:active > img, button#main_edit_delete_btn:active > img {
     filter: brightness(0.85);
 }
 
-img#main_editdishes_edit_btn_img, img#main_editdishes_delete_btn_img {
+img#main_edit_edit_btn_img, img#main_edit_delete_btn_img {
     filter: brightness(1);
     transition: 0.1s ease;
 }
 
-img#main_editdishes_edit_btn_img {
+img#main_edit_edit_btn_img {
     width: 36px;
     height: 38px;
 }
 
-img#main_editdishes_delete_btn_img {
+img#main_edit_delete_btn_img {
     width: 30px;
     height: 38px;
 }
 
+form#edit_user_form {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 5px 20px 5px;
+}
 
-/* media quieries */
+div#edit_user_form1, div#edit_user_form2 , div#edit_user_form3, div#edit_user_form4 {
+    margin-bottom: 15px;
+    display:flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+div#edit_user_form5 {
+    align-self: center;
+}
+
+input[type=text]#edit_user_email, input[type=text]#edit_user_name, input[type=text]#edit_user_lastname, input[type=text]#edit_user_address {
+    font-size: 13px;
+ }
+
 
 @media screen and (max-width: 1420px) {
     input {
@@ -309,6 +362,17 @@ img#main_editdishes_delete_btn_img {
     }
 }
 
+@media screen and (max-width: 812px) {
+    div#main_editusers_text {
+        display: block;
+        text-align: start;
+        width: 50%;
+    }
+    div#main_editusers_text > span {
+        display: block;
+    }
+}
+
 @media screen and (max-width: 726px) {
     div#add_dish_1 {
         flex-direction: column;
@@ -345,11 +409,11 @@ img#main_editdishes_delete_btn_img {
     input#adminmenu_dish_description {
         width: 13em;
     }
-    div#main_editdishes_error > img {
+    div.main_editdishes_error > img {
         height: 300px;
         width: 300px;
     }
-    div#main_editdishes_error > h1 {
+    div.main_editdishes_error > h1 {
         font-size: 18px;
     }
     div#main_editdishes_text {
@@ -359,12 +423,11 @@ img#main_editdishes_delete_btn_img {
         width: 60px;
         height: 45px;
     }
-    img#main_editdishes_edit_btn_img {
+    img#main_edit_edit_btn_img {
         width: 18px;
         height: 19px;
     }
-    
-    img#main_editdishes_delete_btn_img {
+    img#main_edit_delete_btn_img {
         width: 15px;
         height: 19px;
     }

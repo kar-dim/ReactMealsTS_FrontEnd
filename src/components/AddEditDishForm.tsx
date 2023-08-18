@@ -16,7 +16,7 @@ interface IAddEditDishFormProps {
 
 const AddEditDishForm = ({preFilledValues, addOrEditDish,addOrEditDishImageHandler, addOrEditDishButton, isUsedForAdd} : IAddEditDishFormProps) => {
     return (
-        <div id={adminStyle.main_adddish}>
+        <div>
             <div>
                 <form id={adminStyle.add_dish_form} onSubmit={(event) => addOrEditDish(event)}>
                     <div id={adminStyle.add_dish_1}>
