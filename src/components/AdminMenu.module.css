@@ -192,26 +192,27 @@ span#main_editdishes_text_description {
 div#main_editusers_text {
     display:flex;
     width: 90%;
-    text-align:center;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
 }
 span#main_editusers_text_email {
     display: inline-block;
-    flex-grow: 1;
+    width:22%;
 }
 span#main_editusers_text_name {
     display: inline-block;
-    flex-grow: 1;
+    width:22%;
 }
 
 span#main_editusers_text_lastname {
     display: inline-block;
-    flex-grow: 1;
+    width:22%;
 }
 
 span#main_editusers_text_address {
     display: inline-block;
-    flex-grow: 1;
+    width:22%;
 }
 
 button#main_edit_edit_btn , button#main_edit_delete_btn  {

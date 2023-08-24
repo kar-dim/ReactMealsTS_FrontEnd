@@ -95,7 +95,7 @@ const AdminMenu = () => {
                     });
                     const usersRet : IUser[] | null = response.data;
                     if (usersRet != null && usersRet.length > 0) {
-                        console.log(usersRet);
+                        //console.log(usersRet);
                         setAvailableUsers(usersRet);
                     } else {
                         setAvailableUsers([]); //no users returned
@@ -242,7 +242,7 @@ const AdminMenu = () => {
         //disable edit user button while the operation is in progress
         editUserButton.current!.setAttribute("disabled", "true");
 
-        console.log(userToEdit);
+        //console.log(userToEdit);
         const userToSend :IUser = {
             user_Id: userToEdit!.user_Id,
             name: event.target.elements.name.value,
@@ -250,7 +250,7 @@ const AdminMenu = () => {
             email: event.target.elements.email.value,
             address: event.target.elements.address.value,
         };
-        console.log(userToSend);
+        //console.log(userToSend);
         //send http PUT request
         try {
             //get auth0 access token

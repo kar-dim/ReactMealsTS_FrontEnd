@@ -40,8 +40,6 @@ const CartDetails = ({closeModal} : ICartDetails) => {
             })
         };
 
-        console.log(orderData);
-
         //if empty card don't send request! Also close the modal
         if (orderData.order.length == 0){
             toastShow('Empty cart!', 'E');
