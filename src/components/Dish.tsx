@@ -5,6 +5,7 @@ import {OtherRoutes, Settings} from '../other/PublicSettings';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import DishStyle from './Dish.module.css';
+import DishLoadingImage from '../media/dish_loading_skeleton.png';
 
 interface IDishProps {
     dish: IDish,
@@ -48,6 +49,7 @@ const Dish = ({dish, showCurrentDishInfo} : IDishProps) => {
                <div className={DishStyle.dish_left} onClick={() => showCurrentDishInfo(dish, fetchedDishImage)}>
                     <div className={DishStyle.left_image}>
                         {dish.dish_url && fetchedDishImage && <img id={DishStyle.dish_left_img} src={`data:image/*;charset=utf-8;base64,${fetchedDishImage}`}></img>}
+                        {dish.dish_url && !fetchedDishImage && <img id={DishStyle.dish_left_img} src={DishLoadingImage}></img>}
                     </div>
                     <div className={DishStyle.dish_left_text}>
                         <span id={DishStyle.dish_name}>{dish.dish_name}</span><br/>
