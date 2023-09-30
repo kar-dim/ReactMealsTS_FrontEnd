@@ -71,13 +71,6 @@ div#add_dish_1 {
     justify-content:space-between;
 }
 
-input#adminmenu_dish_name, input#adminmenu_dish_description, input#adminmenu_dish_price {
-    margin-left: 10px;
-}
-label#adminmenu_dish_description_label, label#adminmenu_dish_price_label  {
-    margin-left: 45px;
-}
-
 input#adminmenu_dish_name {
     width: 18em;
 }
@@ -291,12 +284,6 @@ input[type=text]#edit_user_email, input[type=text]#edit_user_name, input[type=te
 }
 
 @media screen and (max-width: 1128px) {
-    input#adminmenu_dish_name, input#adminmenu_dish_description, input#adminmenu_dish_price {
-        margin-left: 10px;
-    }
-    label#adminmenu_dish_description_label, label#adminmenu_dish_price_label  {
-        margin-left: 15px;
-    }
     
     input#adminmenu_dish_name {
         width: 16em;
@@ -331,12 +318,6 @@ input[type=text]#edit_user_email, input[type=text]#edit_user_name, input[type=te
 }
 
 @media screen and (max-width: 962px) {
-    input#adminmenu_dish_name, input#adminmenu_dish_description, input#adminmenu_dish_price {
-        margin-left: 0px;
-    }
-    label#adminmenu_dish_description_label, label#adminmenu_dish_price_label  {
-        margin-left: 0px;
-    }
     
     input#adminmenu_dish_name {
         width: 16em;
