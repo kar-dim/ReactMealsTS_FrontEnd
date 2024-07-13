@@ -1,4 +1,4 @@
-import jwtDecode, {JwtPayload } from "jwt-decode";
+import {jwtDecode, JwtPayload } from "jwt-decode";
 
 export const isLoggedAsAdmin = (jwtToken : string) => {
     const decodedAccessToken = jwtDecode<JwtPayload & { permissions : string[]}>(jwtToken);
