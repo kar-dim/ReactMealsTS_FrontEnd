@@ -89,7 +89,6 @@ const OrderDetails = ({closeModal} : IOrderDetailsProps) => {
         <div id={OrderDetailsStyle.no_orders}>
             <h1>You have no orders yet.</h1>
             <img loading='lazy' src={NoOrdersPic}></img>
-            
         </div>
         )
     }
