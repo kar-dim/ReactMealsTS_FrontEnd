@@ -140,7 +140,7 @@ const OrderDetails = ({closeModal} : IOrderDetailsProps) => {
                 }
             </ul>
         </div>
-    )
+    );
 }
 
 export default OrderDetails;

@@ -15,7 +15,7 @@ const DishExtendedInfo = ({dish_description, dish_extended_info, dish_name, imag
                 {dish_extended_info}
             </div>
         </div>
-    )
+    );
 };
 
 export default DishExtendedInfo;
