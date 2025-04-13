@@ -1,5 +1,5 @@
-import { FormEvent } from "react";
-import adminStyle from "./AdminMenu.module.css"
+import { FormEvent } from 'react';
+import adminStyle from '../styles/AdminMenu.module.css'
 
 interface IAddEditDishFormProps {
     preFilledValues? : {

@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import CartButton from './CartButton';
-import HeaderStyles from './Header.module.css';
+import HeaderStyles from '../styles/Header.module.css';
 import {useCartContext} from '../contexts/cart-context';
 import Modal from './Modal';
 import { toastShow } from '../other/ToastUtils';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import imgBg from '../media/bg.webp';
 import Auth0SignInOffButton from './Auth0SignInOffButton';
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react';
 import {Settings} from '../other/PublicSettings';
 import CartDetails from './CartDetails';
 import OrderDetails from './OrderDetails';

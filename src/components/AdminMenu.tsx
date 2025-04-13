@@ -1,20 +1,20 @@
-import adminStyle from "./AdminMenu.module.css"
-import Header from "./Header";
-import axios from "axios";
+import adminStyle from '../styles/AdminMenu.module.css';
+import Header from './Header';
+import axios from 'axios';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { toastShow } from "../other/ToastUtils";
-import { useEffect, useRef, useState } from "react";
-import { IDish, IDishToAdd, IDishToPut } from "../interfaces/DishInterfaces";
-import { IUser } from "../interfaces/UserInterface";
-import { useAuth0 } from "@auth0/auth0-react";
-import { ApiRoutes, OtherRoutes, Settings } from "../other/PublicSettings";
+import { toastShow } from '../other/ToastUtils';
+import { useEffect, useRef, useState } from 'react';
+import { IDish, IDishToAdd, IDishToPut } from '../interfaces/DishInterfaces';
+import { IUser } from '../interfaces/UserInterface';
+import { useAuth0 } from '@auth0/auth0-react';
+import { ApiRoutes, OtherRoutes, Settings } from '../other/PublicSettings';
 import NoDishesPic from '../media/sad_food.jpg';
 import IconEdit from '../media/icon_edit.png';
 import IconDelete from '../media/icon_delete.png';
-import Modal from "./Modal";
-import AddEditDishForm from "./AddEditDishForm";
-import EditUserForm from "./EditUserForm";
+import Modal from './Modal';
+import AddEditDishForm from './AddEditDishForm';
+import EditUserForm from './EditUserForm';
 
 const AdminMenu = () => {
     

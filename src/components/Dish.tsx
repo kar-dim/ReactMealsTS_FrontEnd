@@ -1,10 +1,10 @@
 import {IDish} from '../interfaces/DishInterfaces';
 import { useCartContext } from '../contexts/cart-context';
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react';
 import {OtherRoutes, Settings} from '../other/PublicSettings';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import DishStyle from './Dish.module.css';
+import DishStyle from '../styles/Dish.module.css';
 import DishLoadingImage from '../media/dish_loading_skeleton.png';
 
 interface IDishProps {

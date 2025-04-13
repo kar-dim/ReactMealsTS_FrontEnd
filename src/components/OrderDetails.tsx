@@ -1,4 +1,4 @@
-import OrderDetailsStyle from './OrderDetails.module.css';
+import OrderDetailsStyle from '../styles/OrderDetails.module.css';
 import { toastShow } from '../other/ToastUtils';
 import axios from 'axios';
 import {useEffect, useState} from 'react';

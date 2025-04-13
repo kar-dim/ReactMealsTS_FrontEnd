@@ -1,4 +1,4 @@
-import './Modal.css';
+import '../styles/Modal.css';
 import { ReactNode } from 'react'
 
 interface IModal {
