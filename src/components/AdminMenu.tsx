@@ -145,10 +145,11 @@ const AdminMenu = () => {
                     Authorization: `Bearer ${accessToken}`,
                 }
             });
-            toastShow('The Dish was successfully added to the database, with ID: ' + response.data, 'S');
+            const newDishId = (response.data as IDish).dishId;
+            toastShow('The Dish was successfully added to the database, with ID: ' + newDishId, 'S');
             //append to the local dishes
             let newlyCreatedDish : IDishToPut = {
-                dishId: response.data,
+                dishId: newDishId,
                 price: dishToSend.price,
                 dish_name: dishToSend.dish_name,
                 dish_description: dishToSend.dish_description,
