@@ -95,7 +95,7 @@ const AdminMenu = () => {
                     });
                     const usersRet : IUser[] | null = response.data;
                     if (usersRet != null && usersRet.length > 0) {
-                        //console.log(usersRet);
+                        console.log(usersRet);
                         setAvailableUsers(usersRet);
                     } else {
                         setAvailableUsers([]); //no users returned
@@ -245,13 +245,13 @@ const AdminMenu = () => {
 
         //console.log(userToEdit);
         const userToSend :IUser = {
-            user_Id: userToEdit!.user_Id,
+            user_id: userToEdit!.user_id,
             name: event.target.elements.name.value,
             lastName: event.target.elements.lastname.value,
             email: event.target.elements.email.value,
             address: event.target.elements.address.value,
         };
-        //console.log(userToSend);
+        console.log(userToSend);
         //send http PUT request
         try {
             //get auth0 access token
@@ -266,9 +266,9 @@ const AdminMenu = () => {
             //update this specific user locally, and then re-render
             const availableUsersC = availableUsers.map(x => x);
             for (let i=0; i<availableUsersC.length; i++) {
-                if (availableUsersC[i].user_Id == userToSend.user_Id) {
+                if (availableUsersC[i].user_id == userToSend.user_id) {
                     availableUsersC[i] = {
-                        user_Id: availableUsersC[i].user_Id,
+                        user_id: availableUsersC[i].user_id,
                         name: userToSend.name,
                         lastName: userToSend.lastName,
                         email: userToSend.email,
@@ -362,7 +362,7 @@ const AdminMenu = () => {
                 }
             });
             toastShow('User delete success', 'S');
-            setAvailableUsers(prev => prev.filter((user) => user.user_Id != userToDelete));
+            setAvailableUsers(prev => prev.filter((user) => user.user_id != userToDelete));
         } catch (error : any) {
              // check if the error was thrown from axios
             if (axios.isAxiosError(error)) {
@@ -371,7 +371,7 @@ const AdminMenu = () => {
                     console.error(error.response.status);
                     //if 404 not found from server -> we can delete the local user from here
                     if (error.response.status == 404) {
-                        setAvailableUsers(prev => prev.filter((user) => user.user_Id != userToDelete));
+                        setAvailableUsers(prev => prev.filter((user) => user.user_id != userToDelete));
                         toastShow('User not found in db', 'I');
                     } else
                         toastShow('Error in deleting the user. Check console log', 'E');
@@ -521,7 +521,7 @@ const AdminMenu = () => {
                             <ul style={{paddingLeft: "5px"}}>
                                 {availableUsers.map((user, index) => {
                                     return (
-                                        <li key={user.user_Id} className={adminStyle.main_editusers_li}>
+                                        <li key={user.user_id} className={adminStyle.main_editusers_li}>
                                         <div id={adminStyle.main_editusers_text}>
                                             <span id={adminStyle.main_editusers_text_email}>{user.email}</span>
                                             <span id={adminStyle.main_editusers_text_name}>{user.name}</span>
@@ -530,7 +530,7 @@ const AdminMenu = () => {
                                         </div>
                                         <div>
                                             <button ref={ref => (editUserButtons.current[index] = ref)} onClick = {() => {setUserToEdit(user)}} id={adminStyle.main_edit_edit_btn}><img id={adminStyle.main_edit_edit_btn_img} src={IconEdit}></img></button>
-                                            <button ref={ref => (deleteUserButtons.current[index] = ref)} onClick = {() => setUserDeleteConfirm(user.user_Id)} id={adminStyle.main_edit_delete_btn}><img id={adminStyle.main_edit_delete_btn_img}src={IconDelete}></img></button>
+                                            <button ref={ref => (deleteUserButtons.current[index] = ref)} onClick = {() => setUserDeleteConfirm(user.user_id)} id={adminStyle.main_edit_delete_btn}><img id={adminStyle.main_edit_delete_btn_img}src={IconDelete}></img></button>
                                         </div>
                                     </li>
                                     )
