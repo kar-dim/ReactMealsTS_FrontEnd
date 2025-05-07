@@ -1,12 +1,34 @@
-# ReactMealsTS_FrontEnd
-My own implementation (Frontend) of Maximilian's [React Meals](https://www.udemy.com/course/react-the-complete-guide-incl-redux/) (as of 2023).
+This is a custom frontend implementation of Maximilian Schwarzmüller's [React Meals](https://www.udemy.com/course/react-the-complete-guide-incl-redux/) project (as of 2023), built with **React**, **Vite**, and **TypeScript**.
 
-It is a web app written in React (Vite with TypeScript) based on Maximillian's React Meals but enhanced with some extra functionality:
+## Enhancements & Features
 
-- A Backend is implemented [Link](https://github.com/kar-dim/ReactMealsTS_BackEnd). There is a new functionality for calling the backend services in order to fetch and update information (orders, update dishes, etc).
-- Login system implemented, with the help of Auth0. 
-- Role based with the help of Auth0. "Admin" role users have extra functionality, like updating the Menu/Dishes and Users' information by calling the backend services.
-- Configured for Vercel (in 'production' mode, ```num run build```) 
+This version extends the original project with additional functionality:
+
+- **New Backend Integration**  
+  A backend service is available here: [ReactMealsTS_BackEnd](https://github.com/kar-dim/ReactMealsTS_BackEnd)  
+  It provides API endpoints for managing orders, dishes, and users.
+
+- **Authentication & Authorization**  
+  - Integrated with **Auth0** for secure login.
+  - **Role-based access control** is implemented:
+    - Regular users can place orders.
+    - Users with the `"Admin"` role can also edit the menu and manage users via backend services.
+
+- **Deployment**  
+  - May be configured for **Vercel** deployment.
+  - To build for production:
+
+    ```bash
+    npm run build
+    ```
+
+## Tech Stack
+
+- React
+- TypeScript
+- Vite
+- Auth0
+- REST API (via custom backend)
 
 # UI
 ![1](https://github.com/user-attachments/assets/d319d7ba-7b57-42b4-9a76-652dd0e5984b)
