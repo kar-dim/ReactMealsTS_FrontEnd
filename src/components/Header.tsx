@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import CartButton from './CartButton';
 import HeaderStyles from '../styles/Header.module.css';
 import {useCartContext} from '../contexts/cart-context';
