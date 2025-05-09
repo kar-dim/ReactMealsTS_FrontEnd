@@ -11,6 +11,7 @@ ReactDOM.createRoot(document.getElementById("root") as Element).render(
       domain={Settings.auth0_domain}
       clientId={Settings.auth0_clientId}
       useRefreshTokens={true}
+      useRefreshTokensFallback={true}
       cacheLocation="localstorage"
       authorizationParams={{
         redirect_uri: `${Settings.frontend_url}/`,
