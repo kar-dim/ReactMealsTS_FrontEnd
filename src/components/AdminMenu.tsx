@@ -54,8 +54,8 @@ const AdminMenu = () => {
                             let responseImage;
                             let b64img;
                             try {
-                               responseImage = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dish.dish_url}`, { responseType:"arraybuffer" });
-                               //convert to base64
+                                responseImage = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dish.dish_url}`, { responseType:"arraybuffer" });
+                                //convert to base64
                                 b64img = btoa(new Uint8Array(responseImage.data).reduce((data, byte) => data + String.fromCharCode(byte),''));
                             } catch (error) {
                                 //image not found? it's OK, don't throw errors or exit, just don't show the image
@@ -72,18 +72,17 @@ const AdminMenu = () => {
                             });
                         }));
                         setAvailableDishes([...availableDishes, ...dishes ]);
-                        
-                    } else {
-                        toastShow('Could not fetch dishes', 'E');
+                        return;
                     }
                 } catch (error) {
                     console.error(error);
-                    toastShow('Could not fetch dishes', 'E');
                 }
+                toastShow('Could not fetch dishes', 'E');
             };
+
             getDishes();
         }
-        //again, his should run ONLY once to fetch all the users from db at first, if somehow it runs again, don't do anything
+        //again, this should run ONLY once to fetch all the users from db at first, if somehow it runs again, don't do anything
         if (availableUsers.length == 0) {
             const getUsers = async() => {
                 try {
@@ -93,29 +92,17 @@ const AdminMenu = () => {
                             Authorization: `Bearer ${accessToken}`,
                         }
                     });
-                    const usersRet : IUser[] | null = response.data;
-                    if (usersRet != null && usersRet.length > 0) {
-                        console.log(usersRet);
-                        setAvailableUsers(usersRet);
-                    } else {
-                        setAvailableUsers([]); //no users returned
-                    }
-                } catch (error : any) {
-                    toastShow('Could not fetch Users', 'E');
-                     // check if the error was thrown from axios
-                    if (axios.isAxiosError(error)) {
-                        if (error.response) {
-                            console.error(error.response.data);
-                            console.error(error.response.status);
-                            console.error(error.response.headers);
-                        }
-                    } else
-                        console.error(error);
+                    const usersRet: IUser[] | null = response.data;
+                    setAvailableUsers(usersRet != null && usersRet.length > 0 ? usersRet : []);
+                    return;
+                } catch (error) {
+                    console.error(error);
                 }
+                toastShow('Could not fetch Users', 'E');
             };
-            getUsers();
-        }   
 
+            getUsers();
+        }
     }, []);
     
     //when the user clicks ADD DISH
@@ -158,17 +145,9 @@ const AdminMenu = () => {
             }
             setAvailableDishes((prev) => ([...prev, newlyCreatedDish]));
 
-        } catch (error : any) {
+        } catch (error) {
             toastShow('Error in adding the dish. Check console log', 'E');
-             // check if the error was thrown from axios
-            if (axios.isAxiosError(error)) {
-                if (error.response) {
-                    console.error(error.response.data);
-                    console.error(error.response.status);
-                    console.error(error.response.headers);
-                }
-            } else
-                console.error(error);
+            console.error(error);
         } finally {
             if (addDishButton.current)
                 addDishButton.current.removeAttribute("disabled");
@@ -205,32 +184,21 @@ const AdminMenu = () => {
             });
             toastShow('Dish update success', 'S');
             //update this specific dish locally, and then re-render
-            const availableDishesC = availableDishes.map(x => x);
-            for (let i=0; i<availableDishesC.length; i++) {
-                if (availableDishesC[i].dishId == dishToSend.dishId) {
-                    availableDishesC[i] = {
-                        dishId: availableDishesC[i].dishId,
+            setAvailableDishes(prev => prev.map(dish =>
+                dish.dishId === dishToSend.dishId ? {
+                        dishId: dish.dishId,
                         dish_name: dishToSend.dish_name,
                         dish_description: dishToSend.dish_description,
                         dish_extended_info: dishToSend.dish_extended_info,
                         price: dishToSend.price,
                         dish_image_base64: dishToSend.dish_image_base64
-                    }
-                }
-            }
-            setAvailableDishes(availableDishesC);
+                    } : dish
+                )
+            );
             setDishToEdit(null);
-        } catch (error : any) {
+        } catch (error) {
             toastShow('Error in updating the dish. Check console log', 'E');
-             // check if the error was thrown from axios
-            if (axios.isAxiosError(error)) {
-                if (error.response) {
-                    console.error(error.response.data);
-                    console.error(error.response.status);
-                    console.error(error.response.headers);
-                }
-            } else
-                console.error(error);
+            console.error(error);
         } finally {
             //enable the button again
             editDishButton.current!.removeAttribute("disabled");

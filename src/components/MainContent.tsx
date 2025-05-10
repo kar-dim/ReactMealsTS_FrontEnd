@@ -23,17 +23,15 @@ const MainContent = () => {
             try {
                 const response = await axios.get(`${Settings.backend_url}/${ApiRoutes.GetDishes}`);
                 const dishesRet : IDish[] | null = response.data;
-                if (dishesRet != null && dishesRet.length > 0){
+                if (dishesRet != null && dishesRet.length > 0) {
                     setAvailableDishes(dishesRet);
-                } else {
-                    setInitialText('');
-                    toastShow('Could not fetch dishes', 'E');
+                    return;
                 }
             } catch (error) {
                 console.error(error);
-                setInitialText('');
-                toastShow('Could not fetch dishes', 'E');
             }
+            setInitialText('');
+            toastShow('Could not fetch dishes', 'E');
         };
         getDishes();
     }, []);
