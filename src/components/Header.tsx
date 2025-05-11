@@ -68,14 +68,13 @@ const Header = ()  => {
     const clickCartHandler = (): void => {
         if (!isAuthenticated){
             toastShow("Please Login first!", "E");
-        } else {
-            if (cartItems !== null && cartItems.length > 0){
-                setShowCartModal(true);
-            } //else -> empty
-            else {
-                toastShow('Empty cart!', "E");
-            }
+            return;
         }
+        if (cartItems !== null && cartItems.length > 0) {
+            setShowCartModal(true);
+            return;
+        }
+        toastShow('Empty cart!', "E");
     };
 
     const isAuthenticatedUser = (isAuthenticated && userLoggedIn !== undefined && userLoggedIn.name != undefined);

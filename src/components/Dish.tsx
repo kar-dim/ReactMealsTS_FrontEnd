@@ -22,22 +22,15 @@ const Dish = ({dish, showCurrentDishInfo} : IDishProps) => {
         if (dish.dish_url != null) {
             const fetchDishes = async() => {
                 try {
-                    const res = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dish.dish_url}`, { responseType:"arraybuffer" });
+                    const imageResponse = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dish.dish_url}`, { responseType:"arraybuffer" });
                     //convert to base64
-                    let b64img = btoa(new Uint8Array(res.data).reduce((data, byte) => data + String.fromCharCode(byte),''));
+                    let b64img = btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte),''));
                     setFetchedDishImage(b64img);
-                } catch (error : any) {
-                     // check if the error was thrown from axios
-                    if (axios.isAxiosError(error)) {
-                        if (error.response) {
-                            console.error(error.response.data);
-                            console.error(error.response.status);
-                            console.error(error.response.headers);
-                        }
-                    } else
-                        console.error(error);
+                } catch (error) {
+                    console.error(error);
                 }
             };
+
             fetchDishes();
          }
     }, []);

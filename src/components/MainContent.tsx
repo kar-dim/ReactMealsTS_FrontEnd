@@ -14,9 +14,7 @@ const MainContent = () => {
     const [availableDishes, setAvailableDishes] = useState<IDish[] | null>([]);
     const [initialText, setInitialText] = useState<string>('Loading...');
     const [currentDishExtendedInfo, setShowCurrentDishExtendedInfo] = useState<IDishWithImageURLEncoded | null>(null);
-    const shouldRenderList = () : boolean => {
-        return (availableDishes !== null && availableDishes !== undefined && availableDishes.length > 0);
-    };
+    const shouldRenderList = () : boolean => availableDishes !== null && availableDishes !== undefined && availableDishes.length > 0;
 
     useEffect(() => {
         const getDishes = async() => {
@@ -61,8 +59,7 @@ const MainContent = () => {
         <div className={`${MainContentStyles.main_content} ${MainContentStyles.main_content_error}`}>
             <h1 id={MainContentStyles.main_content_error_h1}>Internal Error. Please try again later.</h1>
             <img id={MainContentStyles.error_img} src={ErrorImage}></img>
-        </div> 
-        
+        </div>
         : <div style={{ fontSize: '2rem', marginTop: '2rem', textAlign: 'center', color: 'white'}}>{initialText}</div>
         
     );

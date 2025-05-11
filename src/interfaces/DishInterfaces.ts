@@ -8,6 +8,10 @@ export interface IDish {
     dish_url: string | null
 };
 
+export interface IDishWithCounter extends IDish {
+    dish_counter : number
+}
+
 export interface DishType {
     dish: IDish;
     addDish(dish: IDish) : void;
