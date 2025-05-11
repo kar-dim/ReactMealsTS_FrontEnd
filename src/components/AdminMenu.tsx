@@ -15,6 +15,7 @@ import IconDelete from '../media/icon_delete.png';
 import Modal from './Modal';
 import AddEditDishForm from './AddEditDishForm';
 import EditUserForm from './EditUserForm';
+import {get, post, put, del} from '../other/utils';
 
 const AdminMenu = () => {
     
@@ -86,13 +87,7 @@ const AdminMenu = () => {
         if (availableUsers.length == 0) {
             const getUsers = async() => {
                 try {
-                    const accessToken = await getAccessTokenSilently();
-                    const response = await axios.get(`${Settings.backend_url}/${ApiRoutes.GetUsers}`, {
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                        }
-                    });
-                    const usersRet: IUser[] | null = response.data;
+                    const usersRet = await get<IUser[] | null>(ApiRoutes.GetUsers, await getAccessTokenSilently());
                     setAvailableUsers(usersRet != null && usersRet.length > 0 ? usersRet : []);
                     return;
                 } catch (error) {
@@ -124,15 +119,7 @@ const AdminMenu = () => {
         try {
             if (addDishButton.current)
                 addDishButton.current.setAttribute("disabled", "true");
-            //get auth0 access token
-            const accessToken = await getAccessTokenSilently();
-            //send the post request
-            const response = await axios.post(`${Settings.backend_url}/${ApiRoutes.AddDish}`, dishToSend , {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            });
-            const newDishId : number = response.data;
+            const newDishId = await post<IDishToAdd, number>(ApiRoutes.AddDish, dishToSend, await getAccessTokenSilently());
             toastShow('The Dish was successfully added to the database, with ID: ' + newDishId, 'S');
             //append to the local dishes
             let newlyCreatedDish : IDishToPut = {
@@ -174,14 +161,7 @@ const AdminMenu = () => {
 
         //send http PUT request
         try {
-            //get auth0 access token
-            const accessToken = await getAccessTokenSilently();
-            //send the put request
-            await axios.put(`${Settings.backend_url}/${ApiRoutes.UpdateDish}`, dishToSend , {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            });
+            await put<IDishToPut, any>(ApiRoutes.UpdateDish, dishToSend,  await getAccessTokenSilently());
             toastShow('Dish update success', 'S');
             //update this specific dish locally, and then re-render
             setAvailableDishes(prev => prev.map(dish =>
@@ -205,13 +185,10 @@ const AdminMenu = () => {
         }
     };
 
-
     const editUser = async(event: any) => {
         event.preventDefault();
         //disable edit user button while the operation is in progress
         editUserButton.current!.setAttribute("disabled", "true");
-
-        //console.log(userToEdit);
         const userToSend :IUser = {
             user_id: userToEdit!.user_id,
             name: event.target.elements.name.value,
@@ -219,51 +196,31 @@ const AdminMenu = () => {
             email: event.target.elements.email.value,
             address: event.target.elements.address.value,
         };
-        console.log(userToSend);
         //send http PUT request
         try {
-            //get auth0 access token
-            const accessToken = await getAccessTokenSilently();
-            //send the put request
-            await axios.put(`${Settings.backend_url}/${ApiRoutes.UpdateUser}`, userToSend , {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            });
+            await put<IUser, any>(ApiRoutes.UpdateUser, userToSend, await getAccessTokenSilently());
             toastShow('User update success', 'S');
             //update this specific user locally, and then re-render
-            const availableUsersC = availableUsers.map(x => x);
-            for (let i=0; i<availableUsersC.length; i++) {
-                if (availableUsersC[i].user_id == userToSend.user_id) {
-                    availableUsersC[i] = {
-                        user_id: availableUsersC[i].user_id,
-                        name: userToSend.name,
-                        lastName: userToSend.lastName,
-                        email: userToSend.email,
-                        address: userToSend.address
-                    }
-                }
-            }
-            setAvailableUsers(availableUsersC);
+            setAvailableUsers(prev => prev.map(user =>
+               user.user_id === userToSend.user_id ? {
+                    user_id: user.user_id,
+                    name: userToSend.name,
+                    lastName: userToSend.lastName,
+                    email: userToSend.email,
+                    address: userToSend.address
+                    } : user
+                )
+            );
             setUserToEdit(null);
-        } catch (error : any) {
+        } catch (error) {
             toastShow('Error in updating the user. Check console log', 'E');
-             // check if the error was thrown from axios
-            if (axios.isAxiosError(error)) {
-                if (error.response) {
-                    console.error(error.response.data);
-                    console.error(error.response.status);
-                    console.error(error.response.headers);
-                }
-            } else
-                console.error(error);
+            console.error(error);
         } finally {
             //enable the button again
             editUserButton.current!.removeAttribute("disabled");
         }
     };
 
-    
     const deleteDish = async(dishIdToDelete: number) => {
         //disable all buttons while the Delete operation is in progress
         for (let i = 0; i < availableDishes.length; i++) {
@@ -271,38 +228,25 @@ const AdminMenu = () => {
             deleteDishButtons.current[i]?.setAttribute("disabled", "true");
         } 
 
-         //send http DELETE request
+        //send http DELETE request
         try {
-            //get auth0 access token
-            const accessToken = await getAccessTokenSilently();
-            //send the delete request
-            await axios.delete(`${Settings.backend_url}/${ApiRoutes.DeleteDish}/${dishIdToDelete}`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            });
+            await del<any>(`${ApiRoutes.DeleteDish}/${dishIdToDelete}`, await getAccessTokenSilently());
             toastShow('Dish delete success', 'S');
             setAvailableDishes(prev => prev.filter((dish) => dish.dishId != dishIdToDelete));
-        } catch (error : any) {
-             // check if the error was thrown from axios
-            if (axios.isAxiosError(error)) {
-                if (error.response) {
-                    console.error(error.response.data);
-                    console.error(error.response.status);
-                    //if 404 not found from server -> we can delete the local dish from here
-                    if (error.response.status == 404) {
-                        setAvailableDishes(prev => prev.filter((dish) => dish.dishId != dishIdToDelete));
-                        toastShow('Dish not found in db', 'I');
-                    } else
-                        toastShow('Error in deleting the dish. Check console log', 'E');
-                    console.error(error.response.headers);
-                } else {
-                    toastShow('Error in deleting the dish. Check console log', 'E');
+        } catch (error) {
+            console.error(error);
+            if (axios.isAxiosError(error) && error.response) {
+                const { status, data, headers } = error.response;
+                console.error('Axios error: ', data, status, headers);
+                if (status === 404) {
+                    setAvailableDishes(prev => prev.filter(dish => dish.dishId !== dishIdToDelete));
+                    toastShow('Dish not found in db', 'I');
+                    return;
                 }
-            } else {
                 toastShow('Error in deleting the dish. Check console log', 'E');
-                console.error(error);
+                return;
             }
+            toastShow('Error in deleting the dish. Check console log', 'E');
         } finally {
             //enable the buttons again
             for (let i = 0; i < availableDishes.length; i++) {
@@ -321,36 +265,23 @@ const AdminMenu = () => {
 
          //send http DELETE request
         try {
-            //get auth0 access token
-            const accessToken = await getAccessTokenSilently();
-            //send the delete request
-            await axios.delete(`${Settings.backend_url}/${ApiRoutes.DeleteUser}/${userToDelete}`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            });
+            del<any>(`${ApiRoutes.DeleteUser}/${userToDelete}`, await getAccessTokenSilently());
             toastShow('User delete success', 'S');
             setAvailableUsers(prev => prev.filter((user) => user.user_id != userToDelete));
-        } catch (error : any) {
-             // check if the error was thrown from axios
-            if (axios.isAxiosError(error)) {
-                if (error.response) {
-                    console.error(error.response.data);
-                    console.error(error.response.status);
-                    //if 404 not found from server -> we can delete the local user from here
-                    if (error.response.status == 404) {
-                        setAvailableUsers(prev => prev.filter((user) => user.user_id != userToDelete));
-                        toastShow('User not found in db', 'I');
-                    } else
-                        toastShow('Error in deleting the user. Check console log', 'E');
-                    console.error(error.response.headers);
-                } else {
-                    toastShow('Error in deleting the user. Check console log', 'E');
+        }catch (error) {
+            console.error(error);
+            if (axios.isAxiosError(error) && error.response) {
+                const { status, data, headers } = error.response;
+                console.error('Axios error: ', data, status, headers);
+                if (status === 404) {
+                    setAvailableUsers(prev => prev.filter(user => user.user_id !== userToDelete));
+                    toastShow('User not found in db', 'I');
+                    return;
                 }
-            } else {
                 toastShow('Error in deleting the user. Check console log', 'E');
-                console.error(error);
+                return;
             }
+            toastShow('Error in deleting the user. Check console log', 'E');
         } finally {
             //enable the buttons again
             for (let i = 0; i < availableDishes.length; i++) {
@@ -359,20 +290,18 @@ const AdminMenu = () => {
             } 
         }        
     };
-
-
     
     //check the size of the uploaded image file (mut be 3MB MAX) and errors in uploading 
     const checkImage = (event: any, isAdd: boolean) => {
         let file = event.target.files[0];
-        if (file.size > 3000000){
+        if (file.size > 3000000) {
             toastShow("File size is too big", "E");
             isAdd ? setAddDishImageBase64(null) : setEditDishImageBase64(null);
             return;
         }
         
         var reader = new FileReader();
-         reader.onload = function() {
+        reader.onload = function() {
             if (!this.result) {
                 toastShow("Could not upload the file", "E");
                 isAdd ? setAddDishImageBase64(null) : setEditDishImageBase64(null);
@@ -391,10 +320,7 @@ const AdminMenu = () => {
         reader.readAsDataURL(file);
     };
 
-    const addOrEditDishImageHandler = (event: any, isAdd: boolean) => {
-        checkImage(event, isAdd);
-    };
-
+    const addOrEditDishImageHandler = (event: any, isAdd: boolean) => checkImage(event, isAdd);
 
     return (
         <>
