@@ -18,9 +18,9 @@ import EditUserForm from './EditUserForm';
 import {get, post, put, del} from '../other/utils';
 
 const AdminMenu = () => {
-    
-    const {getAccessTokenSilently} = useAuth0();
+    const MAX_IMG_SIZE = 3000000;
 
+    const {getAccessTokenSilently} = useAuth0();
     const [availableDishes, setAvailableDishes] = useState<IDishToPut[]>([]);
     const [availableUsers, setAvailableUsers] = useState<IUser[]>([]);
     const [addDishImageBase64, setAddDishImageBase64] = useState<string | null>(null);
@@ -268,7 +268,7 @@ const AdminMenu = () => {
             del<any>(`${ApiRoutes.DeleteUser}/${userToDelete}`, await getAccessTokenSilently());
             toastShow('User delete success', 'S');
             setAvailableUsers(prev => prev.filter((user) => user.user_id != userToDelete));
-        }catch (error) {
+        } catch (error) {
             console.error(error);
             if (axios.isAxiosError(error) && error.response) {
                 const { status, data, headers } = error.response;
@@ -294,7 +294,7 @@ const AdminMenu = () => {
     //check the size of the uploaded image file (mut be 3MB MAX) and errors in uploading 
     const checkImage = (event: any, isAdd: boolean) => {
         let file = event.target.files[0];
-        if (file.size > 3000000) {
+        if (file.size > MAX_IMG_SIZE) {
             toastShow("File size is too big", "E");
             isAdd ? setAddDishImageBase64(null) : setEditDishImageBase64(null);
             return;
