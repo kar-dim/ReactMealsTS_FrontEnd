@@ -4,9 +4,9 @@ import axios from 'axios';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { toastShow } from '../other/ToastUtils';
-import { useEffect, useRef, useState } from 'react';
-import { IDish, IDishToAdd, IDishToPut } from '../interfaces/DishInterfaces';
-import { IUser } from '../interfaces/UserInterface';
+import { FormEvent, useEffect, useRef, useState } from 'react';
+import { createDishToAddFromForm, createDishToPut, createDishToPutFromAdd, createDishToPutFromForm, IDish, IDishToAdd, IDishToPut } from '../interfaces/DishInterfaces';
+import { createUserFromForm, IUser } from '../interfaces/UserInterface';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ApiRoutes, OtherRoutes, Settings } from '../other/PublicSettings';
 import NoDishesPic from '../media/sad_food.jpg';
@@ -62,15 +62,7 @@ const AdminMenu = () => {
                                 //image not found? it's OK, don't throw errors or exit, just don't show the image
                                 b64img = "";
                             }
-                            
-                            dishes.push({
-                                dishId: dish.dishId,
-                                price: dish.price,
-                                dish_name: dish.dish_name,
-                                dish_description: dish.dish_description,
-                                dish_extended_info: dish.dish_extended_info,
-                                dish_image_base64: b64img,
-                            });
+                            dishes.push(createDishToPut(dish, b64img));
                         }));
                         setAvailableDishes([...availableDishes, ...dishes ]);
                         return;
@@ -101,19 +93,13 @@ const AdminMenu = () => {
     }, []);
     
     //when the user clicks ADD DISH
-    const addDish = async(event : any) => {
+    const addDish = async(event : FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (addDishImageBase64 === null) {
             toastShow("A valid image is required", "E");
             return;
         }
-        const dishToSend :IDishToAdd = {
-            dish_name : event.target.elements.dish_name.value,
-            price : event.target.elements.dish_price.value,
-            dish_description : event.target.elements.dish_description.value,
-            dish_extended_info : event.target.elements.dish_extended_description.value,
-            dish_image_base64 : addDishImageBase64
-        };
+        const dishToSend = createDishToAddFromForm(event.target as HTMLFormElement, addDishImageBase64);
 
         //send http POST request
         try {
@@ -122,16 +108,7 @@ const AdminMenu = () => {
             const newDishId = await post<IDishToAdd, number>(ApiRoutes.AddDish, dishToSend, await getAccessTokenSilently());
             toastShow('The Dish was successfully added to the database, with ID: ' + newDishId, 'S');
             //append to the local dishes
-            let newlyCreatedDish : IDishToPut = {
-                dishId: newDishId,
-                price: dishToSend.price,
-                dish_name: dishToSend.dish_name,
-                dish_description: dishToSend.dish_description,
-                dish_extended_info: dishToSend.dish_extended_info,
-                dish_image_base64: dishToSend.dish_image_base64
-            }
-            setAvailableDishes((prev) => ([...prev, newlyCreatedDish]));
-
+            setAvailableDishes((prev) => ([...prev, createDishToPutFromAdd(dishToSend, newDishId)]));
         } catch (error) {
             toastShow('Error in adding the dish. Check console log', 'E');
             console.error(error);
@@ -141,7 +118,7 @@ const AdminMenu = () => {
         }
     };
 
-    const editDish = async(event: any) => {
+    const editDish = async(event : FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (editDishImageBase64 === null) {
             toastShow("A valid image is required", "E");
@@ -150,31 +127,13 @@ const AdminMenu = () => {
         //disable edit dish button while the operation is in progress
         editDishButton.current!.setAttribute("disabled", "true");
 
-        const dishToSend :IDishToPut = {
-            dishId: dishToEdit!.dishId,
-            dish_name : event.target.elements.dish_name.value,
-            price : event.target.elements.dish_price.value,
-            dish_description : event.target.elements.dish_description.value,
-            dish_extended_info : event.target.elements.dish_extended_description.value,
-            dish_image_base64 : editDishImageBase64
-        };
-
+        const dishToSend = createDishToPutFromForm(event.target as HTMLFormElement, editDishImageBase64, dishToEdit!.dishId)
         //send http PUT request
         try {
             await put<IDishToPut, any>(ApiRoutes.UpdateDish, dishToSend,  await getAccessTokenSilently());
             toastShow('Dish update success', 'S');
             //update this specific dish locally, and then re-render
-            setAvailableDishes(prev => prev.map(dish =>
-                dish.dishId === dishToSend.dishId ? {
-                        dishId: dish.dishId,
-                        dish_name: dishToSend.dish_name,
-                        dish_description: dishToSend.dish_description,
-                        dish_extended_info: dishToSend.dish_extended_info,
-                        price: dishToSend.price,
-                        dish_image_base64: dishToSend.dish_image_base64
-                    } : dish
-                )
-            );
+            setAvailableDishes(prev => prev.map(dish => dish.dishId === dishToSend.dishId ? dishToSend : dish));
             setDishToEdit(null);
         } catch (error) {
             toastShow('Error in updating the dish. Check console log', 'E');
@@ -185,32 +144,17 @@ const AdminMenu = () => {
         }
     };
 
-    const editUser = async(event: any) => {
+    const editUser = async(event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         //disable edit user button while the operation is in progress
         editUserButton.current!.setAttribute("disabled", "true");
-        const userToSend :IUser = {
-            user_id: userToEdit!.user_id,
-            name: event.target.elements.name.value,
-            lastName: event.target.elements.lastname.value,
-            email: event.target.elements.email.value,
-            address: event.target.elements.address.value,
-        };
+        const userToSend = createUserFromForm(event.target as HTMLFormElement, userToEdit!.user_id);
         //send http PUT request
         try {
             await put<IUser, any>(ApiRoutes.UpdateUser, userToSend, await getAccessTokenSilently());
             toastShow('User update success', 'S');
             //update this specific user locally, and then re-render
-            setAvailableUsers(prev => prev.map(user =>
-               user.user_id === userToSend.user_id ? {
-                    user_id: user.user_id,
-                    name: userToSend.name,
-                    lastName: userToSend.lastName,
-                    email: userToSend.email,
-                    address: userToSend.address
-                    } : user
-                )
-            );
+            setAvailableUsers(prev => prev.map(user => user.user_id === userToSend.user_id ? userToSend : user));
             setUserToEdit(null);
         } catch (error) {
             toastShow('Error in updating the user. Check console log', 'E');
@@ -263,7 +207,7 @@ const AdminMenu = () => {
             deleteUserButtons.current[i]?.setAttribute("disabled", "true");
         } 
 
-         //send http DELETE request
+        //send http DELETE request
         try {
             del<any>(`${ApiRoutes.DeleteUser}/${userToDelete}`, await getAccessTokenSilently());
             toastShow('User delete success', 'S');
@@ -441,5 +385,4 @@ const AdminMenu = () => {
     </>
     );
 }
-
 export default AdminMenu;
