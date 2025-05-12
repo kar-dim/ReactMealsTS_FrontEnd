@@ -2,6 +2,13 @@
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
+const toastTypeMap: Record<string, Function> = {
+    E: toast.error,
+    W: toast.warn,
+    I: toast.info,
+    S: toast.success
+};
+
 const defaultToastOptions = {
     position: "top-right",
     autoClose: 5000,
@@ -17,14 +24,7 @@ const defaultToastOptions = {
 export const toastShow = (message: string, type: string) => {
     if (!type) 
         return;
-    const normalizedType = type.toUpperCase();
-    const toastTypeMap: Record<string, Function> = {
-        E: toast.error,
-        W: toast.warn,
-        I: toast.info,
-        S: toast.success,
-    };
-    const toastMethod = toastTypeMap[normalizedType];
+    const toastMethod = toastTypeMap[type.toUpperCase()];
     if (toastMethod)
         toastMethod(message, defaultToastOptions);
 };
