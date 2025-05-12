@@ -55,12 +55,12 @@ export const createDishToAddFromForm = (form: HTMLFormElement, imageBase64: stri
 });
 
 export const createDishToPutFromForm = (form: HTMLFormElement, imageBase64: string | null, dishId: number): IDishToPut => ({
-        dishId: dishId,
-        dish_name: (form.elements.namedItem('dish_name') as HTMLInputElement).value,
-        price: parseFloat((form.elements.namedItem('dish_price') as HTMLInputElement).value),
-        dish_description: (form.elements.namedItem('dish_description') as HTMLInputElement).value,
-        dish_extended_info: (form.elements.namedItem('dish_extended_description') as HTMLInputElement).value,
-        dish_image_base64 : imageBase64
+    dishId: dishId,
+    dish_name: (form.elements.namedItem('dish_name') as HTMLInputElement).value,
+    price: parseFloat((form.elements.namedItem('dish_price') as HTMLInputElement).value),
+    dish_description: (form.elements.namedItem('dish_description') as HTMLInputElement).value,
+    dish_extended_info: (form.elements.namedItem('dish_extended_description') as HTMLInputElement).value,
+    dish_image_base64 : imageBase64
 });
 
 export const createDishToPutFromAdd = (dishToSend: IDishToAdd, id: number) : IDishToPut => ({

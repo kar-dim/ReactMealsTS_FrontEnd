@@ -1,57 +1,30 @@
-//toast functions
+// toast functions
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-//show the (dark) toast based on its type (Error, Warn, Info, Success), will not execute if type is wrong
-export const toastShow = (message : string, type : string) => {
-    if (type !== null && type !== undefined)
-    {
-        type = type.toUpperCase();
-        if (type === "E")
-        {
-            toast.error(message, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
-        } else if (type === "W") {
-            toast.warn(message, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
-        } else if (type === "I") {
-            toast.info(message, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
-        } else if (type === "S") {
-            toast.success(message, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
-        }
-    }
+const defaultToastOptions = {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+};
+
+// Show the toast based on its type (Error, Warn, Info, Success)
+export const toastShow = (message: string, type: string) => {
+    if (!type) 
+        return;
+    const normalizedType = type.toUpperCase();
+    const toastTypeMap: Record<string, Function> = {
+        E: toast.error,
+        W: toast.warn,
+        I: toast.info,
+        S: toast.success,
+    };
+    const toastMethod = toastTypeMap[normalizedType];
+    if (toastMethod)
+        toastMethod(message, defaultToastOptions);
 };
