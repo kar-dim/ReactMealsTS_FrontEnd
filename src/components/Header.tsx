@@ -12,6 +12,7 @@ import {Settings} from '../other/PublicSettings';
 import CartDetails from './CartDetails';
 import OrderDetails from './OrderDetails';
 import { isLoggedAsAdmin } from '../other/utils';
+import {IAuth0User} from '../interfaces/Auth0UserInterface';
 
 //renders the top header bar
 const Header = ()  => {
