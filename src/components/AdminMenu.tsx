@@ -235,36 +235,32 @@ const AdminMenu = () => {
         }        
     };
     
-    //check the size of the uploaded image file (mut be 3MB MAX) and errors in uploading 
-    const checkImage = (event: any, isAdd: boolean) => {
-        let file = event.target.files[0];
+    //check the size of the uploaded image file and errors in uploading 
+    const checkImage = (event: React.ChangeEvent<HTMLInputElement>, isAdd: boolean) => {
+        const file = event.target.files?.[0];
+        const setImage = isAdd ? setAddDishImageBase64 : setEditDishImageBase64;
+        if (!file) 
+            return;
         if (file.size > MAX_IMG_SIZE) {
-            toastShow("File size is too big", "E");
-            isAdd ? setAddDishImageBase64(null) : setEditDishImageBase64(null);
+            toastShow("File is invalid or size is too big", "E");
+            setImage(null);
             return;
         }
-        
-        var reader = new FileReader();
-        reader.onload = function() {
-            if (!this.result) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const result = reader.result;
+            if (typeof result !== "string" || !result.includes(",")) {
                 toastShow("Could not upload the file", "E");
-                isAdd ? setAddDishImageBase64(null) : setEditDishImageBase64(null);
+                setImage(null);
                 return;
             }
-            let fileStr = (this.result as string);
-            let comma : number = fileStr.indexOf(',');
-            if (comma == -1){
-                toastShow("Could not upload the file", "E");
-                isAdd ? setAddDishImageBase64(null) : setEditDishImageBase64(null);
-                return;
-            }
-            var base64str = fileStr.substring(comma + 1);
-            isAdd ? setAddDishImageBase64(base64str) : setEditDishImageBase64(base64str);
-        }
+            const base64str = result.split(",")[1];
+            setImage(base64str);
+        };
         reader.readAsDataURL(file);
     };
 
-    const addOrEditDishImageHandler = (event: any, isAdd: boolean) => checkImage(event, isAdd);
+    const addOrEditDishImageHandler = (event: React.ChangeEvent<HTMLInputElement>, isAdd: boolean) => checkImage(event, isAdd);
 
     return (
         <>

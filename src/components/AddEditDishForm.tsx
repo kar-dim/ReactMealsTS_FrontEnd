@@ -9,12 +9,12 @@ interface IAddEditDishFormProps {
         dish_extended_description: string
     } | null,
     addOrEditDish(event: FormEvent<HTMLFormElement>) : void,
-    addOrEditDishImageHandler(event: any, isAdd: boolean) : void,
+    addOrEditDishImageHandler(event: React.ChangeEvent<HTMLInputElement>, isAdd: boolean) : void,
     addOrEditDishButton: any,
     isUsedForAdd: boolean //is true -> ADD DISH form, else -> EDIT DISH form
 }
 
-const AddEditDishForm = ({preFilledValues, addOrEditDish,addOrEditDishImageHandler, addOrEditDishButton, isUsedForAdd} : IAddEditDishFormProps) => {
+const AddEditDishForm = ({preFilledValues, addOrEditDish, addOrEditDishImageHandler, addOrEditDishButton, isUsedForAdd} : IAddEditDishFormProps) => {
     const spacing : string = isUsedForAdd ? " " : "";
     return (
         <div>
