@@ -25,18 +25,24 @@ interface ICartDetails {
     closeModal() : void;
 };
 
+// Returns a frequency list of cart items grouped by dishId
+const getCartItemsWithCounts = (items: IDish[]): CartItemCounter[] => {
+    const countMap = new Map<number, CartItemCounter>();
+    for (const item of items) {
+        if (!countMap.has(item.dishId)) 
+            countMap.set(item.dishId, { ...item, count: 1 });
+        else
+            countMap.get(item.dishId)!.count++;
+    }
+    return Array.from(countMap.values());
+};
+    
 const CartDetails = ({closeModal} : ICartDetails) => {
 
     const { user, getAccessTokenSilently } = useAuth0();
     const [showOrderButton, setShowOrderButton] = useState<boolean>(true);
     const {cartItems, addCartItem, removeCartItem, clearCartItems} = useCartContext();
-    
-    //returns a "frequency object" which counts how many times each dish ID (that exists in cart) appears
-    const cartItemsCountered : CartItemCounter[] = [...cartItems.reduce( (mp, o) => {
-        if (!mp.has(o.dishId)) mp.set(o.dishId, { ...o, count: 0 });
-        mp.get(o.dishId).count++;
-        return mp;
-    }, new Map()).values()];
+    const cartItemsCountered = getCartItemsWithCounts(cartItems);
 
     //order food (POST request)
     const order = async() => {
