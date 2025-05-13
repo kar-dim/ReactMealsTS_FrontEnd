@@ -10,15 +10,15 @@ interface IModal {
 
 const Modal = (props: IModal) => {
     const modalRef = useRef<HTMLDivElement>(null);
+    const handleClickOutside = (event: MouseEvent) => {
+        if (modalRef.current && !modalRef.current.contains(event.target as Node))
+            props.closeModal();
+    };
+
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (modalRef.current && !modalRef.current.contains(event.target as Node))
-                props.closeModal();
-        };
         if (props.showModal)
             document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
-        
     }, [props.showModal, props.closeModal]);
 
     const showModalClass = props.showModal ? 'cart_modal cart_show_modal' : 'cart_modal';

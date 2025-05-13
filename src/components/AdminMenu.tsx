@@ -52,16 +52,12 @@ const AdminMenu = () => {
                         let dishes :IDishToPut[] = [];
                         //foreach one, get the image
                         await Promise.all(dishesRet.map(async(dish) => {
-                            let responseImage;
-                            let b64img;
+                            let b64img = "";
                             try {
-                                responseImage = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dish.dish_url}`, { responseType:"arraybuffer" });
+                                const responseImage = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dish.dish_url}`, { responseType:"arraybuffer" });
                                 //convert to base64
                                 b64img = btoa(new Uint8Array(responseImage.data).reduce((data, byte) => data + String.fromCharCode(byte),''));
-                            } catch (error) {
-                                //image not found? it's OK, don't throw errors or exit, just don't show the image
-                                b64img = "";
-                            }
+                            } catch (error) { }
                             dishes.push(createDishToPut(dish, b64img));
                         }));
                         setAvailableDishes([...availableDishes, ...dishes ]);
@@ -80,7 +76,7 @@ const AdminMenu = () => {
             const getUsers = async() => {
                 try {
                     const usersRet = await get<IUser[] | null>(ApiRoutes.GetUsers, await getAccessTokenSilently());
-                    setAvailableUsers(usersRet != null && usersRet.length > 0 ? usersRet : []);
+                    setAvailableUsers(usersRet ?? []);
                     return;
                 } catch (error) {
                     console.error(error);
