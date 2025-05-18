@@ -2,20 +2,20 @@ import { FormEvent } from 'react';
 import adminStyle from '../styles/AdminMenu.module.css'
 
 interface IAddEditDishFormProps {
-    preFilledValues? : {
+    preFilledValues?: {
         dish_name: string,
         dish_description: string,
         price: number,
         dish_extended_description: string
     } | null,
-    addOrEditDish(event: FormEvent<HTMLFormElement>) : void,
-    addOrEditDishImageHandler(event: React.ChangeEvent<HTMLInputElement>, isAdd: boolean) : void,
+    addOrEditDish(event: FormEvent<HTMLFormElement>): void,
+    addOrEditDishImageHandler(event: React.ChangeEvent<HTMLInputElement>, isAdd: boolean): void,
     addOrEditDishButton: any,
     isUsedForAdd: boolean //is true -> ADD DISH form, else -> EDIT DISH form
 }
 
-const AddEditDishForm = ({preFilledValues, addOrEditDish, addOrEditDishImageHandler, addOrEditDishButton, isUsedForAdd} : IAddEditDishFormProps) => {
-    const spacing : string = isUsedForAdd ? " " : "";
+const AddEditDishForm = ({ preFilledValues, addOrEditDish, addOrEditDishImageHandler, addOrEditDishButton, isUsedForAdd }: IAddEditDishFormProps) => {
+    const spacing: string = isUsedForAdd ? " " : "";
     return (
         <div>
             <div>
@@ -37,17 +37,17 @@ const AddEditDishForm = ({preFilledValues, addOrEditDish, addOrEditDishImageHand
 
                     <div id={adminStyle.add_dish_2}>
                         <label id={adminStyle.adminmenu_dish_extended_description_label} htmlFor={adminStyle.adminmenu_dish_extended_description}>Dish extended info:</label>
-                        <textarea minLength={1} rows={10} cols={120} id={adminStyle.adminmenu_dish_extended_description} defaultValue={preFilledValues == null ? "" : preFilledValues.dish_extended_description}  name="dish_extended_description" maxLength={1800}></textarea>
+                        <textarea minLength={1} rows={10} cols={120} id={adminStyle.adminmenu_dish_extended_description} defaultValue={preFilledValues == null ? "" : preFilledValues.dish_extended_description} name="dish_extended_description" maxLength={1800}></textarea>
                     </div>
 
                     <div id={adminStyle.add_dish_3}>
-                        <label id={adminStyle.adminmenu_imageFile_label}htmlFor={adminStyle.adminmenu_imageFile}>Dish Image:</label>
+                        <label id={adminStyle.adminmenu_imageFile_label} htmlFor={adminStyle.adminmenu_imageFile}>Dish Image:</label>
                         <input type="file" required id={adminStyle.adminmenu_imageFile} name="imageFile" onChange={(e) => addOrEditDishImageHandler(e, isUsedForAdd)} accept="image/*"></input>
                     </div>
                     <div id={adminStyle.add_dish_4}>
                         <button type="submit" ref={addOrEditDishButton} className={adminStyle.custom_button}>{isUsedForAdd ? "Add Dish" : "Edit Dish"}</button>
                     </div>
-                </form> 
+                </form>
             </div>
         </div>
     );

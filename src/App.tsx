@@ -15,48 +15,48 @@ import axios from "axios";
 const compareDishFn = (a: IDish, b: IDish) => a.dishId - b.dishId;
 
 const App = () => {
-    const { isLoading } = useAuth0();
-    //initial state when page loads
-    const [cartItems, setCartItems] = useState<IDish[]>(JSON.parse(localStorage.getItem('cartItems') ?? '[]'));
-  
-    //saves cart items to localStorage and react state
-    const setCart = (cart: IDish[]) => {
-       localStorage.setItem('cartItems', JSON.stringify(cart));
-       setCartItems(cart);
-    }
+  const { isLoading } = useAuth0();
+  //initial state when page loads
+  const [cartItems, setCartItems] = useState<IDish[]>(JSON.parse(localStorage.getItem('cartItems') ?? '[]'));
 
-    //called from the CART MODAL ("+" BUTTONS) and in MainContent (ADD button on the main menu)
-    const addItem = (dishToAdd : IDish): void => {
-      const cartWithNewItem: IDish[] = [...JSON.parse(localStorage.getItem('cartItems') ?? '[]'), dishToAdd].sort(compareDishFn);
-      setCart(cartWithNewItem);
-    };
-  
-    //called from the CART MODAL ("-" BUTTON)
-    const removeItem = (dishToRemove: IDish): void => {
-      let cart: IDish[] = JSON.parse(localStorage.getItem('cartItems') ?? '[]');
-      cart.splice(cart.findIndex(dish => dish.dishId === dishToRemove.dishId), 1);
-      setCart(cart);
-    };
-  
-    //called when an order is finished, clears the cart
-    const clearItems = (): void => setCart([]);
+  //saves cart items to localStorage and react state
+  const setCart = (cart: IDish[]) => {
+    localStorage.setItem('cartItems', JSON.stringify(cart));
+    setCartItems(cart);
+  }
 
-    if (isLoading)
-      return (<Auth0LoadingPage />);
+  //called from the CART MODAL ("+" BUTTONS) and in MainContent (ADD button on the main menu)
+  const addItem = (dishToAdd: IDish): void => {
+    const cartWithNewItem: IDish[] = [...JSON.parse(localStorage.getItem('cartItems') ?? '[]'), dishToAdd].sort(compareDishFn);
+    setCart(cartWithNewItem);
+  };
 
-    //global axios stuff
-    axios.defaults.timeout = 7000;
-    axios.defaults.headers.common['ngrok-skip-browser-warning'] = true;
+  //called from the CART MODAL ("-" BUTTON)
+  const removeItem = (dishToRemove: IDish): void => {
+    let cart: IDish[] = JSON.parse(localStorage.getItem('cartItems') ?? '[]');
+    cart.splice(cart.findIndex(dish => dish.dishId === dishToRemove.dishId), 1);
+    setCart(cart);
+  };
+
+  //called when an order is finished, clears the cart
+  const clearItems = (): void => setCart([]);
+
+  if (isLoading)
+    return (<Auth0LoadingPage />);
+
+  //global axios stuff
+  axios.defaults.timeout = 7000;
+  axios.defaults.headers.common['ngrok-skip-browser-warning'] = true;
 
   return (
-    <CartContext.Provider value ={{cartItems: cartItems, addCartItem: addItem, removeCartItem: removeItem, clearCartItems: clearItems}}>
-        <ToastContainer position="top-right" autoClose={5000} hideProgressBar newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover={false} theme="dark"/>
-        <Routes>
-          <Route path="/" element = { <Home/> } />
-          <Route path="about" element = { <About/> } />
-          <Route path="admin" element = { <AdminMenu/> } />
-          <Route path="*" element = { <RouteErrorPage errorText="PAGE NOT FOUND" errorDescription="The page you requested could not be found."/> } />
-        </Routes>
+    <CartContext.Provider value={{ cartItems: cartItems, addCartItem: addItem, removeCartItem: removeItem, clearCartItems: clearItems }}>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover={false} theme="dark" />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="admin" element={<AdminMenu />} />
+        <Route path="*" element={<RouteErrorPage errorText="PAGE NOT FOUND" errorDescription="The page you requested could not be found." />} />
+      </Routes>
     </CartContext.Provider>
   )
 }

@@ -14,25 +14,33 @@ h1#auth0_text {
     margin-left: 20px;
     color: white;
 }
+
 .auth0_spinner {
     position: relative;
     width: 100px;
     height: 100px;
-  }
-  
-  .auth0_spinner:before , .auth0_spinner:after{
+}
+
+.auth0_spinner:before,
+.auth0_spinner:after {
     content: '';
     border-radius: 50%;
     position: absolute;
     inset: 0;
     box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.3) inset;
-  }
-  .auth0_spinner:after {
+}
+
+.auth0_spinner:after {
     box-shadow: 0 2px 0 #FF3D00 inset;
     animation: rotate 2s linear infinite;
-  }
-  
-  @keyframes rotate {
-    0% {  transform: rotate(0)}
-    100% { transform: rotate(360deg)}
-  }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}

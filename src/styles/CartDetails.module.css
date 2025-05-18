@@ -18,7 +18,7 @@ button.cart_details_button_close {
     font-size: 20px;
     background-color: rgb(226, 0, 34);
     border-radius: 25px;
-    padding: 8px 13px 8px 13px;
+    padding: 8px 13px;
     margin-right: 10px;
 }
 
@@ -30,21 +30,21 @@ button.cart_details_button_order {
     font-size: 20px;
     background-color: white;
     border-radius: 25px;
-    padding: 8px 13px 8px 13px;
+    padding: 8px 13px;
 }
 
 button.cart_details_button_order:hover,
 button.cart_details_button_close:hover {
     outline: 2px solid rgb(214, 0, 39);
     background-color: rgb(214, 0, 39);
-    color: rgb(230,230,230);
+    color: rgb(230, 230, 230);
 }
 
 button.cart_details_button_order:active,
 button.cart_details_button_close:active {
     outline: 2px solid rgb(186, 0, 34);
     background-color: rgb(186, 0, 34);
-    color: rgb(210,210,210);
+    color: rgb(210, 210, 210);
 }
 
 button.cart_details_button_order:disabled {
@@ -63,24 +63,24 @@ button.cart_details_minus {
     width: 40%;
     background-color: white;
     border-radius: 10px;
-    padding: 3px 8px 3px 8px;
+    padding: 3px 8px;
 }
 
 button.cart_details_plus:hover,
 button.cart_details_minus:hover {
     outline: 2px solid rgb(214, 0, 39);
     background-color: rgb(214, 0, 39);
-    color: rgb(230,230,230);
+    color: rgb(230, 230, 230);
 }
 
 button.cart_details_plus:active,
 button.cart_details_minus:active {
     outline: 2px solid rgb(186, 0, 34);
     background-color: rgb(186, 0, 34);
-    color: rgb(210,210,210);
+    color: rgb(210, 210, 210);
 }
 
-.cart_details_main_right > h2{
+.cart_details_main_right>h2 {
     float: right;
 }
 
@@ -98,24 +98,17 @@ div.cart_details_price {
     margin-bottom: 10px;
 }
 
-div.cart_details_price_left {
-    float: left;
-}
-
 div.cart_details_price_right {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    float: right;
     width: 80px;
 }
 
-div.cart_details_price_left > span {
+div.cart_details_price_left>span {
     display: inline-block;
-    margin-top: 5px;
-    margin-bottom: 6px;
-    margin-right: 20px;
-    color:brown;
+    margin: 5px 20px 6px 0;
+    color: brown;
     font-weight: bold;
 }
 
@@ -123,20 +116,15 @@ div.cart_details_counter_box {
     float: right;
     outline: 2px solid rgb(153, 153, 153);
     border-radius: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 5px 10px;
 }
 
-
-
 @media screen and (max-width: 450px) {
-    div.cart_details_main > h2 {
+    div.cart_details_main>h2 {
         font-size: 18px;
     }
 
-    div.cart_details_main_right > h2 {
+    div.cart_details_main_right>h2 {
         font-size: 18px;
     }
 
@@ -145,7 +133,8 @@ div.cart_details_counter_box {
         margin-right: 15px;
         width: auto;
     }
-    div.cart_details_main_right_buttons > button {
+
+    div.cart_details_main_right_buttons>button {
         font-size: 18px;
         padding: 4px 7px 4px 7px;
     }

@@ -2,8 +2,8 @@ import '../styles/Modal.css';
 import { useEffect, useRef, ReactNode } from 'react'
 
 interface IModal {
-    showModal : boolean;
-    closeModal() : void;
+    showModal: boolean;
+    closeModal(): void;
     desiredWidth?: string;
     children: ReactNode
 };

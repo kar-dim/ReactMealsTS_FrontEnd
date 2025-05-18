@@ -22,7 +22,7 @@ const defaultToastOptions = {
 
 // Show the toast based on its type (Error, Warn, Info, Success)
 export const toastShow = (message: string, type: string) => {
-    if (!type) 
+    if (!type)
         return;
     const toastMethod = toastTypeMap[type.toUpperCase()];
     if (toastMethod)

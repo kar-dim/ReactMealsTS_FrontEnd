@@ -9,32 +9,34 @@
     border: 0px;
     font-weight: 700;
     box-shadow: 0px 0px 14px -7px #f08c19;
-    background-image: linear-gradient(45deg, #FF512F 0%, #f08c19  51%, #FF512F  100%);
+    background-image: linear-gradient(45deg, #FF512F 0%, #f08c19 51%, #FF512F 100%);
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
 }
-  
+
 .custom_button:hover {
     background-position: right center;
-    color: #fff;
+    color: white;
     text-decoration: none;
 }
-  
+
 .custom_button:active {
     transform: scale(0.95);
 }
 
 .custom_button:disabled {
-    background-image: linear-gradient(45deg, #ffc4c4 0%, #ffcd95  51%, #ffb0a0  100%);
+    background-image: linear-gradient(45deg, #ffc4c4 0%, #ffcd95 51%, #ffb0a0 100%);
 }
 
 input {
     font-size: 16px;
 }
 
-input[type=text], input[type=number], textarea{
+input[type=text],
+input[type=number],
+textarea {
     border-radius: 5px;
 }
 
@@ -59,16 +61,15 @@ div#main_content {
     font-size: 16px;
 }
 
-
 form#add_dish_form {
-    display:flex;
+    display: flex;
     flex-direction: column;
     margin-top: 25px;
 }
 
 div#add_dish_1 {
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
 }
 
 input#adminmenu_dish_name {
@@ -102,7 +103,6 @@ label#adminmenu_imageFile_label {
     margin-right: 15px;
 }
 
-
 div#add_dish_4 {
     display: flex;
     align-items: center;
@@ -110,9 +110,8 @@ div#add_dish_4 {
     margin-top: 25px;
 }
 
-
 div#deletedish_confirm_dialog {
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -124,12 +123,12 @@ div.main_edit_main {
 }
 
 div.main_edit_error {
-
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-div.main_edit_error > img{
+
+div.main_edit_error>img {
     height: 400px;
     width: 400px;
 }
@@ -139,19 +138,19 @@ div.main_edit_main {
     flex-direction: column;
 }
 
-div.main_edit_main > ul {
+div.main_edit_main>ul {
     list-style: none;
 }
 
 li.main_editdishes_li {
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 15px;
 }
 
 li.main_editusers_li {
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 15px;
@@ -172,6 +171,7 @@ span#main_editdishes_text_name {
     display: inline-block;
     width: 30%;
 }
+
 span#main_editdishes_text_price {
     display: inline-block;
     width: 10%;
@@ -181,36 +181,38 @@ span#main_editdishes_text_description {
     display: inline-block;
 }
 
-
 div#main_editusers_text {
-    display:flex;
+    display: flex;
     width: 90%;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
 }
+
 span#main_editusers_text_email {
     display: inline-block;
-    width:22%;
+    width: 22%;
 }
+
 span#main_editusers_text_name {
     display: inline-block;
-    width:22%;
+    width: 22%;
 }
 
 span#main_editusers_text_lastname {
     display: inline-block;
-    width:22%;
+    width: 22%;
 }
 
 span#main_editusers_text_address {
     display: inline-block;
-    width:22%;
+    width: 22%;
 }
 
-button#main_edit_edit_btn , button#main_edit_delete_btn  {
+button#main_edit_edit_btn,
+button#main_edit_delete_btn {
     border: none;
-    outline:none;
+    outline: none;
     box-shadow: none;
     border-radius: 5px;
     background-color: white;
@@ -219,7 +221,8 @@ button#main_edit_edit_btn , button#main_edit_delete_btn  {
     filter: brightness(1);
 }
 
-button#main_edit_edit_btn:disabled , button#main_edit_delete_btn:disabled  {
+button#main_edit_edit_btn:disabled,
+button#main_edit_delete_btn:disabled {
     filter: saturate(0);
 }
 
@@ -227,16 +230,19 @@ button#main_edit_delete_btn {
     margin-left: 5px;
 }
 
-button#main_edit_edit_btn:hover > img, button#main_edit_delete_btn:hover > img {
+button#main_edit_edit_btn:hover>img,
+button#main_edit_delete_btn:hover>img {
     pointer-events: none;
     filter: brightness(1.15);
 }
 
-button#main_edit_edit_btn:active > img, button#main_edit_delete_btn:active > img {
+button#main_edit_edit_btn:active>img,
+button#main_edit_delete_btn:active>img {
     filter: brightness(0.85);
 }
 
-img#main_edit_edit_btn_img, img#main_edit_delete_btn_img {
+img#main_edit_edit_btn_img,
+img#main_edit_delete_btn_img {
     filter: brightness(1);
     transition: 0.1s ease;
 }
@@ -252,15 +258,18 @@ img#main_edit_delete_btn_img {
 }
 
 form#edit_user_form {
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     margin: 20px 5px 20px 5px;
 }
 
-div#edit_user_form1, div#edit_user_form2 , div#edit_user_form3, div#edit_user_form4 {
+div#edit_user_form1,
+div#edit_user_form2,
+div#edit_user_form3,
+div#edit_user_form4 {
     margin-bottom: 15px;
-    display:flex;
+    display: flex;
     flex-direction: column;
     width: 70%;
 }
@@ -269,40 +278,45 @@ div#edit_user_form5 {
     align-self: center;
 }
 
-input[type=text]#edit_user_email, input[type=text]#edit_user_name, input[type=text]#edit_user_lastname, input[type=text]#edit_user_address {
+input[type=text]#edit_user_email,
+input[type=text]#edit_user_name,
+input[type=text]#edit_user_lastname,
+input[type=text]#edit_user_address {
     font-size: 13px;
- }
-
+}
 
 @media screen and (max-width: 1420px) {
     input {
         font-size: 13px;
     }
+
     div#main_content {
         font-size: 13px;
     }
 }
 
 @media screen and (max-width: 1128px) {
-    
     input#adminmenu_dish_name {
         width: 16em;
     }
-    
+
     input#adminmenu_dish_description {
         width: 26em;
     }
-    
+
     input#adminmenu_dish_price {
         width: 4.5em;
     }
+
     div#main_content {
         width: 95%;
     }
+
     div#add_dish_2 {
         flex-direction: column;
     }
-    div#add_dish_2 > textarea {
+
+    div#add_dish_2>textarea {
         width: 80vw;
     }
 }
@@ -311,6 +325,7 @@ input[type=text]#edit_user_email, input[type=text]#edit_user_name, input[type=te
     div#main_editdishes_text {
         width: 70%;
     }
+
     img#main_editdishes_img {
         width: 80px;
         height: 60px;
@@ -318,27 +333,30 @@ input[type=text]#edit_user_email, input[type=text]#edit_user_name, input[type=te
 }
 
 @media screen and (max-width: 962px) {
-    
     input#adminmenu_dish_name {
         width: 16em;
     }
-    
+
     input#adminmenu_dish_description {
         width: 26em;
     }
-    
+
     input#adminmenu_dish_price {
         width: 4.5em;
     }
-    div#add_dish_2 > textarea {
+
+    div#add_dish_2>textarea {
         height: 20em;
     }
+
     span#main_editdishes_text_name {
         width: 50%;
     }
+
     span#main_editdishes_text_price {
         width: 20%;
     }
+
     span#main_editdishes_text_description {
         display: none;
     }
@@ -350,7 +368,8 @@ input[type=text]#edit_user_email, input[type=text]#edit_user_name, input[type=te
         text-align: start;
         width: 50%;
     }
-    div#main_editusers_text > span {
+
+    div#main_editusers_text>span {
         display: block;
     }
 }
@@ -359,14 +378,17 @@ input[type=text]#edit_user_email, input[type=text]#edit_user_name, input[type=te
     div#add_dish_1 {
         flex-direction: column;
     }
-    div#add_dish_1 > div {
+
+    div#add_dish_1>div {
         display: flex;
         justify-content: space-between;
     }
+
     input#adminmenu_dish_name {
         width: 26em;
     }
-    div#add_dish_2 > textarea {
+
+    div#add_dish_2>textarea {
         height: 25em;
     }
 }
@@ -375,9 +397,11 @@ input[type=text]#edit_user_email, input[type=text]#edit_user_name, input[type=te
     div#main_editdishes_text {
         width: 60%;
     }
+
     span#main_editdishes_text_name {
         width: 100%;
     }
+
     span#main_editdishes_text_price {
         width: 0%;
         display: none;
@@ -388,27 +412,34 @@ input[type=text]#edit_user_email, input[type=text]#edit_user_name, input[type=te
     input#adminmenu_dish_name {
         width: 13em;
     }
+
     input#adminmenu_dish_description {
         width: 13em;
     }
-    div.main_editdishes_error > img {
+
+    div.main_editdishes_error>img {
         height: 300px;
         width: 300px;
     }
-    div.main_editdishes_error > h1 {
+
+    div.main_editdishes_error>h1 {
         font-size: 18px;
     }
+
     div#main_editdishes_text {
         width: 60%;
     }
+
     img#main_editdishes_img {
         width: 60px;
         height: 45px;
     }
+
     img#main_edit_edit_btn_img {
         width: 18px;
         height: 19px;
     }
+
     img#main_edit_delete_btn_img {
         width: 15px;
         height: 19px;
@@ -417,7 +448,7 @@ input[type=text]#edit_user_email, input[type=text]#edit_user_name, input[type=te
 
 @media screen and (max-width: 400px) {
     img#main_editdishes_img {
-       display: none;
+        display: none;
     }
 }
 
@@ -425,10 +456,12 @@ input[type=text]#edit_user_email, input[type=text]#edit_user_name, input[type=te
     input#adminmenu_dish_name {
         width: 10em;
     }
+
     input#adminmenu_dish_description {
         width: 10em;
     }
-    div#add_dish_2 > textarea {
+
+    div#add_dish_2>textarea {
         height: 30em;
     }
 }

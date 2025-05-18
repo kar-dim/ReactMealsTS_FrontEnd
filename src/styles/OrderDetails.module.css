@@ -1,11 +1,11 @@
 div#no_orders {
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-div#no_orders > img{
+div#no_orders>img {
     height: 400px;
     width: 400px;
 }
@@ -32,7 +32,7 @@ div.order_details {
 }
 
 div.order_food_details {
-    display:flex;
+    display: flex;
     flex-direction: column;
     width: 50%;
 }
@@ -56,13 +56,10 @@ div#order_food_detail {
 }
 
 div.food_counter_box {
-    display:inline;
+    display: inline;
     outline: 2px solid rgb(153, 153, 153);
     border-radius: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 5px 10px;
 }
 
 @media screen and (max-width: 830px) {
@@ -72,7 +69,6 @@ div.food_counter_box {
         margin: 0;
         padding: 0;
     }
-    
 }
 
 @media screen and (max-width: 560px) {
@@ -80,10 +76,12 @@ div.food_counter_box {
         font-size: 20px;
         margin-bottom: 20px;
     }
+
     div.order_details {
         font-size: 16px;
-        display:block;
+        display: block;
     }
+
     div.order_food_details {
         width: 95%;
     }
@@ -91,7 +89,6 @@ div.food_counter_box {
     div.order_food_details_total {
         width: 100%;
     }
-    
 }
 
 @media screen and (max-width: 440px) {
@@ -99,10 +96,12 @@ div.food_counter_box {
         font-size: 18px;
         margin-bottom: 18px;
     }
+
     div.order_details {
         font-size: 14px;
-        display:block;
+        display: block;
     }
+
     div.order_food_details {
         width: 95%;
     }
@@ -113,11 +112,12 @@ div.food_counter_box {
 }
 
 @media screen and (max-width: 400px) {
-    div#no_orders > img{
+    div#no_orders>img {
         height: 300px;
         width: 300px;
     }
-    div#no_orders > h1 {
+
+    div#no_orders>h1 {
         font-size: 18px;
     }
 }
@@ -127,4 +127,3 @@ div.food_counter_box {
         width: 90%;
     }
 }
-

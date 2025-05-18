@@ -1,5 +1,5 @@
 div.dish_main {
-    display:flex;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 20px;
@@ -7,9 +7,9 @@ div.dish_main {
 }
 
 div.dish_left {
-   display: flex;
-   cursor: pointer;
-   transition: .5s ease
+    display: flex;
+    cursor: pointer;
+    transition: .5s ease
 }
 
 div.dish_left:hover {
@@ -35,9 +35,9 @@ div.dish_right {
     float: right;
 }
 
-div.dish_left > span {
+div.dish_left>span {
     margin-bottom: 5px;
-    display:inline-block;
+    display: inline-block;
 }
 
 span#dish_text_price {
@@ -48,7 +48,7 @@ span#dish_text_price {
 }
 
 button.add_button {
-    outline:none;
+    outline: none;
     box-shadow: none;
     color: white;
     border: none;
@@ -61,16 +61,16 @@ button.add_button {
 
 button.add_button:hover {
     background-color: rgb(214, 0, 39);
-    color: rgb(230,230,230);
+    color: rgb(230, 230, 230);
 }
 
 button.add_button:active {
     background-color: rgb(186, 0, 34);
-    color: rgb(210,210,210);
+    color: rgb(210, 210, 210);
 }
 
 span#dish_description {
-    display:inline;
+    display: inline;
 }
 
 @media screen and (max-width: 960px) {
@@ -78,23 +78,27 @@ span#dish_description {
         height: 90px;
         width: 110px;
     }
+
     span#dish_description {
-        display:inline;
+        display: inline;
     }
 }
 
 @media screen and (max-width: 760px) {
     button.add_button {
-      font-size: 16px;
+        font-size: 16px;
     }
+
     span#dish_text_price {
         font-size: 16px;
     }
+
     span#dish_name {
-        font-size:16px;
+        font-size: 16px;
     }
+
     span#dish_description {
-        display:none;
+        display: none;
     }
 }
 
@@ -103,16 +107,20 @@ span#dish_description {
         height: 70px;
         width: 85px;
     }
+
     button.add_button {
-      font-size: 14px;
+        font-size: 14px;
     }
+
     span#dish_text_price {
         font-size: 14px;
     }
+
     span#dish_name {
-        font-size:14px;
+        font-size: 14px;
     }
+
     span#dish_description {
-        display:none;
+        display: none;
     }
 }

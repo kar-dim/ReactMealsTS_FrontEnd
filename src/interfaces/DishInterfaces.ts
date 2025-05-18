@@ -9,17 +9,17 @@ export interface IDish {
 };
 
 export interface IDishWithCounter extends IDish {
-    dish_counter : number
+    dish_counter: number
 }
 
 export interface DishType {
     dish: IDish;
-    addDish(dish: IDish) : void;
+    addDish(dish: IDish): void;
 };
 
 //used to show main page dishes
 export interface IDishWithImageURLEncoded extends IDish {
-    imageUrlEncoded : string | null;
+    imageUrlEncoded: string | null;
 };
 
 //a newly created dish, sent from an administrator who can edit the apps dishes, it is sent to the backend API
@@ -28,7 +28,7 @@ export interface IDishToAdd {
     dish_description: string,
     price: number,
     dish_extended_info: string,
-    dish_image_base64 : string | null
+    dish_image_base64: string | null
 };
 
 //a dish interface used on HTTP PUT request
@@ -60,10 +60,10 @@ export const createDishToPutFromForm = (form: HTMLFormElement, imageBase64: stri
     price: parseFloat((form.elements.namedItem('dish_price') as HTMLInputElement).value),
     dish_description: (form.elements.namedItem('dish_description') as HTMLInputElement).value,
     dish_extended_info: (form.elements.namedItem('dish_extended_description') as HTMLInputElement).value,
-    dish_image_base64 : imageBase64
+    dish_image_base64: imageBase64
 });
 
-export const createDishToPutFromAdd = (dishToSend: IDishToAdd, id: number) : IDishToPut => ({
+export const createDishToPutFromAdd = (dishToSend: IDishToAdd, id: number): IDishToPut => ({
     dishId: id,
     price: dishToSend.price,
     dish_name: dishToSend.dish_name,

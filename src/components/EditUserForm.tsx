@@ -2,18 +2,18 @@ import { FormEvent } from 'react';
 import adminStyle from '../styles/AdminMenu.module.css'
 
 interface IEditUserFormProps {
-    preFilledValues? : {
+    preFilledValues?: {
         email: string
         user_name: string,
         user_lastname: string,
         location: string,
 
     } | null,
-    editUser(event: FormEvent<HTMLFormElement>) : void,
+    editUser(event: FormEvent<HTMLFormElement>): void,
     editUserButton: any,
 }
 
-const EditUserForm = ({preFilledValues, editUser, editUserButton} : IEditUserFormProps) => {
+const EditUserForm = ({ preFilledValues, editUser, editUserButton }: IEditUserFormProps) => {
     return (
         <div id={adminStyle.main_edit_user_form}>
             <form id={adminStyle.edit_user_form} onSubmit={(event) => editUser(event)}>
@@ -23,20 +23,20 @@ const EditUserForm = ({preFilledValues, editUser, editUserButton} : IEditUserFor
                 </div>
                 <div id={adminStyle.edit_user_form2}>
                     <label htmlFor={adminStyle.edit_user_name}>Name</label>
-                    <input id={adminStyle.edit_user_name}required type="text" maxLength={50} name="name" defaultValue={preFilledValues?.user_name}></input>
+                    <input id={adminStyle.edit_user_name} required type="text" maxLength={50} name="name" defaultValue={preFilledValues?.user_name}></input>
                 </div>
                 <div id={adminStyle.edit_user_form3}>
                     <label htmlFor={adminStyle.edit_user_lastname}>Last Name</label>
-                    <input id={adminStyle.edit_user_lastname}required type="text" maxLength={50} name="lastname" defaultValue={preFilledValues?.user_lastname}></input>
+                    <input id={adminStyle.edit_user_lastname} required type="text" maxLength={50} name="lastname" defaultValue={preFilledValues?.user_lastname}></input>
                 </div>
                 <div id={adminStyle.edit_user_form4}>
                     <label htmlFor={adminStyle.edit_user_address}>Location</label>
-                    <input id={adminStyle.edit_user_address}required type="text" maxLength={50} name="address" defaultValue={preFilledValues?.location}></input>
+                    <input id={adminStyle.edit_user_address} required type="text" maxLength={50} name="address" defaultValue={preFilledValues?.location}></input>
                 </div>
                 <div id={adminStyle.edit_user_form5}>
                     <button type="submit" ref={editUserButton} className={adminStyle.custom_button}>Edit User</button>
                 </div>
-            </form> 
+            </form>
         </div>
     );
 }

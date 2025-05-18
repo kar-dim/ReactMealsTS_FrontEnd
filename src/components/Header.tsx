@@ -1,33 +1,33 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import CartButton from './CartButton';
 import HeaderStyles from '../styles/Header.module.css';
-import {useCartContext} from '../contexts/cart-context';
+import { useCartContext } from '../contexts/cart-context';
 import Modal from './Modal';
 import { toastShow } from '../other/ToastUtils';
 import { Link } from 'react-router-dom';
 import imgBg from '../media/bg.webp';
 import Auth0SignInOffButton from './Auth0SignInOffButton';
 import { useAuth0 } from '@auth0/auth0-react';
-import {Settings} from '../other/PublicSettings';
+import { Settings } from '../other/PublicSettings';
 import CartDetails from './CartDetails';
 import OrderDetails from './OrderDetails';
 import { isLoggedAsAdmin } from '../other/utils';
-import {IAuth0User} from '../interfaces/Auth0UserInterface';
+import { IAuth0User } from '../interfaces/Auth0UserInterface';
 
 //renders the top header bar
-const Header = ()  => {
+const Header = () => {
 
     //states
-    const {getIdTokenClaims, isAuthenticated, getAccessTokenSilently} = useAuth0();
+    const { getIdTokenClaims, isAuthenticated, getAccessTokenSilently } = useAuth0();
     const [userLoggedIn, setUserLoggedIn] = useState<IAuth0User | undefined>(undefined);
-    const {cartItems, clearCartItems} = useCartContext();
+    const { cartItems, clearCartItems } = useCartContext();
     const [showCartModal, setShowCartModal] = useState<boolean>(false); //new order modal
     const [showMyOrdersModal, setShowMyOrdersModal] = useState<boolean>(false); //user (completed) orders modal
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
     //methods
-    const verifyAdminAccess = async() => setIsAdmin(isLoggedAsAdmin(await getAccessTokenSilently()));
-    const loadUserProfileFromClaims = async() => {
+    const verifyAdminAccess = async () => setIsAdmin(isLoggedAsAdmin(await getAccessTokenSilently()));
+    const loadUserProfileFromClaims = async () => {
         let claims = await getIdTokenClaims();
         if (claims == undefined)
             return;
@@ -62,12 +62,12 @@ const Header = ()  => {
             setIsAdmin(false);
         }
 
-        run();  
+        run();
     }, [isAuthenticated]);
 
     //click on the "cart" div
     const clickCartHandler = (): void => {
-        if (!isAuthenticated){
+        if (!isAuthenticated) {
             toastShow("Please Login first!", "E");
             return;
         }
@@ -83,21 +83,21 @@ const Header = ()  => {
     return (
         <>
             {showMyOrdersModal && <Modal showModal={showMyOrdersModal} closeModal={() => setShowMyOrdersModal(false)}>
-                <OrderDetails closeModal={() => setShowMyOrdersModal(false)}/>
-            </Modal> }
+                <OrderDetails closeModal={() => setShowMyOrdersModal(false)} />
+            </Modal>}
             {showCartModal && <Modal showModal={showCartModal} closeModal={() => setShowCartModal(false)}>
-                <CartDetails closeModal={() => setShowCartModal(false)}/>
-            </Modal> }
+                <CartDetails closeModal={() => setShowCartModal(false)} />
+            </Modal>}
             <div className={HeaderStyles.header_main}>
                 <div>
                     <Link to="/" id={HeaderStyles.header_home}>Jimmys Foodzilla</Link>
                     <Link id={HeaderStyles.header_about_link} to="/about"><button className={HeaderStyles.custom_button}>About</button></Link>
-                    <Auth0SignInOffButton text={isAuthenticated ? "Logout" : "Login"} isLogin = {!isAuthenticated} />
-                    {isAuthenticatedUser && <button className={HeaderStyles.custom_button} onClick = {() => setShowMyOrdersModal(true)}>My Orders</button>}
+                    <Auth0SignInOffButton text={isAuthenticated ? "Logout" : "Login"} isLogin={!isAuthenticated} />
+                    {isAuthenticatedUser && <button className={HeaderStyles.custom_button} onClick={() => setShowMyOrdersModal(true)}>My Orders</button>}
                     {isAuthenticatedUser && !isAdmin && <span id={HeaderStyles.header_user_name}>Welcome back, {userLoggedIn.name}!</span>}
                     {isAuthenticatedUser && isAdmin && <Link id={HeaderStyles.header_admin_link} to="/admin"><button className={HeaderStyles.custom_button}>Admin Menu</button></Link>}
                 </div>
-                <CartButton cartItemsCounter = {cartItems.length} cartButtonClick={clickCartHandler} />
+                <CartButton cartItemsCounter={cartItems.length} cartButtonClick={clickCartHandler} />
             </div>
             <img src={imgBg} className={HeaderStyles.main_bg} alt="food background"></img>
             <div className={HeaderStyles.header_text}>
