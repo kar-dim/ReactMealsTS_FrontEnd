@@ -17,6 +17,25 @@ import AddEditDishForm from './AddEditDishForm';
 import EditUserForm from './EditUserForm';
 import { get, post, put, del } from '../other/utils';
 
+function makeDeleteParams<T>(
+    idToDelete: string | number,
+    items: T[],
+    apiRoute: string,
+    setItems: React.Dispatch<React.SetStateAction<T[]>>,
+    getId: (item: T) => string | number,
+    editButton: React.MutableRefObject<(HTMLElement | null)[]>,
+    delButton: React.MutableRefObject<(HTMLElement | null)[]>,
+) { return { idToDelete, items, apiRoute, setItems, getId, editButton, delButton }; };
+
+function makeEditParams<T>(
+    buttonRef: React.RefObject<HTMLButtonElement>,
+    itemToSend: T,
+    apiRoute: string,
+    setItems: React.Dispatch<React.SetStateAction<T[]>>,
+    getId: (item: T) => any,
+    setItemToEdit: React.Dispatch<React.SetStateAction<T | null>>
+) { return { buttonRef, itemToSend, apiRoute, setItems, getId, setItemToEdit }; };
+
 const AdminMenu = () => {
     const MAX_IMG_SIZE = 3000000;
 
@@ -40,53 +59,53 @@ const AdminMenu = () => {
     const editUserButtons = useRef<(HTMLButtonElement | null)[]>([]);
     const deleteUserButtons = useRef<(HTMLButtonElement | null)[]>([]);
 
-    //get all the available dishes on startup
+    //get all the available dishes and users on startup
     useEffect(() => {
-        //this should run ONLY once to fetch all the dishes from db at first, if somehow it runs again, don't do anything
-        if (availableDishes.length == 0) {
-            const getDishes = async () => {
-                try {
-                    const response = await axios.get(`${Settings.backend_url}/${ApiRoutes.GetDishes}`);
-                    const dishesRet: IDish[] | null = response.data;
-                    if (dishesRet != null && dishesRet.length > 0) {
-                        let dishes: IDishToPut[] = [];
-                        //foreach one, get the image
-                        await Promise.all(dishesRet.map(async (dish) => {
-                            let b64img = "";
-                            try {
-                                const responseImage = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dish.dish_url}`, { responseType: "arraybuffer" });
-                                //convert to base64
-                                b64img = btoa(new Uint8Array(responseImage.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-                            } catch (error) { }
-                            dishes.push(createDishToPut(dish, b64img));
-                        }));
-                        setAvailableDishes([...availableDishes, ...dishes]);
-                        return;
-                    }
-                } catch (error) {
-                    console.error(error);
-                }
-                toastShow('Could not fetch dishes', 'E');
-            };
-
+        if (availableDishes.length == 0)
             getDishes();
-        }
-        //again, this should run ONLY once to fetch all the users from db at first, if somehow it runs again, don't do anything
-        if (availableUsers.length == 0) {
-            const getUsers = async () => {
-                try {
-                    const usersRet = await get<IUser[] | null>(ApiRoutes.GetUsers, await getAccessTokenSilently());
-                    setAvailableUsers(usersRet ?? []);
-                    return;
-                } catch (error) {
-                    console.error(error);
-                }
-                toastShow('Could not fetch Users', 'E');
-            };
-
+        if (availableUsers.length == 0)
             getUsers();
-        }
     }, []);
+
+    //retrive all the dishes
+    const getDishes = async () => {
+        try {
+            const response = await axios.get(`${Settings.backend_url}/${ApiRoutes.GetDishes}`);
+            const dishesRet: IDish[] | null = response.data;
+            if (dishesRet == null || dishesRet.length == 0) {
+                toastShow('Could not fetch dishes', 'E');
+                return;
+            }
+            let dishes: IDishToPut[] = [];
+            await Promise.all(dishesRet.map(async (dish) => {
+                let b64img = "";
+                try {
+                    const responseImage = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dish.dish_url}`, { responseType: "arraybuffer" });
+                    b64img = btoa(new Uint8Array(responseImage.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+                } catch (error) {
+                    console.warn("Could not fetch dish image data");
+                }
+                dishes.push(createDishToPut(dish, b64img));
+            }));
+            setAvailableDishes([...availableDishes, ...dishes]);
+            return;
+        } catch (error) {
+            console.error(error);
+        }
+        toastShow('Could not fetch dishes', 'E');
+    };
+
+    //retrieve all the users
+    const getUsers = async () => {
+        try {
+            const usersRet = await get<IUser[] | null>(ApiRoutes.GetUsers, await getAccessTokenSilently());
+            setAvailableUsers(usersRet ?? []);
+            return;
+        } catch (error) {
+            console.error(error);
+        }
+        toastShow('Could not fetch Users', 'E');
+    };
 
     //when the user clicks ADD DISH
     const addDish = async (event: FormEvent<HTMLFormElement>) => {
@@ -96,7 +115,6 @@ const AdminMenu = () => {
             return;
         }
         const dishToSend = createDishToAddFromForm(event.target as HTMLFormElement, addDishImageBase64);
-
         //send http POST request
         try {
             if (addDishButton.current)
@@ -114,122 +132,81 @@ const AdminMenu = () => {
         }
     };
 
+    //common function to update a User or Dish
+    async function editItem<T>(params: ReturnType<typeof makeEditParams<T>>): Promise<void> {
+        const { buttonRef, itemToSend, apiRoute, getId, setItems, setItemToEdit } = params;
+        buttonRef.current?.setAttribute("disabled", "true");
+        try {
+            await put<T, any>(apiRoute, itemToSend, await getAccessTokenSilently());
+            toastShow('Item update success', "S");
+            setItems(prev => prev.map(item => getId(item) === getId(itemToSend) ? itemToSend : item));
+            setItemToEdit(null);
+        } catch (error) {
+            toastShow('Error in updating the item. Check console log', "E");
+            console.error(error);
+        } finally {
+            buttonRef.current?.removeAttribute("disabled");
+        }
+    }
+    //common function to delete a User or Dish
+    async function deleteItem<T>(params: ReturnType<typeof makeDeleteParams<T>>): Promise<void> {
+        const { idToDelete, apiRoute, setItems, getId, editButton, delButton, items, } = params
+        // Disable buttons while the operation is running
+        for (let i = 0; i < items.length; i++) {
+            editButton.current[i]?.setAttribute("disabled", "true");
+            delButton.current[i]?.setAttribute("disabled", "true");
+        }
+        try {
+            await del<any>(`${apiRoute}/${idToDelete}`, await getAccessTokenSilently());
+            toastShow('Item delete success', 'S');
+            setItems(prev => prev.filter(item => getId(item) !== idToDelete));
+        } catch (error) {
+            console.error(error);
+            if (axios.isAxiosError(error) && error.response) {
+                const { status, data, headers } = error.response;
+                console.error('Axios error:', data, status, headers);
+                //if status is HTTP NOT FOUND, then delete from the UI the item, it does not exist on the backend
+                if (status === 404) {
+                    setItems(prev => prev.filter(item => getId(item) !== idToDelete));
+                    toastShow('Item not found in db', 'I');
+                    return;
+                }
+            }
+            toastShow(`Error in deleting the item. Check console log`, 'E');
+        } finally {
+            // Re-enable buttons
+            for (let i = 0; i < items.length; i++) {
+                editButton.current[i]?.removeAttribute("disabled");
+                delButton.current[i]?.removeAttribute("disabled");
+            }
+        }
+    };
+
+    //when the user clicks EDIT DISH
     const editDish = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (editDishImageBase64 === null) {
             toastShow("A valid image is required", "E");
             return;
         }
-        //disable edit dish button while the operation is in progress
-        editDishButton.current!.setAttribute("disabled", "true");
-
-        const dishToSend = createDishToPutFromForm(event.target as HTMLFormElement, editDishImageBase64, dishToEdit!.dishId)
-        //send http PUT request
-        try {
-            await put<IDishToPut, any>(ApiRoutes.UpdateDish, dishToSend, await getAccessTokenSilently());
-            toastShow('Dish update success', 'S');
-            //update this specific dish locally, and then re-render
-            setAvailableDishes(prev => prev.map(dish => dish.dishId === dishToSend.dishId ? dishToSend : dish));
-            setDishToEdit(null);
-        } catch (error) {
-            toastShow('Error in updating the dish. Check console log', 'E');
-            console.error(error);
-        } finally {
-            //enable the button again
-            editDishButton.current!.removeAttribute("disabled");
-        }
+        const dishToPut = createDishToPutFromForm(event.target as HTMLFormElement, editDishImageBase64!, dishToEdit!.dishId)
+        await editItem(makeEditParams(editDishButton, dishToPut, ApiRoutes.UpdateDish, setAvailableDishes, dish => dish.dishId, setDishToEdit));
     };
 
+    //when the user clicks EDIT USER
     const editUser = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        //disable edit user button while the operation is in progress
-        editUserButton.current!.setAttribute("disabled", "true");
-        const userToSend = createUserFromForm(event.target as HTMLFormElement, userToEdit!.user_id);
-        //send http PUT request
-        try {
-            await put<IUser, any>(ApiRoutes.UpdateUser, userToSend, await getAccessTokenSilently());
-            toastShow('User update success', 'S');
-            //update this specific user locally, and then re-render
-            setAvailableUsers(prev => prev.map(user => user.user_id === userToSend.user_id ? userToSend : user));
-            setUserToEdit(null);
-        } catch (error) {
-            toastShow('Error in updating the user. Check console log', 'E');
-            console.error(error);
-        } finally {
-            //enable the button again
-            editUserButton.current!.removeAttribute("disabled");
-        }
-    };
+        const userToUpdate = createUserFromForm(event.target as HTMLFormElement, userToEdit!.user_id);
+        await editItem(makeEditParams(editUserButton, userToUpdate, ApiRoutes.UpdateUser, setAvailableUsers, user => user.user_id, setUserToEdit));
+    }
 
-    const deleteDish = async (dishIdToDelete: number) => {
-        //disable all buttons while the Delete operation is in progress
-        for (let i = 0; i < availableDishes.length; i++) {
-            editDishButtons.current[i]?.setAttribute("disabled", "true");
-            deleteDishButtons.current[i]?.setAttribute("disabled", "true");
-        }
+    //when the user clicks DELETE DISH
+    const deleteDish = async (dishIdToDelete: number) =>
+        await deleteItem(makeDeleteParams(dishIdToDelete, availableDishes, ApiRoutes.DeleteDish, setAvailableDishes, dish => dish.dishId, editDishButtons, deleteDishButtons));
 
-        //send http DELETE request
-        try {
-            await del<any>(`${ApiRoutes.DeleteDish}/${dishIdToDelete}`, await getAccessTokenSilently());
-            toastShow('Dish delete success', 'S');
-            setAvailableDishes(prev => prev.filter((dish) => dish.dishId != dishIdToDelete));
-        } catch (error) {
-            console.error(error);
-            if (axios.isAxiosError(error) && error.response) {
-                const { status, data, headers } = error.response;
-                console.error('Axios error: ', data, status, headers);
-                if (status === 404) {
-                    setAvailableDishes(prev => prev.filter(dish => dish.dishId !== dishIdToDelete));
-                    toastShow('Dish not found in db', 'I');
-                    return;
-                }
-                toastShow('Error in deleting the dish. Check console log', 'E');
-                return;
-            }
-            toastShow('Error in deleting the dish. Check console log', 'E');
-        } finally {
-            //enable the buttons again
-            for (let i = 0; i < availableDishes.length; i++) {
-                editDishButtons.current[i]?.removeAttribute("disabled");
-                deleteDishButtons.current[i]?.removeAttribute("disabled");
-            }
-        }
-    };
-
-    const deleteUser = async (userToDelete: string) => {
-        //disable all buttons while the Delete operation is in progress
-        for (let i = 0; i < availableUsers.length; i++) {
-            editUserButtons.current[i]?.setAttribute("disabled", "true");
-            deleteUserButtons.current[i]?.setAttribute("disabled", "true");
-        }
-
-        //send http DELETE request
-        try {
-            del<any>(`${ApiRoutes.DeleteUser}/${userToDelete}`, await getAccessTokenSilently());
-            toastShow('User delete success', 'S');
-            setAvailableUsers(prev => prev.filter((user) => user.user_id != userToDelete));
-        } catch (error) {
-            console.error(error);
-            if (axios.isAxiosError(error) && error.response) {
-                const { status, data, headers } = error.response;
-                console.error('Axios error: ', data, status, headers);
-                if (status === 404) {
-                    setAvailableUsers(prev => prev.filter(user => user.user_id !== userToDelete));
-                    toastShow('User not found in db', 'I');
-                    return;
-                }
-                toastShow('Error in deleting the user. Check console log', 'E');
-                return;
-            }
-            toastShow('Error in deleting the user. Check console log', 'E');
-        } finally {
-            //enable the buttons again
-            for (let i = 0; i < availableDishes.length; i++) {
-                editUserButtons.current[i]?.removeAttribute("disabled");
-                deleteUserButtons.current[i]?.removeAttribute("disabled");
-            }
-        }
-    };
+    //when the user clicks DELETE USER
+    const deleteUser = async (userToDelete: string) =>
+        await deleteItem(makeDeleteParams(userToDelete, availableUsers, ApiRoutes.DeleteUser, setAvailableUsers, user => user.user_id, editUserButtons, deleteUserButtons));
 
     //check the size of the uploaded image file and errors in uploading 
     const checkImage = (event: React.ChangeEvent<HTMLInputElement>, isAdd: boolean) => {
