@@ -47,8 +47,8 @@ const CartDetails = ({ closeModal }: ICartDetails) => {
     //order food (POST request)
     const order = async () => {
         const orderData: IOrderData = {
-            userId: user == undefined ? null : user.sub == undefined ? null : user.sub,
-            order: cartItemsCountered.map((cardItemC) => { return { dishid: cardItemC.dishId, dish_counter: cardItemC.count } })
+            userId: user?.sub ?? null,
+            order: cartItemsCountered.map(c => ({ dishid: c.dishId, dish_counter: c.count }))
         };
         //if empty card don't send request! Also close the modal
         if (orderData.order.length == 0) {

@@ -2,36 +2,31 @@ import { useState, useEffect } from 'react';
 import MainContentStyles from '../styles/MainContent.module.css';
 import Dish from './Dish';
 import { IDish, IDishWithImageURLEncoded } from '../interfaces/DishInterfaces';
-import axios from 'axios';
 import { toastShow } from '../other/ToastUtils';
-import { Settings, ApiRoutes } from '../other/PublicSettings';
 import Modal from './Modal';
 import DishExtendedInfo from './DishExtendedInfo';
 import ErrorImage from '../media/sad_food.jpg';
+import { getDishes } from '../other/utils';
 
 //Main body of the website, sends the GET request and renders the dishes returned
 const MainContent = () => {
-    const [availableDishes, setAvailableDishes] = useState<IDish[] | null>([]);
+    const [availableDishes, setAvailableDishes] = useState<IDish[]>([]);
     const [initialText, setInitialText] = useState<string>('Loading...');
     const [currentDishExtendedInfo, setShowCurrentDishExtendedInfo] = useState<IDishWithImageURLEncoded | null>(null);
-    const shouldRenderList = (): boolean => availableDishes !== null && availableDishes !== undefined && availableDishes.length > 0;
-
-    useEffect(() => {
-        const getDishes = async () => {
-            try {
-                const response = await axios.get(`${Settings.backend_url}/${ApiRoutes.GetDishes}`);
-                const dishesRet: IDish[] | null = response.data;
-                if (dishesRet?.length) {
-                    setAvailableDishes(dishesRet);
-                    return;
-                }
-            } catch (error) {
-                console.error(error);
-            }
+    const shouldRenderList = (): boolean => availableDishes?.length > 0;
+    const fetchDishes = async () => {
+        const dishes = await getDishes();
+        if (!dishes.length) {
             setInitialText('');
             toastShow('Could not fetch dishes', 'E');
-        };
-        getDishes();
+            return;
+        }
+        setAvailableDishes(dishes);
+    };
+
+    //fetch all dishes at startup
+    useEffect(() => {
+        fetchDishes();
     }, []);
 
     return (
@@ -45,13 +40,11 @@ const MainContent = () => {
                 }
                 <div className={MainContentStyles.main_content}>
                     <ul className={MainContentStyles.main_content_ul}>
-                        {availableDishes?.map(dish => {
-                            return <Dish key={dish.dishId} dish={dish} showCurrentDishInfo={(dish, fetchedDishImage) => {
-                                let dishWithUrl: IDishWithImageURLEncoded = { ...dish, imageUrlEncoded: fetchedDishImage };
-                                setShowCurrentDishExtendedInfo(dishWithUrl);
-                            }
-                            } />;
-                        })}
+                        {availableDishes?.map(dish => (
+                            <Dish key={dish.dishId} dish={dish} showCurrentDishInfo={(dish, fetchedDishImage) =>
+                                setShowCurrentDishExtendedInfo({ ...dish, imageUrlEncoded: fetchedDishImage })}
+                            />
+                        ))}
                     </ul>
                 </div>
             </>

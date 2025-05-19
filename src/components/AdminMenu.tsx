@@ -8,14 +8,14 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import { createDishToAddFromForm, createDishToPut, createDishToPutFromAdd, createDishToPutFromForm, IDish, IDishToAdd, IDishToPut } from '../interfaces/DishInterfaces';
 import { createUserFromForm, IUser } from '../interfaces/UserInterface';
 import { useAuth0 } from '@auth0/auth0-react';
-import { ApiRoutes, OtherRoutes, Settings } from '../other/PublicSettings';
+import { ApiRoutes } from '../other/PublicSettings';
 import NoDishesPic from '../media/sad_food.jpg';
 import IconEdit from '../media/icon_edit.png';
 import IconDelete from '../media/icon_delete.png';
 import Modal from './Modal';
 import AddEditDishForm from './AddEditDishForm';
 import EditUserForm from './EditUserForm';
-import { get, post, put, del } from '../other/utils';
+import { get, post, put, del, getDishImage, getDishes } from '../other/utils';
 
 function makeDeleteParams<T>(
     idToDelete: string | number,
@@ -62,44 +62,27 @@ const AdminMenu = () => {
     //get all the available dishes and users on startup
     useEffect(() => {
         if (availableDishes.length == 0)
-            getDishes();
+            fetchDishes();
         if (availableUsers.length == 0)
             getUsers();
     }, []);
 
     //retrive all the dishes
-    const getDishes = async () => {
-        try {
-            const response = await axios.get(`${Settings.backend_url}/${ApiRoutes.GetDishes}`);
-            const dishesRet: IDish[] | null = response.data;
-            if (dishesRet == null || dishesRet.length == 0) {
-                toastShow('Could not fetch dishes', 'E');
-                return;
-            }
-            let dishes: IDishToPut[] = [];
-            await Promise.all(dishesRet.map(async (dish) => {
-                let b64img = "";
-                try {
-                    const responseImage = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dish.dish_url}`, { responseType: "arraybuffer" });
-                    b64img = btoa(new Uint8Array(responseImage.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-                } catch (error) {
-                    console.warn("Could not fetch dish image data");
-                }
-                dishes.push(createDishToPut(dish, b64img));
-            }));
-            setAvailableDishes([...availableDishes, ...dishes]);
+    const fetchDishes = async () => {
+        const dishes = await getDishes();
+        if (!dishes.length) {
+            toastShow('Could not fetch dishes', 'E');
             return;
-        } catch (error) {
-            console.error(error);
         }
-        toastShow('Could not fetch dishes', 'E');
+        const dishesWithImg = await Promise.all(dishes.map(async (dish) => createDishToPut(dish, await getDishImage(dish.dish_url!))));
+        setAvailableDishes([...availableDishes, ...dishesWithImg]);
     };
 
     //retrieve all the users
     const getUsers = async () => {
         try {
-            const usersRet = await get<IUser[] | null>(ApiRoutes.GetUsers, await getAccessTokenSilently());
-            setAvailableUsers(usersRet ?? []);
+            const usersRet = await get<IUser[]>(ApiRoutes.GetUsers, await getAccessTokenSilently());
+            setAvailableUsers(usersRet);
             return;
         } catch (error) {
             console.error(error);
