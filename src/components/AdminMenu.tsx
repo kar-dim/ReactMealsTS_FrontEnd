@@ -5,7 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { toastShow } from '../other/ToastUtils';
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import { createDishToAddFromForm, createDishToPut, createDishToPutFromAdd, createDishToPutFromForm, IDish, IDishToAdd, IDishToPut } from '../interfaces/DishInterfaces';
+import { createDishToAddFromForm, createDishToPut, createDishToPutFromAdd, createDishToPutFromForm, IDishToAdd, IDishToPut } from '../interfaces/DishInterfaces';
 import { createUserFromForm, IUser } from '../interfaces/UserInterface';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ApiRoutes } from '../other/PublicSettings';
