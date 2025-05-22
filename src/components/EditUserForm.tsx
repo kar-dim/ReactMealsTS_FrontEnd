@@ -1,5 +1,5 @@
 import { FormEvent } from 'react';
-import adminStyle from '../styles/AdminMenu.module.css'
+import adminStyle from '../styles/AdminMenu.module.scss'
 
 interface IEditUserFormProps {
     preFilledValues?: {

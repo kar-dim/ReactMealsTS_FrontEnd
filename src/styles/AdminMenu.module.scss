@@ -1,3 +1,5 @@
+@use './global' as *;
+
 .custom_button {
     font-size: 16px;
     padding: 10px 25px;
@@ -45,8 +47,7 @@ textarea {
 }
 
 div#main {
-    display: flex;
-    justify-content: center;
+    @include flex-justify-center();
     width: 100%;
     margin-top: 25px;
     margin-bottom: 25px;
@@ -62,14 +63,12 @@ div#main_content {
 }
 
 form#add_dish_form {
-    display: flex;
-    flex-direction: column;
+    @include flex-column();
     margin-top: 25px;
 }
 
 div#add_dish_1 {
-    display: flex;
-    justify-content: space-between;
+    @include flex-between();
 }
 
 input#adminmenu_dish_name {
@@ -85,8 +84,7 @@ input#adminmenu_dish_price {
 }
 
 div#add_dish_2 {
-    display: flex;
-    align-items: center;
+    @include flex-align-center();
     margin-top: 25px;
 }
 
@@ -104,28 +102,20 @@ label#adminmenu_imageFile_label {
 }
 
 div#add_dish_4 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center();
     margin-top: 25px;
 }
 
 div#deletedish_confirm_dialog {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    @include flex-column-center();
 }
 
 div.main_edit_main {
-    display: flex;
-    flex-direction: column;
+    @include flex-column();
 }
 
 div.main_edit_error {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include flex-column-align-center();
 }
 
 div.main_edit_error>img {
@@ -134,8 +124,7 @@ div.main_edit_error>img {
 }
 
 div.main_edit_main {
-    display: flex;
-    flex-direction: column;
+    @include flex-column();
 }
 
 div.main_edit_main>ul {
@@ -143,16 +132,12 @@ div.main_edit_main>ul {
 }
 
 li.main_editdishes_li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include flex-between-center();
     margin-bottom: 15px;
 }
 
 li.main_editusers_li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include flex-between-center();
     margin-bottom: 15px;
 }
 
@@ -182,31 +167,30 @@ span#main_editdishes_text_description {
 }
 
 div#main_editusers_text {
-    display: flex;
-    width: 90%;
+    @include flex-between-center();
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
+    width: 90%;
+}
+
+%inline-block-22 {
+    display: inline-block;
+    width: 22%;
 }
 
 span#main_editusers_text_email {
-    display: inline-block;
-    width: 22%;
+    @extend %inline-block-22;
 }
 
 span#main_editusers_text_name {
-    display: inline-block;
-    width: 22%;
+    @extend %inline-block-22;
 }
 
 span#main_editusers_text_lastname {
-    display: inline-block;
-    width: 22%;
+    @extend %inline-block-22;
 }
 
 span#main_editusers_text_address {
-    display: inline-block;
-    width: 22%;
+    @extend %inline-block-22;
 }
 
 button#main_edit_edit_btn,
@@ -258,9 +242,7 @@ img#main_edit_delete_btn_img {
 }
 
 form#edit_user_form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include flex-column-align-center();
     margin: 20px 5px 20px 5px;
 }
 
@@ -269,8 +251,7 @@ div#edit_user_form2,
 div#edit_user_form3,
 div#edit_user_form4 {
     margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
+    @include flex-column();
     width: 70%;
 }
 
@@ -380,8 +361,7 @@ input[type=text]#edit_user_address {
     }
 
     div#add_dish_1>div {
-        display: flex;
-        justify-content: space-between;
+        @include flex-between();
     }
 
     input#adminmenu_dish_name {

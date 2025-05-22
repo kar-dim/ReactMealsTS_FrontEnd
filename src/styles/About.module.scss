@@ -1,6 +1,7 @@
+@use './global' as *;
+
 div#about_main {
-    display: flex;
-    justify-content: center;
+    @include flex-justify-center();
     width: 100%;
     margin-top: 25px;
 }

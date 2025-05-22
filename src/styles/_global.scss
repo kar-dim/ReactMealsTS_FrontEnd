@@ -1,0 +1,152 @@
+// Flex direction
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+// Justify content
+@mixin flex-justify-center {
+    display: flex;
+    justify-content: center;
+}
+
+@mixin flex-justify-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+@mixin flex-justify-around {
+    display: flex;
+    justify-content: space-around;
+}
+
+@mixin flex-justify-evenly {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+@mixin flex-justify-start {
+    display: flex;
+    justify-content: flex-start;
+}
+
+@mixin flex-justify-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
+// Align items
+@mixin flex-align-center {
+    display: flex;
+    align-items: center;
+}
+
+@mixin flex-align-start {
+    display: flex;
+    align-items: flex-start;
+}
+
+@mixin flex-align-end {
+    display: flex;
+    align-items: flex-end;
+}
+
+// Common combos
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+@mixin flex-between-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flex-around-center {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@mixin flex-evenly-center {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+@mixin flex-center-start {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+@mixin flex-center-end {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+// Directional combos
+@mixin flex-row-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-row-between-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flex-row-between {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@mixin flex-column-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-column-align-center {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+@mixin flex-column-justify-center {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+@mixin flex-column-between {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@mixin flex-column-between-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}

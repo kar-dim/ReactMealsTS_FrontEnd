@@ -1,5 +1,5 @@
 import Header from './Header';
-import AboutStyles from '../styles/About.module.css';
+import AboutStyles from '../styles/About.module.scss';
 
 const About = () => {
     return (

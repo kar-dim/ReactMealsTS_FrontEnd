@@ -1,4 +1,4 @@
-import auth0style from '../styles/Auth0LoadingPage.module.css';
+import auth0style from '../styles/Auth0LoadingPage.module.scss';
 
 const Auth0LoadingPage = () => {
     return (

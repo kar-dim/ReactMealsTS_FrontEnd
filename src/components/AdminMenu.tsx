@@ -1,4 +1,4 @@
-import adminStyle from '../styles/AdminMenu.module.css';
+import adminStyle from '../styles/AdminMenu.module.scss';
 import Header from './Header';
 import axios from 'axios';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';

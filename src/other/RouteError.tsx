@@ -1,4 +1,4 @@
-import RouteErrorStyles from '../styles/RouteError.module.css'
+import RouteErrorStyles from '../styles/RouteError.module.scss'
 
 interface IErrorPageProps {
   title?: string,

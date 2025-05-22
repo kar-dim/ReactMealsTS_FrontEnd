@@ -1,7 +1,7 @@
+@use './global' as *;
+
 .cart_details_main {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    @include flex-row-between();
 }
 
 ul.cart_details_ul {
@@ -91,17 +91,12 @@ div.cart_details_main_right_buttons {
 }
 
 div.cart_details_price {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    @include flex-row-between-center();
     margin-bottom: 10px;
 }
 
 div.cart_details_price_right {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex-between-center();
     width: 80px;
 }
 

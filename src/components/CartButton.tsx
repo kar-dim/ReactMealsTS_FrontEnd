@@ -1,4 +1,4 @@
-import CartButtonStyle from '../styles/CartButton.module.css';
+import CartButtonStyle from '../styles/CartButton.module.scss';
 import cartButtonImg from './../media/cart_icon.png';
 
 interface CartButtonInterface {

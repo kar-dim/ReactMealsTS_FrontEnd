@@ -1,7 +1,7 @@
+@use './global' as *;
+
 div.dish_main {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    @include flex-row-between();
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -19,9 +19,7 @@ div.dish_left:hover {
 
 div.dish_left_text {
     margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    @include flex-column-justify-center();
 }
 
 img#dish_left_img {

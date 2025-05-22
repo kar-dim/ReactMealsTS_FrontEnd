@@ -1,4 +1,4 @@
-import '../styles/Modal.css';
+import '../styles/Modal.scss';
 import { useEffect, useRef, ReactNode } from 'react'
 
 interface IModal {

@@ -2,7 +2,7 @@ import { IDish } from '../interfaces/DishInterfaces';
 import { useCartContext } from '../contexts/cart-context';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
-import DishStyle from '../styles/Dish.module.css';
+import DishStyle from '../styles/Dish.module.scss';
 import DishLoadingImage from '../media/dish_loading_skeleton.png';
 import { getDishImage } from '../other/utils';
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import MainContentStyles from '../styles/MainContent.module.css';
+import MainContentStyles from '../styles/MainContent.module.scss';
 import Dish from './Dish';
 import { IDish, IDishWithImageURLEncoded } from '../interfaces/DishInterfaces';
 import { toastShow } from '../other/ToastUtils';

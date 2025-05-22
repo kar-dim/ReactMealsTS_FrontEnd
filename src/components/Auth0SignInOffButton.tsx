@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import HeaderStyles from '../styles/Header.module.css';
+import HeaderStyles from '../styles/Header.module.scss';
 
 const Auth0SignInOffButton = (props: { text: string; isLogin: boolean }) => {
   const { loginWithRedirect, logout } = useAuth0();

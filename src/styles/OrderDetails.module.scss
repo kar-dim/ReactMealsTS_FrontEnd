@@ -1,8 +1,7 @@
+@use './global' as *;
+
 div#no_orders {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    @include flex-column-center();
 }
 
 div#no_orders>img {
@@ -11,10 +10,8 @@ div#no_orders>img {
 }
 
 div#main_div {
+    @include flex-column-align-center();
     overflow-y: auto;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
 }
 
 ul.order_details_ul {
@@ -25,22 +22,17 @@ ul.order_details_ul {
 }
 
 div.order_details {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    @include flex-row-between-center()
 }
 
 div.order_food_details {
-    display: flex;
-    flex-direction: column;
+    @include flex-column();
     width: 50%;
 }
 
 div.order_food_details_total {
     width: 50%;
-    display: flex;
-    justify-content: center;
+    @include flex-justify-center();
 }
 
 span#order_food_details_total_span {
@@ -49,9 +41,7 @@ span#order_food_details_total_span {
 }
 
 div#order_food_detail {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    @include flex-row-between();
     margin-bottom: 20px;
 }
 

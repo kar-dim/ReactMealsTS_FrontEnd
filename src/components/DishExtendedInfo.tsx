@@ -1,5 +1,5 @@
 import { IDishWithImageURLEncoded } from '../interfaces/DishInterfaces';
-import style from '../styles/DishExtendedInfo.module.css'
+import style from '../styles/DishExtendedInfo.module.scss'
 
 const DishExtendedInfo = ({ dish_description, dish_extended_info, dish_name, imageUrlEncoded }: IDishWithImageURLEncoded) => {
     return (

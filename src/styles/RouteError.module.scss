@@ -1,3 +1,5 @@
+@use './global' as *;
+
 #error_page {
     position: absolute;
     left: 50%;
@@ -9,9 +11,7 @@
 }
 
 #error_page_content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include flex-column-align-center();
 }
 
 p,

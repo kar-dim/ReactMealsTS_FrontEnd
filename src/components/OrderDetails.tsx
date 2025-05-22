@@ -1,4 +1,4 @@
-import OrderDetailsStyle from '../styles/OrderDetails.module.css';
+import OrderDetailsStyle from '../styles/OrderDetails.module.scss';
 import { toastShow } from '../other/ToastUtils';
 import { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';

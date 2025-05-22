@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import CartButton from './CartButton';
-import HeaderStyles from '../styles/Header.module.css';
+import HeaderStyles from '../styles/Header.module.scss';
 import { useCartContext } from '../contexts/cart-context';
 import Modal from './Modal';
 import { toastShow } from '../other/ToastUtils';

@@ -1,5 +1,5 @@
 import { IDish } from '../interfaces/DishInterfaces';
-import CartDetailsStyle from '../styles/CartDetails.module.css';
+import CartDetailsStyle from '../styles/CartDetails.module.scss';
 import { useCartContext } from '../contexts/cart-context';
 import { toastShow } from '../other/ToastUtils';
 import { useState } from 'react';

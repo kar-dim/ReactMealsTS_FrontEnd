@@ -1,13 +1,13 @@
+@use './global' as *;
+
 div#auth0_loader {
     position: absolute;
     top: 50%;
     left: 50%;
+    @include flex-center();
     height: 800px;
     width: 800px;
     transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 h1#auth0_text {
