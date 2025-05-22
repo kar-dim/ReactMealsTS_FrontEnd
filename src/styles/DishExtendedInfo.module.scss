@@ -12,8 +12,7 @@ div#header {
 
 img#food_pic {
     border-radius: 20px;
-    height: 270px;
-    width: 340px;
+    @include size(270px, 340px);
 }
 
 div#name_and_short_description {
@@ -28,8 +27,7 @@ h2 {
 
 @media screen and (max-width: 960px) {
     img#food_pic {
-        height: 240px;
-        width: 300px;
+        @include size(240px, 300px);
     }
 }
 
@@ -47,8 +45,7 @@ h2 {
     }
 
     img#food_pic {
-        height: 210px;
-        width: 270px;
+        @include size(210px, 270px);
     }
 }
 
@@ -62,8 +59,7 @@ h2 {
     }
 
     img#food_pic {
-        height: 120px;
-        width: 170px;
+        @include size(120px, 170px);
     }
 }
 
@@ -77,7 +73,6 @@ h2 {
     }
 
     img#food_pic {
-        height: 120px;
-        width: 170px;
+        @include size(120px, 170px);
     }
 }

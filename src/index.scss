@@ -1,3 +1,5 @@
+@use './styles/global' as *;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Exo 2', 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,5 +7,5 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(44, 44, 44);
+  background-color: $color-main-body;
 }

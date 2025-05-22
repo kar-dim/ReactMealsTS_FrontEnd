@@ -3,9 +3,8 @@
 .cart_modal {
     position: fixed;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    @include size(100%);
+    background-color: $color-semi-transparent;
     opacity: 0;
     visibility: hidden;
     transform: scale(1.1);
@@ -18,7 +17,7 @@
     width: 48rem;
     left: 50%;
     transform: translate(-50%, 4rem);
-    background-color: white;
+    background-color: $color-white;
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
     overflow-y: auto;
@@ -28,15 +27,15 @@
 .cart_modal_close_button {
     float: right;
     width: 1.5rem;
-    line-height: 1.5rem;
+    height: 1.5rem;
     text-align: center;
     cursor: pointer;
     border-radius: 0.25rem;
-    background-color: lightgray;
+    background-color: $color-light-white;
 }
 
 .cart_modal_close_button:hover {
-    background-color: darkgray;
+    background-color: $color-dark-white;
 }
 
 .cart_show_modal {

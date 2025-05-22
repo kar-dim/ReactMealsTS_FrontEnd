@@ -6,7 +6,7 @@
     text-align: center;
     transition: 0.5s;
     background-size: 200% auto;
-    color: white;
+    color: $color-white;
     border-radius: 10px;
     border: 0px;
     font-weight: 700;
@@ -20,7 +20,7 @@
 
 .custom_button:hover {
     background-position: right center;
-    color: white;
+    color: $color-white;
     text-decoration: none;
 }
 
@@ -55,7 +55,7 @@ div#main {
 
 div#main_content {
     width: 1366px;
-    background-color: white;
+    background-color: $color-white;
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -119,8 +119,7 @@ div.main_edit_error {
 }
 
 div.main_edit_error>img {
-    height: 400px;
-    width: 400px;
+    @include size(400px);
 }
 
 div.main_edit_main {
@@ -142,8 +141,7 @@ li.main_editusers_li {
 }
 
 img#main_editdishes_img {
-    width: 120px;
-    height: 100px;
+    @include size(100px, 120px);
     border-radius: 8px;
 }
 
@@ -199,7 +197,7 @@ button#main_edit_delete_btn {
     outline: none;
     box-shadow: none;
     border-radius: 5px;
-    background-color: white;
+    background-color: $color-white;
     padding: 0;
     cursor: pointer;
     filter: brightness(1);
@@ -232,18 +230,16 @@ img#main_edit_delete_btn_img {
 }
 
 img#main_edit_edit_btn_img {
-    width: 36px;
-    height: 38px;
+    @include size(38px, 36px);
 }
 
 img#main_edit_delete_btn_img {
-    width: 30px;
-    height: 38px;
+    @include size(38px, 30px);
 }
 
 form#edit_user_form {
     @include flex-column-align-center();
-    margin: 20px 5px 20px 5px;
+    margin: 20px 5px;
 }
 
 div#edit_user_form1,
@@ -308,8 +304,7 @@ input[type=text]#edit_user_address {
     }
 
     img#main_editdishes_img {
-        width: 80px;
-        height: 60px;
+        @include size(60px, 80px);
     }
 }
 
@@ -398,8 +393,7 @@ input[type=text]#edit_user_address {
     }
 
     div.main_editdishes_error>img {
-        height: 300px;
-        width: 300px;
+        @include size(300px);
     }
 
     div.main_editdishes_error>h1 {
@@ -411,18 +405,15 @@ input[type=text]#edit_user_address {
     }
 
     img#main_editdishes_img {
-        width: 60px;
-        height: 45px;
+        @include size(45px, 60px);
     }
 
     img#main_edit_edit_btn_img {
-        width: 18px;
-        height: 19px;
+        @include size(19px, 18px);
     }
 
     img#main_edit_delete_btn_img {
-        width: 15px;
-        height: 19px;
+        @include size(19px, 15px);
     }
 }
 

@@ -5,8 +5,7 @@ div#no_orders {
 }
 
 div#no_orders>img {
-    height: 400px;
-    width: 400px;
+    @include size(400px);
 }
 
 div#main_div {
@@ -47,7 +46,7 @@ div#order_food_detail {
 
 div.food_counter_box {
     display: inline;
-    outline: 2px solid rgb(153, 153, 153);
+    outline: 2px solid $color-counter-box;
     border-radius: 10px;
     padding: 5px 10px;
 }
@@ -103,8 +102,7 @@ div.food_counter_box {
 
 @media screen and (max-width: 400px) {
     div#no_orders>img {
-        height: 300px;
-        width: 300px;
+        @include size(300px);
     }
 
     div#no_orders>h1 {

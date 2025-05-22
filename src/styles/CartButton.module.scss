@@ -3,14 +3,14 @@
 div.cart_button {
    display: flex;
    margin-right: 40px;
-   background-color: rgb(92, 29, 0);
+   background-color: $color-cart-button;
    padding: 10px 10px 10px 20px;
    border-radius: 20px;
    cursor: pointer;
 }
 
 div.cart_button:hover {
-   background-color: rgb(139, 44, 0);
+   background-color: $color-brown;
 }
 
 .cart_button>img {
@@ -20,7 +20,7 @@ div.cart_button:hover {
 
 p#cart_p {
    margin: 0px 0px 0px 0px;
-   color: white;
+   color: $color-white;
 }
 
 .cart_button>div.cart_count {
@@ -28,13 +28,13 @@ p#cart_p {
    margin-left: 15px;
    padding-left: 10px;
    padding-right: 10px;
-   background-color: rgb(207, 71, 17);
+   background-color: $color-cart-count;
    border-radius: 10px;
 }
 
 .cart_button>div.cart_count p {
    margin: 0px 0px 0px 0px;
-   color: white;
+   color: $color-white;
 }
 
 @media (max-width: 1100px) {
@@ -52,8 +52,7 @@ p#cart_p {
    .cart_button>img {
       margin-right: 0px;
       margin-left: 15px;
-      width: 25px;
-      height: 25px;
+      @include size(25px);
    }
 
    .cart_button>div.cart_count {
@@ -66,7 +65,7 @@ p#cart_p {
    .cart_button>div.cart_count p {
       margin: 0px 0px 0px 0px;
       font-size: 18px;
-      color: white;
+      color: $color-white;
    }
 }
 
@@ -85,8 +84,7 @@ p#cart_p {
    .cart_button>img {
       margin-right: 0px;
       margin-left: 5px;
-      width: 20px;
-      height: 20px;
+      @include size(20px);
    }
 
    .cart_button>div.cart_count {
@@ -99,6 +97,6 @@ p#cart_p {
    .cart_button>div.cart_count p {
       margin: 0px 0px 0px 0px;
       font-size: 14px;
-      color: white;
+      color: $color-white;
    }
 }

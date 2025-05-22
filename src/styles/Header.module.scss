@@ -1,7 +1,7 @@
 @use './global' as *;
 
 .header_main {
-    background-color: rgb(168, 61, 19);
+    background-color: $color-header-main;
     @include flex-row-between-center();
     padding-top: 10px;
     padding-bottom: 10px;
@@ -14,7 +14,7 @@
     text-align: center;
     transition: 0.5s;
     background-size: 200% auto;
-    color: white;
+    color: $color-white;
     border-radius: 10px;
     border: 0px;
     font-weight: 700;
@@ -28,7 +28,7 @@
 
 .custom_button:hover {
     background-position: right center;
-    color: white;
+    color: $color-white;
     text-decoration: none;
 }
 
@@ -38,12 +38,12 @@
 
 a#header_about_link,
 a#header_admin_link {
-    color: white;
+    color: $color-white;
 }
 
 a#header_home {
     font-size: 1.6em;
-    color: white;
+    color: $color-white;
     font-weight: bold;
     margin-right: 30px;
     margin-left: 4vw;
@@ -69,13 +69,13 @@ a#header_admin_link:active {
 }
 
 span#header_user_name {
-    color: white;
+    color: $color-white;
     margin-left: 16px;
     font-size: 1.2em;
 }
 
 .header_text {
-    background-color: rgb(55, 55, 55);
+    background-color: $color-header-container;
     width: 500px;
     display: block;
     position: relative;
@@ -87,13 +87,13 @@ span#header_user_name {
 
 .header_text>h1 {
     text-align: center;
-    color: white;
+    color: $color-white;
     font-size: 24px;
 }
 
 .header_text>p {
     text-align: center;
-    color: white;
+    color: $color-white;
     font-size: 14px;
 }
 

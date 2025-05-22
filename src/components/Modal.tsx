@@ -26,7 +26,7 @@ const Modal = (props: IModal) => {
     return (
         <div className={showModalClass}>
             <div className="cart_modal_content" ref={modalRef} style={modalWidth ? { width: modalWidth } : undefined}>
-                <span onClick={props.closeModal} className="cart_modal_close_button">&times;</span>
+                <span onClick={props.closeModal} className="cart_modal_close_button">🗙</span>
                 {props.children}
             </div>
         </div>

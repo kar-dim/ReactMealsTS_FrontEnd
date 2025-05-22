@@ -1,3 +1,7 @@
+//
+// MIXINS
+//
+
 // Flex direction
 @mixin flex-row {
     display: flex;
@@ -150,3 +154,32 @@
     justify-content: space-between;
     align-items: center;
 }
+
+// Height/width
+@mixin size($height, $width: $height) {
+    height: $height;
+    width: $width;
+}
+
+//
+// VARIABLES
+//
+
+$color-white: white;
+$color-dark-white: darkgray;
+$color-light-white: lightgray;
+$color-orange: orange;
+$color-semi-transparent: rgba(0, 0, 0, 0.5);
+$color-brown: rgb(139, 44, 0);
+$color-text-hover: rgb(230, 230, 230);
+$color-text-active: rgb(210, 210, 210);
+$color-counter-box: rgb(153, 153, 153);
+$color-main-btn: rgb(226, 0, 34);
+$color-main-body: rgb(44, 44, 44);
+$color-header-main: rgb(168, 61, 19);
+$color-header-container: rgb(55, 55, 55);
+$color-button-active: rgb(186, 0, 34);
+$color-button-hover: rgb(214, 0, 39);
+$color-cart-count: rgb(207, 71, 17);
+$color-cart-details-dark-red: rgb(177, 0, 9);
+$color-cart-button: rgb(92, 29, 0);

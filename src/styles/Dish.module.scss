@@ -13,7 +13,7 @@ div.dish_left {
 }
 
 div.dish_left:hover {
-    text-shadow: 0 0 2px rgb(187, 75, 0);
+    text-shadow: 0 0 2px $color-header-main;
     transition: .5s ease
 }
 
@@ -24,8 +24,7 @@ div.dish_left_text {
 
 img#dish_left_img {
     border-radius: 20px;
-    height: 150px;
-    width: 170px;
+    @include size(150px, 170px);
 }
 
 div.dish_right {
@@ -40,7 +39,7 @@ div.dish_left>span {
 
 span#dish_text_price {
     margin-top: 1px;
-    color: orange;
+    color: $color-orange;
     font-weight: bold;
     font-size: 20px;
 }
@@ -48,23 +47,23 @@ span#dish_text_price {
 button.add_button {
     outline: none;
     box-shadow: none;
-    color: white;
+    color: $color-white;
     border: none;
     font-size: 22px;
-    background-color: rgb(226, 0, 34);
+    background-color: $color-main-btn;
     border-radius: 25px;
     padding: 10px 15px 10px 15px;
     cursor: pointer;
 }
 
 button.add_button:hover {
-    background-color: rgb(214, 0, 39);
-    color: rgb(230, 230, 230);
+    background-color: $color-button-hover;
+    color: $color-text-hover;
 }
 
 button.add_button:active {
-    background-color: rgb(186, 0, 34);
-    color: rgb(210, 210, 210);
+    background-color: $color-button-active;
+    color: $color-text-active;
 }
 
 span#dish_description {
@@ -73,8 +72,7 @@ span#dish_description {
 
 @media screen and (max-width: 960px) {
     img#dish_left_img {
-        height: 90px;
-        width: 110px;
+        @include size(90px, 110px);
     }
 
     span#dish_description {
@@ -102,8 +100,7 @@ span#dish_description {
 
 @media screen and (max-width: 550px) {
     img#dish_left_img {
-        height: 70px;
-        width: 85px;
+        @include size(70px, 85px);
     }
 
     button.add_button {
