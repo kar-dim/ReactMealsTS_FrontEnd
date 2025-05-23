@@ -9,12 +9,12 @@ div.dish_main {
 div.dish_left {
     display: flex;
     cursor: pointer;
-    transition: .5s ease
-}
+    transition: .5s ease;
 
-div.dish_left:hover {
-    text-shadow: 0 0 2px $color-header-main;
-    transition: .5s ease
+    &:hover {
+        text-shadow: 0 0 2px $color-header-main;
+        transition: .5s ease
+    }
 }
 
 div.dish_left_text {
@@ -54,16 +54,16 @@ button.add_button {
     border-radius: 25px;
     padding: 10px 15px 10px 15px;
     cursor: pointer;
-}
 
-button.add_button:hover {
-    background-color: $color-button-hover;
-    color: $color-text-hover;
-}
+    &:hover {
+        background-color: $color-button-hover;
+        color: $color-text-hover;
+    }
 
-button.add_button:active {
-    background-color: $color-button-active;
-    color: $color-text-active;
+    &:active {
+        background-color: $color-button-active;
+        color: $color-text-active;
+    }
 }
 
 span#dish_description {

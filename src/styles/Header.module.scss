@@ -17,23 +17,23 @@
     color: $color-white;
     border-radius: 10px;
     border: 0px;
-    font-weight: 700;
+    font-weight: bold;
     box-shadow: 0px 0px 14px -7px #f08c19;
     background-image: linear-gradient(45deg, #FF512F 0%, #f08c19 51%, #FF512F 100%);
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-}
 
-.custom_button:hover {
-    background-position: right center;
-    color: $color-white;
-    text-decoration: none;
-}
+    &:hover {
+        background-position: right center;
+        text-decoration: none;
+        color: $color-white;
+    }
 
-.custom_button:active {
-    transform: scale(0.95);
+    &:active {
+        transform: scale(0.95);
+    }
 }
 
 a#header_about_link,
@@ -48,12 +48,11 @@ a#header_home {
     margin-right: 30px;
     margin-left: 4vw;
     cursor: pointer;
-    transition: .3s ease
-}
+    transition: .3s ease;
 
-#header_home:hover {
-    text-shadow: 0 0 10px $color-white;
-    transition: .3s ease
+    &:hover {
+        text-shadow: 0 0 10px $color-white;
+    }
 }
 
 a#header_about_link:link,

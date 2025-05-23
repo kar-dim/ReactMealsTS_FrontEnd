@@ -7,10 +7,10 @@ div.cart_button {
    padding: 10px 10px 10px 20px;
    border-radius: 20px;
    cursor: pointer;
-}
 
-div.cart_button:hover {
-   background-color: $color-brown;
+   &:hover {
+      background-color: $color-brown;
+   }
 }
 
 .cart_button>img {

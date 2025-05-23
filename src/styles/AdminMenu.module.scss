@@ -9,27 +9,27 @@
     color: $color-white;
     border-radius: 10px;
     border: 0px;
-    font-weight: 700;
+    font-weight: bold;
     box-shadow: 0px 0px 14px -7px #f08c19;
     background-image: linear-gradient(45deg, #FF512F 0%, #f08c19 51%, #FF512F 100%);
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-}
 
-.custom_button:hover {
-    background-position: right center;
-    color: $color-white;
-    text-decoration: none;
-}
+    &:hover {
+        background-position: right center;
+        color: $color-white;
+        text-decoration: none;
+    }
 
-.custom_button:active {
-    transform: scale(0.95);
-}
+    &:active {
+        transform: scale(0.95);
+    }
 
-.custom_button:disabled {
-    background-image: linear-gradient(45deg, #ffc4c4 0%, #ffcd95 51%, #ffb0a0 100%);
+    &:disabled {
+        background-image: linear-gradient(45deg, #ffc4c4 0%, #ffcd95 51%, #ffb0a0 100%);
+    }
 }
 
 input {
@@ -201,11 +201,10 @@ button#main_edit_delete_btn {
     padding: 0;
     cursor: pointer;
     filter: brightness(1);
-}
 
-button#main_edit_edit_btn:disabled,
-button#main_edit_delete_btn:disabled {
-    filter: saturate(0);
+    &:disabled {
+        filter: saturate(0);
+    }
 }
 
 button#main_edit_delete_btn {
@@ -291,10 +290,10 @@ input[type=text]#edit_user_address {
 
     div#add_dish_2 {
         flex-direction: column;
-    }
 
-    div#add_dish_2>textarea {
-        width: 80vw;
+        >textarea {
+            width: 80vw;
+        }
     }
 }
 
@@ -343,20 +342,20 @@ input[type=text]#edit_user_address {
         display: block;
         text-align: start;
         width: 50%;
-    }
 
-    div#main_editusers_text>span {
-        display: block;
+        >span {
+            display: block;
+        }
     }
 }
 
 @media screen and (max-width: 726px) {
     div#add_dish_1 {
         flex-direction: column;
-    }
 
-    div#add_dish_1>div {
-        @include flex-between();
+        >div {
+            @include flex-between();
+        }
     }
 
     input#adminmenu_dish_name {

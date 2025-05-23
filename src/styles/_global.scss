@@ -161,10 +161,16 @@
     width: $width;
 }
 
+// Transition
+@mixin transition-default($delay: 0s) {
+    transition: visibility 0s linear $delay, opacity 0.25s ease, transform 0.25s ease;
+}
+
 //
 // VARIABLES
 //
 
+$semi-bold: 600;
 $color-white: white;
 $color-dark-white: darkgray;
 $color-light-white: lightgray;

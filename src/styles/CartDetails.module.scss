@@ -10,11 +10,30 @@ ul.cart_details_ul {
     padding: 0;
 }
 
-button.cart_details_button_close {
-    outline: 2px solid $color-main-btn;
+@mixin cart-details-button-common() {
     box-shadow: none;
-    color: $color-white;
     border: none;
+}
+
+@mixin cart-details-button-states {
+    &:hover {
+        outline: 2px solid $color-button-hover;
+        background-color: $color-button-hover;
+        color: $color-text-hover;
+    }
+
+    &:active {
+        outline: 2px solid $color-button-active;
+        background-color: $color-button-active;
+        color: $color-text-active;
+    }
+}
+
+button.cart_details_button_close {
+    @include cart-details-button-common();
+    @include cart-details-button-states();
+    outline: 2px solid $color-main-btn;
+    color: $color-white;
     font-size: 20px;
     background-color: $color-main-btn;
     border-radius: 25px;
@@ -23,61 +42,33 @@ button.cart_details_button_close {
 }
 
 button.cart_details_button_order {
+    @include cart-details-button-common();
+    @include cart-details-button-states();
     outline: 2px solid $color-cart-details-dark-red;
-    box-shadow: none;
     color: $color-cart-details-dark-red;
-    border: none;
     font-size: 20px;
     background-color: $color-white;
     border-radius: 25px;
     padding: 8px 13px;
-}
 
-button.cart_details_button_order:hover,
-button.cart_details_button_close:hover {
-    outline: 2px solid $color-button-hover;
-    background-color: $color-button-hover;
-    color: $color-text-hover;
-}
-
-button.cart_details_button_order:active,
-button.cart_details_button_close:active {
-    outline: 2px solid $color-button-active;
-    background-color: $color-button-active;
-    color: $color-text-active;
-}
-
-button.cart_details_button_order:disabled {
-    outline: 2px solid $color-cart-details-dark-red;
-    color: $color-cart-details-dark-red;
-    background-color: $color-dark-white;
+    &:disabled {
+        outline: 2px solid $color-cart-details-dark-red;
+        color: $color-cart-details-dark-red;
+        background-color: $color-dark-white;
+    }
 }
 
 button.cart_details_plus,
 button.cart_details_minus {
+    @include cart-details-button-common();
+    @include cart-details-button-states();
     outline: 2px solid $color-cart-details-dark-red;
-    box-shadow: none;
     color: $color-cart-details-dark-red;
-    border: none;
     font-size: 18px;
     width: 40%;
     background-color: $color-white;
     border-radius: 10px;
     padding: 3px 8px;
-}
-
-button.cart_details_plus:hover,
-button.cart_details_minus:hover {
-    outline: 2px solid $color-button-hover;
-    background-color: $color-button-hover;
-    color: $color-text-hover;
-}
-
-button.cart_details_plus:active,
-button.cart_details_minus:active {
-    outline: 2px solid $color-button-active;
-    background-color: $color-button-active;
-    color: $color-text-active;
 }
 
 .cart_details_main_right>h2 {

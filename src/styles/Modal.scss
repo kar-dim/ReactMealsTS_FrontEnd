@@ -8,7 +8,7 @@
     opacity: 0;
     visibility: hidden;
     transform: scale(1.1);
-    transition: visibility 0s linear 0.25s, opacity 0.25s ease, transform 0.25s ease;
+    @include transition-default(0.25s);
     z-index: 2;
 }
 
@@ -26,23 +26,22 @@
 
 .cart_modal_close_button {
     float: right;
-    width: 1.5rem;
-    height: 1.5rem;
+    @include size(1.5rem);
     text-align: center;
     cursor: pointer;
     border-radius: 0.25rem;
     background-color: $color-light-white;
-}
 
-.cart_modal_close_button:hover {
-    background-color: $color-dark-white;
+    &:hover {
+        background-color: $color-dark-white;
+    }
 }
 
 .cart_show_modal {
     opacity: 1;
     visibility: visible;
     transform: scale(1.0);
-    transition: visibility 0s linear 0s, opacity 0.25s ease, transform 0.25s ease;
+    @include transition-default();
 }
 
 @media screen and (max-width: 830px) {
