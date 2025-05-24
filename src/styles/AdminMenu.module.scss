@@ -1,5 +1,10 @@
 @use './global' as *;
 
+$input-mid-width: 416px;
+$input-mid2-width: 256px;
+$input-small-width: 208px;
+$input-small2-width: 160px;
+
 .custom_button {
     font-size: $font-base;
     padding: 10px 25px;
@@ -72,15 +77,15 @@ div#add_dish_1 {
 }
 
 input#adminmenu_dish_name {
-    width: 18em;
+    width: 300px;
 }
 
 input#adminmenu_dish_description {
-    width: 32em;
+    width: 500px;
 }
 
 input#adminmenu_dish_price {
-    width: 4.5em;
+    width: 70px;
 }
 
 div#add_dish_2 {
@@ -273,15 +278,15 @@ input[type=text]#edit_user_address {
 
 @media screen and (max-width: 1128px) {
     input#adminmenu_dish_name {
-        width: 16em;
+        width: $input-mid2-width;
     }
 
     input#adminmenu_dish_description {
-        width: 26em;
+        width: $input-mid-width;
     }
 
     input#adminmenu_dish_price {
-        width: 4.5em;
+        width: 70px;
     }
 
     div#main_content {
@@ -309,19 +314,19 @@ input[type=text]#edit_user_address {
 
 @media screen and (max-width: 962px) {
     input#adminmenu_dish_name {
-        width: 16em;
+        width: $input-mid2-width;
     }
 
     input#adminmenu_dish_description {
-        width: 26em;
+        width: $input-mid-width;
     }
 
     input#adminmenu_dish_price {
-        width: 4.5em;
+        width: 70px;
     }
 
     div#add_dish_2>textarea {
-        height: 20em;
+        height: 320px;
     }
 
     span#main_editdishes_text_name {
@@ -359,11 +364,11 @@ input[type=text]#edit_user_address {
     }
 
     input#adminmenu_dish_name {
-        width: 26em;
+        width: $input-mid-width;
     }
 
     div#add_dish_2>textarea {
-        height: 25em;
+        height: 400px;
     }
 }
 
@@ -384,11 +389,11 @@ input[type=text]#edit_user_address {
 
 @media screen and (max-width: 484px) {
     input#adminmenu_dish_name {
-        width: 13em;
+        width: $input-small-width;
     }
 
     input#adminmenu_dish_description {
-        width: 13em;
+        width: $input-small-width;
     }
 
     div.main_editdishes_error>img {
@@ -424,14 +429,14 @@ input[type=text]#edit_user_address {
 
 @media screen and (max-width: 330px) {
     input#adminmenu_dish_name {
-        width: 10em;
+        width: $input-small2-width;
     }
 
     input#adminmenu_dish_description {
-        width: 10em;
+        width: $input-small2-width;
     }
 
     div#add_dish_2>textarea {
-        height: 30em;
+        height: 480px;
     }
 }
