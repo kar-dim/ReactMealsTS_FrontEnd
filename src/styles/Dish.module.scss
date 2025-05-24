@@ -29,7 +29,6 @@ img#dish_left_img {
 
 div.dish_right {
     align-self: flex-end;
-    float: right;
 }
 
 div.dish_left>span {
@@ -41,7 +40,7 @@ span#dish_text_price {
     margin-top: 1px;
     color: $color-orange;
     font-weight: bold;
-    font-size: 20px;
+    font-size: $font-xl;
 }
 
 button.add_button {
@@ -49,7 +48,7 @@ button.add_button {
     box-shadow: none;
     color: $color-white;
     border: none;
-    font-size: 22px;
+    font-size: $font-xl;
     background-color: $color-main-btn;
     border-radius: 25px;
     padding: 10px 15px 10px 15px;
@@ -82,15 +81,15 @@ span#dish_description {
 
 @media screen and (max-width: 760px) {
     button.add_button {
-        font-size: 16px;
+        font-size: $font-base;
     }
 
     span#dish_text_price {
-        font-size: 16px;
+        font-size: $font-base;
     }
 
     span#dish_name {
-        font-size: 16px;
+        font-size: $font-base;
     }
 
     span#dish_description {
@@ -104,15 +103,15 @@ span#dish_description {
     }
 
     button.add_button {
-        font-size: 14px;
+        font-size: $font-md;
     }
 
     span#dish_text_price {
-        font-size: 14px;
+        font-size: $font-md;
     }
 
     span#dish_name {
-        font-size: 14px;
+        font-size: $font-md;
     }
 
     span#dish_description {

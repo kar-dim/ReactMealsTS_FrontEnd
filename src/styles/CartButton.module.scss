@@ -64,7 +64,7 @@ p#cart_p {
 
    .cart_button>div.cart_count p {
       margin: 0px 0px 0px 0px;
-      font-size: 18px;
+      font-size: $font-lg;
       color: $color-white;
    }
 }
@@ -96,7 +96,7 @@ p#cart_p {
 
    .cart_button>div.cart_count p {
       margin: 0px 0px 0px 0px;
-      font-size: 14px;
+      font-size: $font-md;
       color: $color-white;
    }
 }

@@ -1,7 +1,7 @@
 @use './global' as *;
 
 .custom_button {
-    font-size: 16px;
+    font-size: $font-base;
     padding: 10px 25px;
     text-align: center;
     transition: 0.5s;
@@ -33,7 +33,7 @@
 }
 
 input {
-    font-size: 16px;
+    font-size: $font-base;
 }
 
 input[type=text],
@@ -59,7 +59,7 @@ div#main_content {
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    font-size: 16px;
+    font-size: $font-base;
 }
 
 form#add_dish_form {
@@ -89,7 +89,7 @@ div#add_dish_2 {
 }
 
 div#add_dish_2 textarea {
-    font-size: 14px;
+    font-size: $font-md;
     margin-left: 15px;
 }
 
@@ -258,16 +258,16 @@ input[type=text]#edit_user_email,
 input[type=text]#edit_user_name,
 input[type=text]#edit_user_lastname,
 input[type=text]#edit_user_address {
-    font-size: 13px;
+    font-size: $font-sm;
 }
 
 @media screen and (max-width: 1420px) {
     input {
-        font-size: 13px;
+        font-size: $font-sm;
     }
 
     div#main_content {
-        font-size: 13px;
+        font-size: $font-sm;
     }
 }
 
@@ -396,7 +396,7 @@ input[type=text]#edit_user_address {
     }
 
     div.main_editdishes_error>h1 {
-        font-size: 18px;
+        font-size: $font-lg;
     }
 
     div#main_editdishes_text {

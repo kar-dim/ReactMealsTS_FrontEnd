@@ -34,7 +34,7 @@ button.cart_details_button_close {
     @include cart-details-button-states();
     outline: 2px solid $color-main-btn;
     color: $color-white;
-    font-size: 20px;
+    font-size: $font-xl;
     background-color: $color-main-btn;
     border-radius: 25px;
     padding: 8px 13px;
@@ -46,7 +46,7 @@ button.cart_details_button_order {
     @include cart-details-button-states();
     outline: 2px solid $color-cart-details-dark-red;
     color: $color-cart-details-dark-red;
-    font-size: 20px;
+    font-size: $font-xl;
     background-color: $color-white;
     border-radius: 25px;
     padding: 8px 13px;
@@ -64,7 +64,7 @@ button.cart_details_minus {
     @include cart-details-button-states();
     outline: 2px solid $color-cart-details-dark-red;
     color: $color-cart-details-dark-red;
-    font-size: 18px;
+    font-size: $font-lg;
     width: 40%;
     background-color: $color-white;
     border-radius: 10px;
@@ -107,11 +107,11 @@ div.cart_details_counter_box {
 
 @media screen and (max-width: 450px) {
     div.cart_details_main>h2 {
-        font-size: 18px;
+        font-size: $font-lg;
     }
 
     div.cart_details_main_right>h2 {
-        font-size: 18px;
+        font-size: $font-lg;
     }
 
     div.cart_details_main_right_buttons {
@@ -121,7 +121,7 @@ div.cart_details_counter_box {
     }
 
     div.cart_details_main_right_buttons>button {
-        font-size: 18px;
+        font-size: $font-lg;
         padding: 4px 7px 4px 7px;
     }
 }

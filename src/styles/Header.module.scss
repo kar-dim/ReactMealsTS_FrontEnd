@@ -87,13 +87,13 @@ span#header_user_name {
 .header_text>h1 {
     text-align: center;
     color: $color-white;
-    font-size: 24px;
+    font-size: $font-2xl;
 }
 
 .header_text>p {
     text-align: center;
     color: $color-white;
-    font-size: 14px;
+    font-size: $font-md;
 }
 
 .main_bg {
@@ -130,7 +130,7 @@ span#header_user_name {
 @media (min-width: 900px) and (max-width: 1366px) {
     span#header_user_name {
         display: inline;
-        font-size: 12px;
+        font-size: $font-sm;
     }
 }
 
@@ -170,11 +170,11 @@ span#header_user_name {
 
     .header_text>h1 {
         text-align: center;
-        font-size: 18px;
+        font-size: $font-lg;
     }
 
     .header_text>p {
         text-align: center;
-        font-size: 10px;
+        font-size: $font-xs;
     }
 }

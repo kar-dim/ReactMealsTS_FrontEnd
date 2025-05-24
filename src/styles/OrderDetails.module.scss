@@ -35,7 +35,7 @@ div.order_food_details_total {
 }
 
 span#order_food_details_total_span {
-    font-size: 20px;
+    font-size: $font-xl;
     font-weight: $semi-bold;
 }
 
@@ -62,12 +62,12 @@ div.food_counter_box {
 
 @media screen and (max-width: 560px) {
     h2#order_id {
-        font-size: 20px;
+        font-size: $font-xl;
         margin-bottom: 20px;
     }
 
     div.order_details {
-        font-size: 16px;
+        font-size: $font-base;
         display: block;
     }
 
@@ -82,12 +82,12 @@ div.food_counter_box {
 
 @media screen and (max-width: 440px) {
     h2#order_id {
-        font-size: 18px;
+        font-size: $font-lg;
         margin-bottom: 18px;
     }
 
     div.order_details {
-        font-size: 14px;
+        font-size: $font-md;
         display: block;
     }
 
@@ -106,7 +106,7 @@ div.food_counter_box {
     }
 
     div#no_orders>h1 {
-        font-size: 18px;
+        font-size: $font-lg;
     }
 }
 

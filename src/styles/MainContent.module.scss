@@ -29,7 +29,7 @@ img#error_img {
 }
 
 h1#main_content_error_h1 {
-  font-size: 26px;
+  font-size: $font-2xl;
 }
 
 @media screen and (max-width: 960px) {
@@ -40,12 +40,12 @@ h1#main_content_error_h1 {
 
 @media screen and (max-width: 560px) {
   h1#main_content_error_h1 {
-    font-size: 18px;
+    font-size: $font-lg;
   }
 }
 
 @media screen and (max-width: 410px) {
   h1#main_content_error_h1 {
-    font-size: 12px;
+    font-size: $font-sm;
   }
 }

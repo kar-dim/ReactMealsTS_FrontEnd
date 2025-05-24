@@ -37,11 +37,11 @@ h2 {
     }
 
     #name_and_short_description>h1 {
-        font-size: 24px;
+        font-size: $font-2xl;
     }
 
     #name_and_short_description>h2 {
-        font-size: 22px;
+        font-size: $font-xl;
     }
 
     img#food_pic {
@@ -51,7 +51,7 @@ h2 {
 
 @media screen and (max-width: 560px) {
     #name_and_short_description>h1 {
-        font-size: 20px;
+        font-size: $font-xl;
     }
 
     #name_and_short_description>h2 {
@@ -69,7 +69,7 @@ h2 {
     }
 
     #name_and_short_description>h2 {
-        font-size: 14px;
+        font-size: $font-md;
     }
 
     img#food_pic {
