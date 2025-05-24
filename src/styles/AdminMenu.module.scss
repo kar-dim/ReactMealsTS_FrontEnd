@@ -5,6 +5,11 @@ $input-mid2-width: 256px;
 $input-small-width: 208px;
 $input-small2-width: 160px;
 
+.custom_button_container {
+    display: flex;
+    gap: 5px;
+}
+
 .custom_button {
     font-size: $font-base;
     padding: 10px 25px;
@@ -117,6 +122,10 @@ div#deletedish_confirm_dialog {
 
 div.main_edit_main {
     @include flex-column();
+
+    ul {
+        padding-left: 5px;
+    }
 }
 
 div.main_edit_error {

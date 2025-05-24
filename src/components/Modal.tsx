@@ -22,10 +22,9 @@ const Modal = (props: IModal) => {
     }, [props.showModal, props.closeModal]);
 
     const showModalClass = props.showModal ? 'cart_modal cart_show_modal' : 'cart_modal';
-    const modalWidth = props.desiredWidth == null ? null : props.desiredWidth;
     return (
         <div className={showModalClass}>
-            <div className="cart_modal_content" ref={modalRef} style={modalWidth ? { width: modalWidth } : undefined}>
+            <div className="cart_modal_content" ref={modalRef} style={{ ...(props.desiredWidth && { width: props.desiredWidth }) }}>
                 <span onClick={props.closeModal} className="cart_modal_close_button">🗙</span>
                 {props.children}
             </div>

@@ -39,6 +39,11 @@ span#order_food_details_total_span {
     font-weight: $semi-bold;
 }
 
+span#food_value {
+    margin-right: 10px;
+    font-weight: $semi-bold;
+}
+
 div#order_food_detail {
     @include flex-row-between();
     margin-bottom: 20px;

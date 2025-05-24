@@ -17,6 +17,13 @@
   align-items: center;
 }
 
+div#main_content_initial {
+  font-size: $font-3xl;
+  text-align: 'center';
+  color: $color-white;
+  margin-top: '2rem';
+}
+
 ul.main_content_ul {
   list-style-type: none;
   margin: 0;

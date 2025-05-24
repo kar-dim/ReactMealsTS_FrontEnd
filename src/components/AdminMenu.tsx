@@ -235,9 +235,9 @@ const AdminMenu = () => {
                 <Modal desiredWidth={"fit-content"} showModal={dishDeleteConfirm != -1} closeModal={() => setDishDeleteConfirm(-1)}>
                     <div id={adminStyle.deletedish_confirm_dialog}>
                         <h2>Are you sure you want to delete this Dish?</h2>
-                        <div>
+                        <div className={adminStyle.custom_button_container}>
                             <button className={adminStyle.custom_button} onClick={() => { setDishDeleteConfirm(-1); deleteDish(dishDeleteConfirm) }}>YES</button>
-                            <button style={{ marginLeft: "5px" }} className={adminStyle.custom_button} onClick={() => setDishDeleteConfirm(-1)}>NO</button>
+                            <button className={adminStyle.custom_button} onClick={() => setDishDeleteConfirm(-1)}>NO</button>
                         </div>
                     </div>
                 </Modal>
@@ -246,9 +246,9 @@ const AdminMenu = () => {
                 <Modal desiredWidth={"fit-content"} showModal={userDeleteConfirm != ""} closeModal={() => setUserDeleteConfirm("")}>
                     <div id={adminStyle.deletedish_confirm_dialog}>
                         <h2>Are you sure you want to delete this User?</h2>
-                        <div>
+                        <div className={adminStyle.custom_button_container}>
                             <button className={adminStyle.custom_button} onClick={() => { setUserDeleteConfirm(""); deleteUser(userDeleteConfirm) }}>YES</button>
-                            <button style={{ marginLeft: "5px" }} className={adminStyle.custom_button} onClick={() => setUserDeleteConfirm("")}>NO</button>
+                            <button className={adminStyle.custom_button} onClick={() => setUserDeleteConfirm("")}>NO</button>
                         </div>
                     </div>
                 </Modal>
@@ -308,7 +308,7 @@ const AdminMenu = () => {
                                 }
                                 {availableUsers.length > 0 &&
                                     <div className={adminStyle.main_edit_main}>
-                                        <ul style={{ paddingLeft: "5px" }}>
+                                        <ul>
                                             {availableUsers.map((user, index) => {
                                                 return (
                                                     <li key={user.user_id} className={adminStyle.main_editusers_li}>

@@ -53,7 +53,7 @@ const MainContent = () => {
                     <h1 id={MainContentStyles.main_content_error_h1}>Internal Error. Please try again later.</h1>
                     <img id={MainContentStyles.error_img} src={ErrorImage}></img>
                 </div>
-                : <div style={{ fontSize: '2rem', marginTop: '2rem', textAlign: 'center', color: 'white' }}>{initialText}</div>
+                : <div id={MainContentStyles.main_content_initial}>{initialText}</div>
 
     );
 };

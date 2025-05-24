@@ -39,7 +39,7 @@ const Dish = ({ dish, showCurrentDishInfo }: IDishProps) => {
                     </div>
                     <div className={DishStyle.dish_left_text}>
                         <span id={DishStyle.dish_name}>{dish.dish_name}</span><br />
-                        <span id={DishStyle.dish_description} style={{ fontStyle: "italic" }}>{dish.dish_description}</span><br />
+                        <span id={DishStyle.dish_description}>{dish.dish_description}</span><br />
                         <span id={DishStyle.dish_text_price}>$ {dish.price.toFixed(2)}</span>
                     </div>
                 </div>

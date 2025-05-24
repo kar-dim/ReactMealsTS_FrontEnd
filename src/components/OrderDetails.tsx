@@ -80,8 +80,8 @@ const OrderDetails = ({ closeModal }: IOrderDetailsProps) => {
                                                                 <div id={OrderDetailsStyle.order_food_detail}>
                                                                     <span data-tooltip-id={"food-name-tooltip" + index + food_index} data-tooltip-content={dish.dish_description}>{dish.dish_name}</span>
                                                                     <Tooltip id={"food-name-tooltip" + index + food_index} />
-                                                                    <div id={OrderDetailsStyle.order_food_detail_right_part}>
-                                                                        <span style={{ marginRight: "10px", fontWeight: "600" }}>$ {dish.price.toFixed(2)}</span>
+                                                                    <div>
+                                                                        <span id={OrderDetailsStyle.food_value}>$ {dish.price.toFixed(2)}</span>
                                                                         <div className={OrderDetailsStyle.food_counter_box}>
                                                                             <span>x {dish.dish_counter}</span>
                                                                         </div>

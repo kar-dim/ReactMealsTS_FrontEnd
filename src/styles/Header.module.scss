@@ -55,16 +55,16 @@ a#header_home {
     }
 }
 
-a#header_about_link:link,
-a#header_home:link,
-a#header_admin_link a#header_about_link:visited,
-a#header_home:visited,
-a#header_admin_link:visited,
-a#header_about_link:hover,
-a#header_admin_link:hover a#header_about_link:active,
-a#header_home:active,
-a#header_admin_link:active {
-    text-decoration: none;
+a#header_about_link,
+a#header_home,
+a#header_admin_link {
+
+    &:link,
+    &:visited,
+    &:hover,
+    &:active {
+        text-decoration: none;
+    }
 }
 
 span#header_user_name {
