@@ -11,31 +11,7 @@ $input-small2-width: 160px;
 }
 
 .custom_button {
-    font-size: $font-base;
-    padding: 10px 25px;
-    text-align: center;
-    transition: 0.5s;
-    background-size: 200% auto;
-    color: $color-white;
-    border-radius: 10px;
-    border: 0px;
-    font-weight: bold;
-    box-shadow: 0px 0px 14px -7px #f08c19;
-    background-image: linear-gradient(45deg, #FF512F 0%, #f08c19 51%, #FF512F 100%);
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-
-    &:hover {
-        background-position: right center;
-        color: $color-white;
-        text-decoration: none;
-    }
-
-    &:active {
-        transform: scale(0.95);
-    }
+    @include custom-button-global();
 
     &:disabled {
         background-image: linear-gradient(45deg, #ffc4c4 0%, #ffcd95 51%, #ffb0a0 100%);
