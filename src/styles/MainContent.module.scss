@@ -18,10 +18,10 @@
 }
 
 div#main_content_initial {
+  @include flex-center();
   font-size: $font-3xl;
-  text-align: 'center';
   color: $color-white;
-  margin-top: '2rem';
+  padding-top: 25px;
 }
 
 ul.main_content_ul {
