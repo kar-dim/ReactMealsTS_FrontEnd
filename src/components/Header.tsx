@@ -28,7 +28,7 @@ const Header = () => {
     //methods
     const verifyAdminAccess = async () => setIsAdmin(isLoggedAsAdmin(await getAccessTokenSilently()));
     const loadUserProfileFromClaims = async () => {
-        let claims = await getIdTokenClaims();
+        const claims = await getIdTokenClaims();
         if (claims == undefined)
             return;
         setUserLoggedIn({
@@ -91,11 +91,11 @@ const Header = () => {
             <div className={HeaderStyles.header_main}>
                 <div>
                     <Link to="/" id={HeaderStyles.header_home}>Jimmys Foodzilla</Link>
-                    <Link id={HeaderStyles.header_about_link} to="/about"><button className={HeaderStyles.custom_button}>About</button></Link>
+                    <Link id={HeaderStyles.header_about_link} className={HeaderStyles.custom_button} to="/about">About</Link>
                     <Auth0SignInOffButton text={isAuthenticated ? "Logout" : "Login"} isLogin={!isAuthenticated} />
                     {isAuthenticatedUser && <button className={HeaderStyles.custom_button} onClick={() => setShowMyOrdersModal(true)}>My Orders</button>}
                     {isAuthenticatedUser && !isAdmin && <span id={HeaderStyles.header_user_name}>Welcome back, {userLoggedIn.name}!</span>}
-                    {isAuthenticatedUser && isAdmin && <Link id={HeaderStyles.header_admin_link} to="/admin"><button className={HeaderStyles.custom_button}>Admin Menu</button></Link>}
+                    {isAuthenticatedUser && isAdmin && <Link id={HeaderStyles.header_admin_link} className={HeaderStyles.custom_button} to="/admin">Admin Menu</Link>}
                 </div>
                 <CartButton cartItemsCounter={cartItems.length} cartButtonClick={clickCartHandler} />
             </div>

@@ -1,12 +1,11 @@
 import OrderDetailsStyle from '../styles/OrderDetails.module.scss';
 import { toastShow } from '../other/ToastUtils';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ApiRoutes } from '../other/PublicSettings';
 import { IDishWithCounter } from '../interfaces/DishInterfaces';
 import NoOrdersPic from '../media/sad_food.jpg';
 import { Tooltip } from 'react-tooltip';
-import React from 'react';
 import { get } from '../other/utils';
 
 interface IOrderDetailsProps {
@@ -65,21 +64,21 @@ const OrderDetails = ({ closeModal }: IOrderDetailsProps) => {
         <div id={OrderDetailsStyle.main_div}>
             <ul className={OrderDetailsStyle.order_details_ul}>
                 {
-                    userOrders.orders.map((order: IOrder, index: number) => {
+                    userOrders.orders.map((order: IOrder) => {
                         return (
-                            <React.Fragment key={index}>
+                            <Fragment key={order.id}>
                                 <li>
                                     <div className={OrderDetailsStyle.order_container_details}>
                                         <h2 id={OrderDetailsStyle.order_id}>Order ID #{order.id}</h2>
                                         <div className={OrderDetailsStyle.order_details}>
                                             <div className={OrderDetailsStyle.order_food_details}>
                                                 {
-                                                    order.dishes.map((dish: IDishWithCounter, food_index: number) => {
+                                                    order.dishes.map((dish: IDishWithCounter) => {
                                                         return (
-                                                            <React.Fragment key={"" + index + food_index}>
+                                                            <Fragment key={dish.dishId}>
                                                                 <div id={OrderDetailsStyle.order_food_detail}>
-                                                                    <span data-tooltip-id={"food-name-tooltip" + index + food_index} data-tooltip-content={dish.dish_description}>{dish.dish_name}</span>
-                                                                    <Tooltip id={"food-name-tooltip" + index + food_index} />
+                                                                    <span data-tooltip-id={`food-name-tooltip-${order.id}-${dish.dishId}`} data-tooltip-content={dish.dish_description}>{dish.dish_name}</span>
+                                                                    <Tooltip id={`food-name-tooltip-${order.id}-${dish.dishId}`} />
                                                                     <div>
                                                                         <span id={OrderDetailsStyle.food_value}>$ {dish.price.toFixed(2)}</span>
                                                                         <div className={OrderDetailsStyle.food_counter_box}>
@@ -89,7 +88,7 @@ const OrderDetails = ({ closeModal }: IOrderDetailsProps) => {
 
                                                                 </div>
                                                                 <br></br>
-                                                            </React.Fragment>
+                                                            </Fragment>
                                                         )
                                                     })
                                                 }
@@ -101,7 +100,7 @@ const OrderDetails = ({ closeModal }: IOrderDetailsProps) => {
                                     </div>
                                 </li>
                                 <hr></hr>
-                            </React.Fragment>
+                            </Fragment>
                         );
                     })
                 }

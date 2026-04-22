@@ -59,11 +59,11 @@ const CartDetails = ({ closeModal }: ICartDetails) => {
         //send http POST request
         try {
             setShowOrderButton(false);
-            post<IOrderData, any>(ApiRoutes.Order, orderData, await getAccessTokenSilently());
+            await post<IOrderData, void>(ApiRoutes.Order, orderData, await getAccessTokenSilently());
             toastShow('Your order is complete! Thanks', 'S');
             clearCartItems();
             closeModal();
-        } catch (error: any) {
+        } catch (error) {
             toastShow('Could not order!', 'E');
             console.error(error);
         } finally {
@@ -76,8 +76,8 @@ const CartDetails = ({ closeModal }: ICartDetails) => {
         <div>
             <ul className={CartDetailsStyle.cart_details_ul}>
                 {
-                    cartItemsCountered.map((cartItemC: CartItemCounter, index: number) => {
-                        return (<li key={index}>
+                    cartItemsCountered.map((cartItemC: CartItemCounter) => {
+                        return (<li key={cartItemC.dishId}>
                             <div className={CartDetailsStyle.cart_details_item}>
                                 <p>{cartItemC.dish_name}</p>
                                 <div className={CartDetailsStyle.cart_details_price}>

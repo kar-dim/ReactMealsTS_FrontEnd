@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, RefObject } from 'react';
 import adminStyle from '../styles/AdminMenu.module.scss'
 
 interface IAddEditDishFormProps {
@@ -10,7 +10,7 @@ interface IAddEditDishFormProps {
     } | null,
     addOrEditDish(event: FormEvent<HTMLFormElement>): void,
     addOrEditDishImageHandler(event: React.ChangeEvent<HTMLInputElement>, isAdd: boolean): void,
-    addOrEditDishButton: any,
+    addOrEditDishButton: RefObject<HTMLButtonElement | null>,
     isUsedForAdd: boolean //is true -> ADD DISH form, else -> EDIT DISH form
 }
 

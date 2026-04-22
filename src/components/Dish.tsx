@@ -4,7 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 import DishStyle from '../styles/Dish.module.scss';
 import DishLoadingImage from '../media/dish_loading_skeleton.png';
-import { getDishImage } from '../other/utils';
+import { getDishImageUrl } from '../other/utils';
 
 interface IDishProps {
     dish: IDish,
@@ -15,17 +15,18 @@ interface IDishProps {
 const Dish = ({ dish, showCurrentDishInfo }: IDishProps) => {
     const { isAuthenticated } = useAuth0();
     const [fetchedDishImage, setFetchedDishImage] = useState<string | null>(null);
-    const fetchDishImage = async () => {
-        const b64img = await getDishImage(dish.dish_url!);
-        if (b64img !== "")
-            setFetchedDishImage(b64img);
-    };
-    //normally the fetch should be done by the img src=... and not in a useEffect with axios, but we need custom headers on the get image url request
-    //because we are using NGROK (backend) for this app (cannot set http headers in img=src fetch)
+
+    // img src= can't carry custom headers (needed for ngrok),  fetch with axios and create a blob URL
     useEffect(() => {
         if (dish.dish_url == null)
             return;
-        fetchDishImage();
+        let blobUrl = '';
+        const fetch = async () => {
+            const url = await getDishImageUrl(dish.dish_url!);
+            if (url) { blobUrl = url; setFetchedDishImage(url); }
+        };
+        fetch();
+        return () => { if (blobUrl) URL.revokeObjectURL(blobUrl); };
     }, []);
 
     const { addCartItem } = useCartContext();
@@ -34,7 +35,7 @@ const Dish = ({ dish, showCurrentDishInfo }: IDishProps) => {
             <div className={DishStyle.dish_main}>
                 <div className={DishStyle.dish_left} onClick={() => showCurrentDishInfo(dish, fetchedDishImage)}>
                     <div className={DishStyle.left_image}>
-                        {dish.dish_url && fetchedDishImage && <img id={DishStyle.dish_left_img} src={`data:image/*;charset=utf-8;base64,${fetchedDishImage}`}></img>}
+                        {dish.dish_url && fetchedDishImage && <img id={DishStyle.dish_left_img} src={fetchedDishImage}></img>}
                         {dish.dish_url && !fetchedDishImage && <img id={DishStyle.dish_left_img} src={DishLoadingImage}></img>}
                     </div>
                     <div className={DishStyle.dish_left_text}>

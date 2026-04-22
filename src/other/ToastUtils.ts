@@ -1,15 +1,17 @@
 // toast functions
-import { toast } from 'react-toastify';
+import { toast, ToastOptions } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const toastTypeMap: Record<string, Function> = {
+type ToastFn = (message: string, options?: ToastOptions) => void;
+
+const toastTypeMap: Record<string, ToastFn> = {
     E: toast.error,
     W: toast.warn,
     I: toast.info,
     S: toast.success
 };
 
-const defaultToastOptions = {
+const defaultToastOptions: ToastOptions = {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: true,

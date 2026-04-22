@@ -28,7 +28,7 @@ function makeDeleteParams<T>(
 ) { return { idToDelete, items, apiRoute, setItems, getId, editButton, delButton }; };
 
 function makeEditParams<T>(
-    buttonRef: React.RefObject<HTMLButtonElement>,
+    buttonRef: React.RefObject<HTMLButtonElement | null>,
     itemToSend: T,
     apiRoute: string,
     setItems: React.Dispatch<React.SetStateAction<T[]>>,
@@ -49,9 +49,9 @@ const AdminMenu = () => {
     const [dishDeleteConfirm, setDishDeleteConfirm] = useState<number>(-1); //-1 disable confirm, other value = dish id
     const [userDeleteConfirm, setUserDeleteConfirm] = useState<string>(""); //empty disable confirm, other value = user_id
     //add dish, edit dish modal, edit user modal buttons
-    const addDishButton = useRef<HTMLButtonElement | null>(null);
-    const editDishButton = useRef<HTMLButtonElement | null>(null);
-    const editUserButton = useRef<HTMLButtonElement | null>(null);
+    const addDishButton = useRef<HTMLButtonElement>(null);
+    const editDishButton = useRef<HTMLButtonElement>(null);
+    const editUserButton = useRef<HTMLButtonElement>(null);
     //edit dishes edit/delete buttons
     const editDishButtons = useRef<(HTMLButtonElement | null)[]>([]);
     const deleteDishButtons = useRef<(HTMLButtonElement | null)[]>([]);
@@ -61,10 +61,8 @@ const AdminMenu = () => {
 
     //get all the available dishes and users on startup
     useEffect(() => {
-        if (availableDishes.length == 0)
-            fetchDishes();
-        if (availableUsers.length == 0)
-            getUsers();
+        fetchDishes();
+        getUsers();
     }, []);
 
     //retrive all the dishes
@@ -75,7 +73,7 @@ const AdminMenu = () => {
             return;
         }
         const dishesWithImg = await Promise.all(dishes.map(async (dish) => createDishToPut(dish, await getDishImage(dish.dish_url!))));
-        setAvailableDishes([...availableDishes, ...dishesWithImg]);
+        setAvailableDishes(prev => [...prev, ...dishesWithImg]);
     };
 
     //retrieve all the users
@@ -216,14 +214,12 @@ const AdminMenu = () => {
         reader.readAsDataURL(file);
     };
 
-    const addOrEditDishImageHandler = (event: React.ChangeEvent<HTMLInputElement>, isAdd: boolean) => checkImage(event, isAdd);
-
     return (
         <>
             <Header />
             {dishToEdit &&
                 <Modal desiredWidth={"fit-content"} showModal={dishToEdit !== null} closeModal={() => setDishToEdit(null)}>
-                    <AddEditDishForm preFilledValues={{ dish_name: dishToEdit.dish_name, price: dishToEdit.price, dish_description: dishToEdit.dish_description, dish_extended_description: dishToEdit.dish_extended_info }} addOrEditDishButton={editDishButton} addOrEditDish={editDish} addOrEditDishImageHandler={addOrEditDishImageHandler} isUsedForAdd={false} />
+                    <AddEditDishForm preFilledValues={{ dish_name: dishToEdit.dish_name, price: dishToEdit.price, dish_description: dishToEdit.dish_description, dish_extended_description: dishToEdit.dish_extended_info }} addOrEditDishButton={editDishButton} addOrEditDish={editDish} addOrEditDishImageHandler={checkImage} isUsedForAdd={false} />
                 </Modal>
             }
             {userToEdit &&
@@ -263,7 +259,7 @@ const AdminMenu = () => {
                         </TabList>
 
                         <TabPanel>
-                            <AddEditDishForm preFilledValues={null} addOrEditDishButton={addDishButton} addOrEditDish={addDish} addOrEditDishImageHandler={addOrEditDishImageHandler} isUsedForAdd={true} />
+                            <AddEditDishForm preFilledValues={null} addOrEditDishButton={addDishButton} addOrEditDish={addDish} addOrEditDishImageHandler={checkImage} isUsedForAdd={true} />
                         </TabPanel>
                         <TabPanel>
                             <div className={adminStyle.main_edit}>
@@ -286,8 +282,8 @@ const AdminMenu = () => {
                                                             <span id={adminStyle.main_editdishes_text_description}>{dish.dish_description}</span>
                                                         </div>
                                                         <div>
-                                                            <button ref={ref => (editDishButtons.current[index] = ref)} onClick={() => { setDishToEdit(dish) }} id={adminStyle.main_edit_edit_btn}><img id={adminStyle.main_edit_edit_btn_img} src={IconEdit}></img></button>
-                                                            <button ref={ref => (deleteDishButtons.current[index] = ref)} onClick={() => setDishDeleteConfirm(dish.dishId)} id={adminStyle.main_edit_delete_btn}><img id={adminStyle.main_edit_delete_btn_img} src={IconDelete}></img></button>
+                                                            <button ref={ref => { editDishButtons.current[index] = ref; }} onClick={() => { setDishToEdit(dish) }} id={adminStyle.main_edit_edit_btn}><img id={adminStyle.main_edit_edit_btn_img} src={IconEdit}></img></button>
+                                                            <button ref={ref => { deleteDishButtons.current[index] = ref; }} onClick={() => setDishDeleteConfirm(dish.dishId)} id={adminStyle.main_edit_delete_btn}><img id={adminStyle.main_edit_delete_btn_img} src={IconDelete}></img></button>
                                                         </div>
                                                     </li>
                                                 )
@@ -319,8 +315,8 @@ const AdminMenu = () => {
                                                             <span id={adminStyle.main_editusers_text_address}>Location: {user.address}</span>
                                                         </div>
                                                         <div>
-                                                            <button ref={ref => (editUserButtons.current[index] = ref)} onClick={() => { setUserToEdit(user) }} id={adminStyle.main_edit_edit_btn}><img id={adminStyle.main_edit_edit_btn_img} src={IconEdit}></img></button>
-                                                            <button ref={ref => (deleteUserButtons.current[index] = ref)} onClick={() => setUserDeleteConfirm(user.user_id)} id={adminStyle.main_edit_delete_btn}><img id={adminStyle.main_edit_delete_btn_img} src={IconDelete}></img></button>
+                                                            <button ref={ref => { editUserButtons.current[index] = ref; }} onClick={() => { setUserToEdit(user) }} id={adminStyle.main_edit_edit_btn}><img id={adminStyle.main_edit_edit_btn_img} src={IconEdit}></img></button>
+                                                            <button ref={ref => { deleteUserButtons.current[index] = ref; }} onClick={() => setUserDeleteConfirm(user.user_id)} id={adminStyle.main_edit_delete_btn}><img id={adminStyle.main_edit_delete_btn_img} src={IconDelete}></img></button>
                                                         </div>
                                                     </li>
                                                 )

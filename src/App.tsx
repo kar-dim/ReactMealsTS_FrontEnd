@@ -12,6 +12,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Auth0LoadingPage from "./components/Auth0LoadingPage";
 import axios from "axios";
 
+axios.defaults.timeout = 7000;
+axios.defaults.headers.common['ngrok-skip-browser-warning'] = true;
+
 const compareDishFn = (a: IDish, b: IDish) => a.dishId - b.dishId;
 
 const App = () => {
@@ -43,10 +46,6 @@ const App = () => {
 
   if (isLoading)
     return (<Auth0LoadingPage />);
-
-  //global axios stuff
-  axios.defaults.timeout = 7000;
-  axios.defaults.headers.common['ngrok-skip-browser-warning'] = true;
 
   return (
     <CartContext.Provider value={{ cartItems: cartItems, addCartItem: addItem, removeCartItem: removeItem, clearCartItems: clearItems }}>

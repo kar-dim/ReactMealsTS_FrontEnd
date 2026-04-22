@@ -12,14 +12,9 @@ export interface IDishWithCounter extends IDish {
     dish_counter: number
 }
 
-export interface DishType {
-    dish: IDish;
-    addDish(dish: IDish): void;
-};
-
 //used to show main page dishes
 export interface IDishWithImageURLEncoded extends IDish {
-    imageUrlEncoded: string | null;
+    imageUrl: string | null;
 };
 
 //a newly created dish, sent from an administrator who can edit the apps dishes, it is sent to the backend API

@@ -3,9 +3,9 @@ import axios from 'axios';
 import { ApiRoutes, OtherRoutes, Settings } from "./PublicSettings";
 import { IDish } from "../interfaces/DishInterfaces";
 
-export const isLoggedAsAdmin = (jwtToken: string) => {
-    const decodedAccessToken = jwtDecode<JwtPayload & { permissions: string[] }>(jwtToken);
-    return decodedAccessToken && decodedAccessToken.hasOwnProperty("permissions") && decodedAccessToken.permissions.indexOf("admin:admin") !== -1
+export const isLoggedAsAdmin = (jwtToken: string): boolean => {
+    const decodedAccessToken = jwtDecode<JwtPayload & { permissions?: string[] }>(jwtToken);
+    return !!(decodedAccessToken && "permissions" in decodedAccessToken && decodedAccessToken.permissions?.includes("admin:admin"));
 }
 
 export const get = async <O>(url: string, token: string): Promise<O> =>
@@ -29,11 +29,25 @@ export const getDishes = async (): Promise<IDish[]> => {
     return [];
 }
 
+// returns a base64 string used by the admin panel
 export const getDishImage = async (dishUrl: string): Promise<string> => {
     try {
         const { data } = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dishUrl}`, { responseType: "arraybuffer" });
-        //convert to base64
-        return btoa(String.fromCharCode(...new Uint8Array(data)));
+        const bytes = new Uint8Array(data as ArrayBuffer);
+        let binary = '';
+        for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+        return btoa(binary);
+    } catch (error) {
+        console.error(error);
+    }
+    return "";
+};
+
+// returns a blob URL for display purposes, callers must revoke with URL.revokeObjectURL() on cleanup
+export const getDishImageUrl = async (dishUrl: string): Promise<string> => {
+    try {
+        const { data } = await axios.get<Blob>(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dishUrl}`, { responseType: "blob" });
+        return URL.createObjectURL(data);
     } catch (error) {
         console.error(error);
     }
