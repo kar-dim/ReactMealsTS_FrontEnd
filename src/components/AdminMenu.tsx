@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { toastShow } from '../other/ToastUtils';
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { createDishToAddFromForm, createDishToPut, createDishToPutFromAdd, createDishToPutFromForm, IDishToAdd, IDishToPut } from '../interfaces/DishInterfaces';
 import { createUserFromForm, IUser } from '../interfaces/UserInterface';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -12,72 +12,44 @@ import { ApiRoutes } from '../other/PublicSettings';
 import NoDishesPic from '../media/sad_food.jpg';
 import IconEdit from '../media/icon_edit.png';
 import IconDelete from '../media/icon_delete.png';
+import DishLoadingImage from '../media/dish_loading_skeleton.png';
 import Modal from './Modal';
 import AddEditDishForm from './AddEditDishForm';
 import EditUserForm from './EditUserForm';
-import { get, post, put, del, getDishImage, getDishes } from '../other/utils';
+import { get, post, put, del, getDishImageUrl, getDishes } from '../other/utils';
 
-function makeDeleteParams<T>(
-    idToDelete: string | number,
-    items: T[],
-    apiRoute: string,
-    setItems: React.Dispatch<React.SetStateAction<T[]>>,
-    getId: (item: T) => string | number,
-    editButton: React.MutableRefObject<(HTMLElement | null)[]>,
-    delButton: React.MutableRefObject<(HTMLElement | null)[]>,
-) { return { idToDelete, items, apiRoute, setItems, getId, editButton, delButton }; };
-
-function makeEditParams<T>(
-    buttonRef: React.RefObject<HTMLButtonElement | null>,
-    itemToSend: T,
-    apiRoute: string,
-    setItems: React.Dispatch<React.SetStateAction<T[]>>,
-    getId: (item: T) => any,
-    setItemToEdit: React.Dispatch<React.SetStateAction<T | null>>
-) { return { buttonRef, itemToSend, apiRoute, setItems, getId, setItemToEdit }; };
+const MAX_IMG_SIZE = 3000000;
 
 const AdminMenu = () => {
-    const MAX_IMG_SIZE = 3000000;
-
     const { getAccessTokenSilently } = useAuth0();
     const [availableDishes, setAvailableDishes] = useState<IDishToPut[]>([]);
     const [availableUsers, setAvailableUsers] = useState<IUser[]>([]);
+    // dishId -> image src (blob URL for fetched dishes, data URL for just-uploaded ones), kept separate from the payload
+    const [dishImages, setDishImages] = useState<Record<number, string>>({});
     const [addDishImageBase64, setAddDishImageBase64] = useState<string | null>(null);
     const [editDishImageBase64, setEditDishImageBase64] = useState<string | null>(null);
     const [dishToEdit, setDishToEdit] = useState<IDishToPut | null>(null);
     const [userToEdit, setUserToEdit] = useState<IUser | null>(null);
     const [dishDeleteConfirm, setDishDeleteConfirm] = useState<number>(-1); //-1 disable confirm, other value = dish id
     const [userDeleteConfirm, setUserDeleteConfirm] = useState<string>(""); //empty disable confirm, other value = user_id
-    //add dish, edit dish modal, edit user modal buttons
-    const addDishButton = useRef<HTMLButtonElement>(null);
-    const editDishButton = useRef<HTMLButtonElement>(null);
-    const editUserButton = useRef<HTMLButtonElement>(null);
-    //edit dishes edit/delete buttons
-    const editDishButtons = useRef<(HTMLButtonElement | null)[]>([]);
-    const deleteDishButtons = useRef<(HTMLButtonElement | null)[]>([]);
-    //edit users edit/delete buttons
-    const editUserButtons = useRef<(HTMLButtonElement | null)[]>([]);
-    const deleteUserButtons = useRef<(HTMLButtonElement | null)[]>([]);
+    const [isBusy, setIsBusy] = useState<boolean>(false); //disables action buttons while a request is in flight
 
-    //get all the available dishes and users on startup
-    useEffect(() => {
-        fetchDishes();
-        getUsers();
-    }, []);
-
-    //retrive all the dishes
-    const fetchDishes = async () => {
+    //retrieve all the dishes (and their images, fetched together)
+    const fetchDishes = useCallback(async () => {
         const dishes = await getDishes();
         if (!dishes.length) {
             toastShow('Could not fetch dishes', 'E');
             return;
         }
-        const dishesWithImg = await Promise.all(dishes.map(async (dish) => createDishToPut(dish, await getDishImage(dish.dish_url!))));
-        setAvailableDishes(prev => [...prev, ...dishesWithImg]);
-    };
+        setAvailableDishes(prev => [...prev, ...dishes.map(dish => createDishToPut(dish))]);
+        const images = await Promise.all(
+            dishes.map(async dish => [dish.dishId, dish.dish_url ? await getDishImageUrl(dish.dish_url) : ""] as const)
+        );
+        setDishImages(prev => ({ ...prev, ...Object.fromEntries(images) }));
+    }, []);
 
     //retrieve all the users
-    const getUsers = async () => {
+    const getUsers = useCallback(async () => {
         try {
             const usersRet = await get<IUser[]>(ApiRoutes.GetUsers, await getAccessTokenSilently());
             setAvailableUsers(usersRet);
@@ -86,39 +58,25 @@ const AdminMenu = () => {
             console.error(error);
         }
         toastShow('Could not fetch Users', 'E');
-    };
+    }, [getAccessTokenSilently]);
 
-    //when the user clicks ADD DISH
-    const addDish = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (addDishImageBase64 === null) {
-            toastShow("A valid image is required", "E");
-            return;
-        }
-        const dishToSend = createDishToAddFromForm(event.target as HTMLFormElement, addDishImageBase64);
-        //send http POST request
-        try {
-            if (addDishButton.current)
-                addDishButton.current.setAttribute("disabled", "true");
-            const newDishId = await post<IDishToAdd, number>(ApiRoutes.AddDish, dishToSend, await getAccessTokenSilently());
-            toastShow('The Dish was successfully added to the database, with ID: ' + newDishId, 'S');
-            //append to the local dishes
-            setAvailableDishes((prev) => ([...prev, createDishToPutFromAdd(dishToSend, newDishId)]));
-        } catch (error) {
-            toastShow('Error in adding the dish. Check console log', 'E');
-            console.error(error);
-        } finally {
-            if (addDishButton.current)
-                addDishButton.current.removeAttribute("disabled");
-        }
-    };
+    //get all the available dishes and users on startup
+    useEffect(() => {
+        fetchDishes();
+        getUsers();
+    }, [fetchDishes, getUsers]);
 
     //common function to update a User or Dish
-    async function editItem<T>(params: ReturnType<typeof makeEditParams<T>>): Promise<void> {
-        const { buttonRef, itemToSend, apiRoute, getId, setItems, setItemToEdit } = params;
-        buttonRef.current?.setAttribute("disabled", "true");
+    async function editItem<T>(
+        apiRoute: string,
+        itemToSend: T,
+        getId: (item: T) => string | number,
+        setItems: Dispatch<SetStateAction<T[]>>,
+        setItemToEdit: Dispatch<SetStateAction<T | null>>
+    ): Promise<void> {
+        setIsBusy(true);
         try {
-            await put<T, any>(apiRoute, itemToSend, await getAccessTokenSilently());
+            await put<T, unknown>(apiRoute, itemToSend, await getAccessTokenSilently());
             toastShow('Item update success', "S");
             setItems(prev => prev.map(item => getId(item) === getId(itemToSend) ? itemToSend : item));
             setItemToEdit(null);
@@ -126,19 +84,20 @@ const AdminMenu = () => {
             toastShow('Error in updating the item. Check console log', "E");
             console.error(error);
         } finally {
-            buttonRef.current?.removeAttribute("disabled");
+            setIsBusy(false);
         }
     }
+
     //common function to delete a User or Dish
-    async function deleteItem<T>(params: ReturnType<typeof makeDeleteParams<T>>): Promise<void> {
-        const { idToDelete, apiRoute, setItems, getId, editButton, delButton, items, } = params
-        // Disable buttons while the operation is running
-        for (let i = 0; i < items.length; i++) {
-            editButton.current[i]?.setAttribute("disabled", "true");
-            delButton.current[i]?.setAttribute("disabled", "true");
-        }
+    async function deleteItem<T>(
+        idToDelete: string | number,
+        apiRoute: string,
+        getId: (item: T) => string | number,
+        setItems: Dispatch<SetStateAction<T[]>>
+    ): Promise<void> {
+        setIsBusy(true);
         try {
-            await del<any>(`${apiRoute}/${idToDelete}`, await getAccessTokenSilently());
+            await del<unknown>(`${apiRoute}/${idToDelete}`, await getAccessTokenSilently());
             toastShow('Item delete success', 'S');
             setItems(prev => prev.filter(item => getId(item) !== idToDelete));
         } catch (error) {
@@ -155,11 +114,31 @@ const AdminMenu = () => {
             }
             toastShow(`Error in deleting the item. Check console log`, 'E');
         } finally {
-            // Re-enable buttons
-            for (let i = 0; i < items.length; i++) {
-                editButton.current[i]?.removeAttribute("disabled");
-                delButton.current[i]?.removeAttribute("disabled");
-            }
+            setIsBusy(false);
+        }
+    }
+
+    //when the user clicks ADD DISH
+    const addDish = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (addDishImageBase64 === null) {
+            toastShow("A valid image is required", "E");
+            return;
+        }
+        const dishToSend = createDishToAddFromForm(event.target as HTMLFormElement, addDishImageBase64);
+        //send http POST request
+        try {
+            setIsBusy(true);
+            const newDishId = await post<IDishToAdd, number>(ApiRoutes.AddDish, dishToSend, await getAccessTokenSilently());
+            toastShow('The Dish was successfully added to the database, with ID: ' + newDishId, 'S');
+            //append to the local dishes and reuse the already-uploaded image for the thumbnail
+            setAvailableDishes(prev => [...prev, createDishToPutFromAdd(dishToSend, newDishId)]);
+            setDishImages(prev => ({ ...prev, [newDishId]: `data:image/*;base64,${addDishImageBase64}` }));
+        } catch (error) {
+            toastShow('Error in adding the dish. Check console log', 'E');
+            console.error(error);
+        } finally {
+            setIsBusy(false);
         }
     };
 
@@ -170,26 +149,28 @@ const AdminMenu = () => {
             toastShow("A valid image is required", "E");
             return;
         }
-        const dishToPut = createDishToPutFromForm(event.target as HTMLFormElement, editDishImageBase64!, dishToEdit!.dishId)
-        await editItem(makeEditParams(editDishButton, dishToPut, ApiRoutes.UpdateDish, setAvailableDishes, dish => dish.dishId, setDishToEdit));
+        const dishToPut = createDishToPutFromForm(event.target as HTMLFormElement, editDishImageBase64, dishToEdit!.dishId);
+        await editItem(ApiRoutes.UpdateDish, dishToPut, dish => dish.dishId, setAvailableDishes, setDishToEdit);
+        //reuse the freshly uploaded image for the thumbnail
+        setDishImages(prev => ({ ...prev, [dishToPut.dishId]: `data:image/*;base64,${editDishImageBase64}` }));
     };
 
     //when the user clicks EDIT USER
     const editUser = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const userToUpdate = createUserFromForm(event.target as HTMLFormElement, userToEdit!.user_id);
-        await editItem(makeEditParams(editUserButton, userToUpdate, ApiRoutes.UpdateUser, setAvailableUsers, user => user.user_id, setUserToEdit));
-    }
+        await editItem(ApiRoutes.UpdateUser, userToUpdate, user => user.user_id, setAvailableUsers, setUserToEdit);
+    };
 
     //when the user clicks DELETE DISH
-    const deleteDish = async (dishIdToDelete: number) =>
-        await deleteItem(makeDeleteParams(dishIdToDelete, availableDishes, ApiRoutes.DeleteDish, setAvailableDishes, dish => dish.dishId, editDishButtons, deleteDishButtons));
+    const deleteDish = (dishIdToDelete: number) =>
+        deleteItem(dishIdToDelete, ApiRoutes.DeleteDish, (dish: IDishToPut) => dish.dishId, setAvailableDishes);
 
     //when the user clicks DELETE USER
-    const deleteUser = async (userToDelete: string) =>
-        await deleteItem(makeDeleteParams(userToDelete, availableUsers, ApiRoutes.DeleteUser, setAvailableUsers, user => user.user_id, editUserButtons, deleteUserButtons));
+    const deleteUser = (userToDelete: string) =>
+        deleteItem(userToDelete, ApiRoutes.DeleteUser, (user: IUser) => user.user_id, setAvailableUsers);
 
-    //check the size of the uploaded image file and errors in uploading 
+    //check the size of the uploaded image file and errors in uploading
     const checkImage = (event: React.ChangeEvent<HTMLInputElement>, isAdd: boolean) => {
         const file = event.target.files?.[0];
         const setImage = isAdd ? setAddDishImageBase64 : setEditDishImageBase64;
@@ -219,12 +200,12 @@ const AdminMenu = () => {
             <Header />
             {dishToEdit &&
                 <Modal desiredWidth={"fit-content"} showModal={dishToEdit !== null} closeModal={() => setDishToEdit(null)}>
-                    <AddEditDishForm preFilledValues={{ dish_name: dishToEdit.dish_name, price: dishToEdit.price, dish_description: dishToEdit.dish_description, dish_extended_description: dishToEdit.dish_extended_info }} addOrEditDishButton={editDishButton} addOrEditDish={editDish} addOrEditDishImageHandler={checkImage} isUsedForAdd={false} />
+                    <AddEditDishForm preFilledValues={{ dish_name: dishToEdit.dish_name, price: dishToEdit.price, dish_description: dishToEdit.dish_description, dish_extended_description: dishToEdit.dish_extended_info }} disabled={isBusy} addOrEditDish={editDish} addOrEditDishImageHandler={checkImage} isUsedForAdd={false} />
                 </Modal>
             }
             {userToEdit &&
                 <Modal desiredWidth={"32rem"} showModal={userToEdit !== null} closeModal={() => setUserToEdit(null)}>
-                    <EditUserForm preFilledValues={{ email: userToEdit.email, user_name: userToEdit.name, user_lastname: userToEdit.lastName, location: userToEdit.address }} editUserButton={editUserButton} editUser={editUser}></EditUserForm>
+                    <EditUserForm preFilledValues={{ email: userToEdit.email, user_name: userToEdit.name, user_lastname: userToEdit.lastName, location: userToEdit.address }} disabled={isBusy} editUser={editUser}></EditUserForm>
                 </Modal>
             }
             {dishDeleteConfirm != -1 &&
@@ -259,7 +240,7 @@ const AdminMenu = () => {
                         </TabList>
 
                         <TabPanel>
-                            <AddEditDishForm preFilledValues={null} addOrEditDishButton={addDishButton} addOrEditDish={addDish} addOrEditDishImageHandler={checkImage} isUsedForAdd={true} />
+                            <AddEditDishForm preFilledValues={null} disabled={isBusy} addOrEditDish={addDish} addOrEditDishImageHandler={checkImage} isUsedForAdd={true} />
                         </TabPanel>
                         <TabPanel>
                             <div className={adminStyle.main_edit}>
@@ -272,18 +253,18 @@ const AdminMenu = () => {
                                 {availableDishes.length > 0 &&
                                     <div className={adminStyle.main_edit_main}>
                                         <ul>
-                                            {availableDishes.map((dish, index) => {
+                                            {availableDishes.map((dish) => {
                                                 return (
                                                     <li key={dish.dishId} className={adminStyle.main_editdishes_li}>
-                                                        <img id={adminStyle.main_editdishes_img} src={`data:image/*;charset=utf-8;base64,${dish.dish_image_base64}`}></img>
+                                                        <img id={adminStyle.main_editdishes_img} src={dishImages[dish.dishId] || DishLoadingImage}></img>
                                                         <div id={adminStyle.main_editdishes_text}>
                                                             <span id={adminStyle.main_editdishes_text_name}>{dish.dish_name}</span>
                                                             <span id={adminStyle.main_editdishes_text_price}>Price: {dish.price}$</span>
                                                             <span id={adminStyle.main_editdishes_text_description}>{dish.dish_description}</span>
                                                         </div>
                                                         <div>
-                                                            <button ref={ref => { editDishButtons.current[index] = ref; }} onClick={() => { setDishToEdit(dish) }} id={adminStyle.main_edit_edit_btn}><img id={adminStyle.main_edit_edit_btn_img} src={IconEdit}></img></button>
-                                                            <button ref={ref => { deleteDishButtons.current[index] = ref; }} onClick={() => setDishDeleteConfirm(dish.dishId)} id={adminStyle.main_edit_delete_btn}><img id={adminStyle.main_edit_delete_btn_img} src={IconDelete}></img></button>
+                                                            <button disabled={isBusy} onClick={() => { setDishToEdit(dish) }} id={adminStyle.main_edit_edit_btn}><img id={adminStyle.main_edit_edit_btn_img} src={IconEdit}></img></button>
+                                                            <button disabled={isBusy} onClick={() => setDishDeleteConfirm(dish.dishId)} id={adminStyle.main_edit_delete_btn}><img id={adminStyle.main_edit_delete_btn_img} src={IconDelete}></img></button>
                                                         </div>
                                                     </li>
                                                 )
@@ -305,7 +286,7 @@ const AdminMenu = () => {
                                 {availableUsers.length > 0 &&
                                     <div className={adminStyle.main_edit_main}>
                                         <ul>
-                                            {availableUsers.map((user, index) => {
+                                            {availableUsers.map((user) => {
                                                 return (
                                                     <li key={user.user_id} className={adminStyle.main_editusers_li}>
                                                         <div id={adminStyle.main_editusers_text}>
@@ -315,8 +296,8 @@ const AdminMenu = () => {
                                                             <span id={adminStyle.main_editusers_text_address}>Location: {user.address}</span>
                                                         </div>
                                                         <div>
-                                                            <button ref={ref => { editUserButtons.current[index] = ref; }} onClick={() => { setUserToEdit(user) }} id={adminStyle.main_edit_edit_btn}><img id={adminStyle.main_edit_edit_btn_img} src={IconEdit}></img></button>
-                                                            <button ref={ref => { deleteUserButtons.current[index] = ref; }} onClick={() => setUserDeleteConfirm(user.user_id)} id={adminStyle.main_edit_delete_btn}><img id={adminStyle.main_edit_delete_btn_img} src={IconDelete}></img></button>
+                                                            <button disabled={isBusy} onClick={() => { setUserToEdit(user) }} id={adminStyle.main_edit_edit_btn}><img id={adminStyle.main_edit_edit_btn_img} src={IconEdit}></img></button>
+                                                            <button disabled={isBusy} onClick={() => setUserDeleteConfirm(user.user_id)} id={adminStyle.main_edit_delete_btn}><img id={adminStyle.main_edit_delete_btn_img} src={IconDelete}></img></button>
                                                         </div>
                                                     </li>
                                                 )

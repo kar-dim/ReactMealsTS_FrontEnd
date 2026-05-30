@@ -10,10 +10,10 @@ interface IEditUserFormProps {
 
     } | null,
     editUser(event: FormEvent<HTMLFormElement>): void,
-    editUserButton: any,
+    disabled: boolean, //disables the submit button while a request hasn't finished
 }
 
-const EditUserForm = ({ preFilledValues, editUser, editUserButton }: IEditUserFormProps) => {
+const EditUserForm = ({ preFilledValues, editUser, disabled }: IEditUserFormProps) => {
     return (
         <div id={adminStyle.main_edit_user_form}>
             <form id={adminStyle.edit_user_form} onSubmit={(event) => editUser(event)}>
@@ -34,7 +34,7 @@ const EditUserForm = ({ preFilledValues, editUser, editUserButton }: IEditUserFo
                     <input id={adminStyle.edit_user_address} required type="text" maxLength={50} name="address" defaultValue={preFilledValues?.location}></input>
                 </div>
                 <div id={adminStyle.edit_user_form5}>
-                    <button type="submit" ref={editUserButton} className={adminStyle.custom_button}>Edit User</button>
+                    <button type="submit" disabled={disabled} className={adminStyle.custom_button}>Edit User</button>
                 </div>
             </form>
         </div>

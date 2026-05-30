@@ -29,25 +29,21 @@ export const getDishes = async (): Promise<IDish[]> => {
     return [];
 }
 
-// returns a base64 string used by the admin panel
-export const getDishImage = async (dishUrl: string): Promise<string> => {
-    try {
-        const { data } = await axios.get(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dishUrl}`, { responseType: "arraybuffer" });
-        const bytes = new Uint8Array(data as ArrayBuffer);
-        let binary = '';
-        for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-        return btoa(binary);
-    } catch (error) {
-        console.error(error);
-    }
-    return "";
-};
+// Module level cache of dishUrl -> blob URL so the same image is fetched only once
+// per session (avoids the N+1 refetch when components remount). URLs intentionally
+// live for the whole session, so callers must NOT revoke them.
+const imageUrlCache = new Map<string, string>();
 
-// returns a blob URL for display purposes, callers must revoke with URL.revokeObjectURL() on cleanup
+// returns a blob URL for an <img src>, shared by the main menu and the admin panel
 export const getDishImageUrl = async (dishUrl: string): Promise<string> => {
+    const cached = imageUrlCache.get(dishUrl);
+    if (cached)
+        return cached;
     try {
         const { data } = await axios.get<Blob>(`${Settings.backend_url}/${OtherRoutes.dishImages}/${dishUrl}`, { responseType: "blob" });
-        return URL.createObjectURL(data);
+        const url = URL.createObjectURL(data);
+        imageUrlCache.set(dishUrl, url);
+        return url;
     } catch (error) {
         console.error(error);
     }

@@ -26,25 +26,24 @@ const OrderDetails = ({ closeModal }: IOrderDetailsProps) => {
     const { user, getAccessTokenSilently } = useAuth0();
     const [isFetchingOrders, setIsFetchingOrders] = useState<boolean>(true); //axios GET request fetching
     const [userOrders, setUserOrders] = useState<IOrders | null>(null);
-    const getOrders = async () => {
-        try {
-            const ordersRet = await get<IOrders | null>(`${ApiRoutes.GetUserOrders}/${user?.sub}`, await getAccessTokenSilently());
-            setUserOrders(ordersRet);
-        } catch (error) {
-            console.error(error);
-            setUserOrders(null);
-            toastShow('Could not fetch Orders', 'E');
-            closeModal();
-        } finally {
-            setIsFetchingOrders(false);
-        }
-    }
-
-    //call once
     useEffect(() => {
-        if (userOrders == null)
+        const getOrders = async () => {
+            try {
+                const ordersRet = await get<IOrders | null>(`${ApiRoutes.GetUserOrders}/${user?.sub}`, await getAccessTokenSilently());
+                setUserOrders(ordersRet);
+            } catch (error) {
+                console.error(error);
+                setUserOrders(null);
+                toastShow('Could not fetch Orders', 'E');
+                closeModal();
+            } finally {
+                setIsFetchingOrders(false);
+            }
+        };
+
+        if (userOrders == null && user?.sub)
             getOrders();
-    }, []);
+    }, [userOrders, user?.sub, getAccessTokenSilently, closeModal]);
 
     if (isFetchingOrders)
         return <div>Loading...</div>
@@ -62,6 +61,7 @@ const OrderDetails = ({ closeModal }: IOrderDetailsProps) => {
     //fetched orders
     return (
         <div id={OrderDetailsStyle.main_div}>
+            <Tooltip id="food-name-tooltip" />
             <ul className={OrderDetailsStyle.order_details_ul}>
                 {
                     userOrders.orders.map((order: IOrder) => {
@@ -77,8 +77,7 @@ const OrderDetails = ({ closeModal }: IOrderDetailsProps) => {
                                                         return (
                                                             <Fragment key={dish.dishId}>
                                                                 <div id={OrderDetailsStyle.order_food_detail}>
-                                                                    <span data-tooltip-id={`food-name-tooltip-${order.id}-${dish.dishId}`} data-tooltip-content={dish.dish_description}>{dish.dish_name}</span>
-                                                                    <Tooltip id={`food-name-tooltip-${order.id}-${dish.dishId}`} />
+                                                                    <span data-tooltip-id="food-name-tooltip" data-tooltip-content={dish.dish_description}>{dish.dish_name}</span>
                                                                     <div>
                                                                         <span id={OrderDetailsStyle.food_value}>$ {dish.price.toFixed(2)}</span>
                                                                         <div className={OrderDetailsStyle.food_counter_box}>

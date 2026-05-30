@@ -11,8 +11,8 @@ interface contextType {
 // the cart items context with addition and removal of cart items, shared among all the components of the application
 export const CartContext = createContext<contextType>({
   cartItems: [],
-  addCartItem(_item) { },
-  removeCartItem(_item) { },
+  addCartItem() { },
+  removeCartItem() { },
   clearCartItems() { }
 }
 );

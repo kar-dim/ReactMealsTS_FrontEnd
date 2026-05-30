@@ -32,7 +32,8 @@ export interface IDishToPut extends IDishToAdd {
 };
 
 //helper converter functions
-export const createDishToPut = (dish: IDish, imageBase64: string | null): IDishToPut => ({
+//images are loaded separately (by dish_url), so the payload starts without an inline image
+export const createDishToPut = (dish: IDish, imageBase64: string | null = null): IDishToPut => ({
     dishId: dish.dishId,
     price: dish.price,
     dish_name: dish.dish_name,

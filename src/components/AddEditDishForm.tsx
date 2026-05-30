@@ -1,4 +1,4 @@
-import { FormEvent, RefObject } from 'react';
+import { FormEvent } from 'react';
 import adminStyle from '../styles/AdminMenu.module.scss'
 
 interface IAddEditDishFormProps {
@@ -10,11 +10,11 @@ interface IAddEditDishFormProps {
     } | null,
     addOrEditDish(event: FormEvent<HTMLFormElement>): void,
     addOrEditDishImageHandler(event: React.ChangeEvent<HTMLInputElement>, isAdd: boolean): void,
-    addOrEditDishButton: RefObject<HTMLButtonElement | null>,
+    disabled: boolean, //disables the submit button while a request is hasn't finished
     isUsedForAdd: boolean //is true -> ADD DISH form, else -> EDIT DISH form
 }
 
-const AddEditDishForm = ({ preFilledValues, addOrEditDish, addOrEditDishImageHandler, addOrEditDishButton, isUsedForAdd }: IAddEditDishFormProps) => {
+const AddEditDishForm = ({ preFilledValues, addOrEditDish, addOrEditDishImageHandler, disabled, isUsedForAdd }: IAddEditDishFormProps) => {
     const spacing: string = isUsedForAdd ? " " : "";
     return (
         <div>
@@ -45,7 +45,7 @@ const AddEditDishForm = ({ preFilledValues, addOrEditDish, addOrEditDishImageHan
                         <input type="file" required id={adminStyle.adminmenu_imageFile} name="imageFile" onChange={(e) => addOrEditDishImageHandler(e, isUsedForAdd)} accept="image/*"></input>
                     </div>
                     <div id={adminStyle.add_dish_4}>
-                        <button type="submit" ref={addOrEditDishButton} className={adminStyle.custom_button}>{isUsedForAdd ? "Add Dish" : "Edit Dish"}</button>
+                        <button type="submit" disabled={disabled} className={adminStyle.custom_button}>{isUsedForAdd ? "Add Dish" : "Edit Dish"}</button>
                     </div>
                 </form>
             </div>

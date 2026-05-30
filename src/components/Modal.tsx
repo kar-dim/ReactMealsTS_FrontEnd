@@ -8,25 +8,26 @@ interface IModal {
     children: ReactNode
 };
 
-const Modal = (props: IModal) => {
+const Modal = ({ showModal, closeModal, desiredWidth, children }: IModal) => {
     const modalRef = useRef<HTMLDivElement>(null);
-    const handleClickOutside = (event: MouseEvent) => {
-        if (modalRef.current && !modalRef.current.contains(event.target as Node))
-            props.closeModal();
-    };
 
     useEffect(() => {
-        if (props.showModal)
+        const handleClickOutside = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node))
+                closeModal();
+        };
+
+        if (showModal)
             document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [props.showModal, props.closeModal]);
+    }, [showModal, closeModal]);
 
-    const showModalClass = props.showModal ? 'cart_modal cart_show_modal' : 'cart_modal';
+    const showModalClass = showModal ? 'cart_modal cart_show_modal' : 'cart_modal';
     return (
         <div className={showModalClass}>
-            <div className="cart_modal_content" ref={modalRef} style={{ ...(props.desiredWidth && { width: props.desiredWidth }) }}>
-                <span onClick={props.closeModal} className="cart_modal_close_button">🗙</span>
-                {props.children}
+            <div className="cart_modal_content" ref={modalRef} style={{ ...(desiredWidth && { width: desiredWidth }) }}>
+                <span onClick={closeModal} className="cart_modal_close_button">🗙</span>
+                {children}
             </div>
         </div>
     );

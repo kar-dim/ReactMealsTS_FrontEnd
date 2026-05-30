@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import CartButton from './CartButton';
 import HeaderStyles from '../styles/Header.module.scss';
 import { useCartContext } from '../contexts/cart-context';
@@ -26,8 +26,8 @@ const Header = () => {
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
     //methods
-    const verifyAdminAccess = async () => setIsAdmin(isLoggedAsAdmin(await getAccessTokenSilently()));
-    const loadUserProfileFromClaims = async () => {
+    const verifyAdminAccess = useCallback(async () => setIsAdmin(isLoggedAsAdmin(await getAccessTokenSilently())), [getAccessTokenSilently]);
+    const loadUserProfileFromClaims = useCallback(async () => {
         const claims = await getIdTokenClaims();
         if (claims == undefined)
             return;
@@ -37,15 +37,15 @@ const Header = () => {
             email: claims[`email`] ?? "",
             address: claims[`${Settings.auth0_audience}/user_metadata.address`],
         });
-    }
-    const checkTokenValidity = async (): Promise<boolean> => {
+    }, [getIdTokenClaims]);
+    const checkTokenValidity = useCallback(async (): Promise<boolean> => {
         try {
             await getAccessTokenSilently();
             return true;
-        } catch (e) {
+        } catch {
             return false;
         }
-    };
+    }, [getAccessTokenSilently]);
 
     //get the IdToken Claims, which contain the user's metadata (user NAME/LASTNAME/ADDRESS), these are added
     //in the idToken in Auth0 dashboard -> onPostLogin AUTH0 ACTION
@@ -63,7 +63,7 @@ const Header = () => {
         }
 
         run();
-    }, [isAuthenticated]);
+    }, [isAuthenticated, checkTokenValidity, clearCartItems, loadUserProfileFromClaims, verifyAdminAccess]);
 
     //click on the "cart" div
     const clickCartHandler = (): void => {

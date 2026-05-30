@@ -101,6 +101,7 @@ div.main_edit_main {
 
     ul {
         padding-left: 5px;
+        list-style: none;
     }
 }
 
@@ -110,14 +111,6 @@ div.main_edit_error {
 
 div.main_edit_error>img {
     @include size(400px);
-}
-
-div.main_edit_main {
-    @include flex-column();
-}
-
-div.main_edit_main>ul {
-    list-style: none;
 }
 
 li.main_editdishes_li {
@@ -270,10 +263,6 @@ input[type=text]#edit_user_address {
         width: $input-mid-width;
     }
 
-    input#adminmenu_dish_price {
-        width: 70px;
-    }
-
     div#main_content {
         width: 95%;
     }
@@ -298,18 +287,6 @@ input[type=text]#edit_user_address {
 }
 
 @media screen and (max-width: 962px) {
-    input#adminmenu_dish_name {
-        width: $input-mid2-width;
-    }
-
-    input#adminmenu_dish_description {
-        width: $input-mid-width;
-    }
-
-    input#adminmenu_dish_price {
-        width: 70px;
-    }
-
     div#add_dish_2>textarea {
         height: 320px;
     }
